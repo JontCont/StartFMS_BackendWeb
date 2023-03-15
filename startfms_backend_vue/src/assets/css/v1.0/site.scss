@@ -1,0 +1,593 @@
+﻿@charset "UTF-8";
+/*#region Global 全版面套用 向下 */
+/*預設內容*/
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "微軟正黑體","Font Awesome 5 Free",'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    outline: 0;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    font-size: 14px;
+    overflow-x: hidden;
+    background: rgba(65, 73, 86,1);
+    min-height: 100vh;
+}
+/*#endregion  Global 全版面套用 向下 */
+
+/*#region css 修改版面 */
+[data-has-detail-view] > td:nth-child(1){
+    text-align:center;
+}
+.bootstrap-table.fullscreen {
+    padding: 25px;
+}
+
+canvas {
+    padding: 15px;
+    padding-top: 0;
+}
+.modal .bs-stepper .step-trigger {
+    /*flex-direction:column;*/
+}
+.chart-title, .div-title {
+    text-align: center;
+    font-size: 1.5em;
+    padding: 5px;
+    background: #ddd;
+}
+
+#subTable tr th {
+    padding: 10px;
+}
+
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+#view-tables [type="button"], #view-tables [type="submit"] {
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.25));
+}
+
+td > button {
+    margin: 3px;
+}
+
+.table_title-h3 {
+    margin: 10px 27px 0px 20px;
+}
+
+/*#endregion css 修改版面 */
+
+/*#region css 工具 向下 */
+
+//set background default
+.detail-view {
+    background: #fff !important;
+}
+
+//set alert fixed
+.alert-fixed {
+    position: fixed !important;
+    top: 10px;
+    left: 0;
+    right: 0;
+    /*bottom: 0;*/
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 100;
+    width: 40%;
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+.table{
+    border:none !important;
+}
+.table-body {
+    padding: 15px 20px;
+}
+
+.view-card {
+    margin: 15px 5px;
+    /*border: 1px solid #111;*/
+    border-radius: 5px;
+    /*overflow: hidden;*/
+    box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.2);
+    /*filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.25)) ;*/
+}
+
+.view-table {
+    margin: 15px 5px;
+    /*border: 1px solid #111;*/
+    border-radius: 5px;
+    /*overflow: hidden;*/
+    box-shadow: 5px 5px 15px 3px rgba(0, 0, 0, 0.2);
+    /*filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.25)) ;*/
+}
+
+.fixed-table-container {
+/*    border-radius: 8px;
+    overflow: hidden;*/
+}
+thead  .form-control {
+    border-radius: 0 ;
+}
+/*#endregion css 工具 向上 */
+/*#region tables */
+//---------------------------------------------------//
+/*$color-key: default, blue, green, red, white, black;*/
+$color: ( default: rgba(65, 73, 86,1),blue : rgba(74, 137, 220,1),green : rgba(3, 166, 120,1),red : rgba(237, 85, 101,1),white : rgba(240, 240, 240,1),black : rgba(41, 41, 41,1) );
+$table-color: ( default: rgba(65, 73, 86,.15),blue : rgba(74, 137, 220,.15),green : rgba(3, 166, 120,.15),red : rgba(237, 85, 101,.15),white : rgba(196, 196, 196,.15),black : rgba(41, 41, 41,.15) );
+
+@each $key, $value in $color {
+    body.#{$key} .menu-active::before {
+        content: '';
+        position: absolute;
+        border-left: 6px solid $value;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    body.#{$key} .table thead {
+        background: $value;
+
+        @if($key!= white) {
+            color: #fff;
+        }
+    }
+
+    body.#{$key} .table tbody {
+        tr:nth-child(even) {
+            background: map-get($table-color, $key);
+        }
+    }
+
+    .colors .#{$key}, body.#{$key} {
+        background: $value;
+    }
+
+    body.#{$key} .chart-title--status,
+    body.#{$key} .div-title {
+        background: $value;
+
+        @if($key == white) {
+            color: #111;
+        }
+        @else {
+            color: #fff;
+        }
+    }
+
+    .#{$key}.jquery-accordion-menu .jquery-accordion-menu-footer,
+    .#{$key}.jquery-accordion-menu .jquery-accordion-menu-header,
+    .#{$key}.jquery-accordion-menu ul li a {
+        background: $value;
+
+        @if($key == white) {
+            color: #111;
+        }
+    }
+
+    @if($key == white) {
+        body.#{$key} .text-white {
+            color: #111 !important;
+        }
+    }
+}
+
+/*#endregion tables */
+
+/*#region animation*/
+@-webkit-keyframes ripple {
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(2.5)
+    }
+}
+
+@-moz-keyframes ripple {
+    100% {
+        opacity: 0;
+        -moz-transform: scale(2.5)
+    }
+}
+
+@-o-keyframes ripple {
+    100% {
+        opacity: 0;
+        -o-transform: scale(2.5)
+    }
+}
+
+@keyframes ripple {
+    100% {
+        opacity: 0;
+        transform: scale(2.5)
+    }
+}
+/*#endregion  animation*/
+
+
+/* Css Tools UP */
+.vh-70 {
+    height: 70vh;
+}
+
+.vh-80 {
+    height: 80vh;
+}
+
+.vh-90 {
+    height: 90vh;
+}
+
+
+#wrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.colors a {
+    width: 43.3px;
+    height: 10px;
+    float: left;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.nav-item {
+    :hover {
+        background: #eee;
+    }
+}
+
+///------------List Nav LEFT---------------///
+.menu-close {
+    position: absolute;
+    left: -999px;
+}
+
+.menu-switch {
+    font-size: 1em;
+    padding: 2px 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.header.header__title {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+
+.page-title {
+    margin-left: 1em;
+}
+
+.content__body {
+    height: 93.666666vh;
+}
+
+.render.render__body {
+    background: #fff;
+    min-width: 0;
+    width: 100%;
+}
+
+.colors {
+    width: 260px;
+    float: left;
+}
+
+.jquery-accordion-menu {
+    width: 260px;
+    float: left;
+    position: relative;
+}
+
+.jquery-accordion-menu .jquery-accordion-menu-footer,
+.jquery-accordion-menu .jquery-accordion-menu-header {
+    width: 100%;
+    height: 50px;
+    padding-left: 22px;
+    float: left;
+    line-height: 50px;
+    font-weight: 600;
+    color: #f0f0f0;
+    background: #414956
+}
+
+.jquery-accordion-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.jquery-accordion-menu ul li {
+    width: 100%;
+    display: block;
+    float: left;
+    position: relative
+}
+
+.jquery-accordion-menu ul li a {
+    width: 100%;
+    padding: 14px 22px;
+    float: left;
+    text-decoration: none;
+    color: #f0f0f0;
+    font-size: 13px;
+    background: #414956;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    -o-transition: color .2s linear, background .2s linear;
+    -moz-transition: color .2s linear, background .2s linear;
+    -webkit-transition: color .2s linear, background .2s linear;
+    transition: color .2s linear, background .2s linear
+}
+
+.jquery-accordion-menu > ul > li.active > a,
+.jquery-accordion-menu > ul > li:hover > a {
+    color: #fff;
+    background: #3b424d
+}
+
+.jquery-accordion-menu > ul > li > a {
+    border-bottom: solid 1px #3b424d
+}
+
+.jquery-accordion-menu ul li a i {
+    width: 34px;
+    float: left;
+    line-height: 18px;
+    font-size: 16px;
+    text-align: left
+}
+
+.jquery-accordion-menu .submenu-indicator {
+    float: right;
+    right: 22px;
+    position: absolute;
+    line-height: 19px;
+    font-size: 20px;
+    -o-transition: transform .3s linear;
+    -moz-transition: transform .3s linear;
+    -webkit-transition: transform .3s linear;
+    -ms-transition: transform .3s linear
+}
+
+.jquery-accordion-menu ul ul.submenu .submenu-indicator {
+    line-height: 16px
+}
+
+.jquery-accordion-menu .submenu-indicator-minus > .submenu-indicator {
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg)
+}
+
+.jquery-accordion-menu ul ul.submenu,
+.jquery-accordion-menu ul ul.submenu li ul.submenu {
+    width: 100%;
+    display: none;
+    /*display: block;*/
+    position: static
+}
+
+.jquery-accordion-menu ul ul.submenu li {
+    clear: both;
+    width: 100%
+}
+
+.jquery-accordion-menu ul ul.submenu li a {
+    width: 100%;
+    float: left;
+    font-size: 11px;
+    background: #383838;
+    border-top: none;
+    position: relative;
+    border-left: solid 6px transparent;
+    -o-transition: border .2s linear;
+    -moz-transition: border .2s linear;
+    -webkit-transition: border .2s linear;
+    transition: border .2s linear
+}
+
+.jquery-accordion-menu ul ul.submenu li:hover > a {
+    border-left-color: #414956
+}
+
+.jquery-accordion-menu ul ul.submenu > li > a {
+    padding-left: 30px
+}
+
+.jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a {
+    padding-left: 45px
+}
+
+.jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > ul.submenu > li > a {
+    padding-left: 60px
+}
+
+.jquery-accordion-menu ul li .jquery-accordion-menu-label,
+.jquery-accordion-menu ul ul.submenu li .jquery-accordion-menu-label {
+    min-width: 20px;
+    padding: 1px 2px 1px 1px;
+    position: absolute;
+    right: 18px;
+    top: 14px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #555;
+    text-align: center;
+    line-height: 18px;
+    background: #f0f0f0;
+    border-radius: 100%
+}
+
+.jquery-accordion-menu ul ul.submenu li .jquery-accordion-menu-label {
+    top: 12px
+}
+
+.ink {
+    display: block;
+    position: absolute;
+    background: rgba(255, 255, 255, .3);
+    border-radius: 100%;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0)
+}
+
+.animate-ink {
+    -webkit-animation: ripple .5s linear;
+    -moz-animation: ripple .5s linear;
+    -ms-animation: ripple .5s linear;
+    -o-animation: ripple .5s linear;
+    animation: ripple .5s linear
+}
+
+.blue.jquery-accordion-menu > ul > li.active > a,
+.blue.jquery-accordion-menu > ul > li:hover > a {
+    background: #3e82da
+}
+
+.blue.jquery-accordion-menu > ul > li > a {
+    border-bottom-color: #3e82da
+}
+
+.blue.jquery-accordion-menu ul ul.submenu li:hover > a {
+    border-left-color: #3e82da
+}
+
+
+.green.jquery-accordion-menu > ul > li.active > a,
+.green.jquery-accordion-menu > ul > li:hover > a {
+    background: #049372
+}
+
+.green.jquery-accordion-menu > ul > li > a {
+    border-bottom-color: #049372
+}
+
+.green.jquery-accordion-menu ul ul.submenu li:hover > a {
+    border-left-color: #049372
+}
+
+
+.red.jquery-accordion-menu > ul > li.active > a,
+.red.jquery-accordion-menu > ul > li:hover > a {
+    background: #DA4453
+}
+
+.red.jquery-accordion-menu > ul > li > a {
+    border-bottom-color: #DA4453
+}
+
+.red.jquery-accordion-menu ul ul.submenu li:hover > a {
+    border-left-color: #DA4453
+}
+
+
+
+.white.jquery-accordion-menu > ul > li.active > a,
+.white.jquery-accordion-menu > ul > li:hover > a {
+    background: #f0f0f0
+}
+
+.white.jquery-accordion-menu > ul > li > a {
+    border-bottom-color: #f0f0f0
+}
+
+.white.jquery-accordion-menu ul ul.submenu li:hover > a {
+    border-left-color: #f0f0f0
+}
+
+.white.jquery-accordion-menu ul ul.submenu li a {
+    color: #ccc;
+}
+
+.white.jquery-accordion-menu > ul > li > a > .ink {
+    background: rgba(0, 0, 0, .1)
+}
+
+
+.black.jquery-accordion-menu > ul > li.active > a,
+.black.jquery-accordion-menu > ul > li:hover > a {
+    background: #222
+}
+
+.black.jquery-accordion-menu > ul > li > a {
+    border-bottom-color: #222
+}
+
+.black.jquery-accordion-menu ul ul.submenu li:hover > a {
+    border-left-color: #222
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
