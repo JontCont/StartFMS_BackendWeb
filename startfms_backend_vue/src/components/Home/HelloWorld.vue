@@ -1,13 +1,23 @@
 <template>
-  <div class="hello">
-    <h1>1111</h1>
+  <div class="container">
+    <b-jumbotron
+      header="Bootstrap-Vue"
+      lead="Bootstrap v4 Components for Vue.js 2"
+    >
+      <p>Now running on @vue/compat and Vue.js 3</p>
+      <b-button variant="primary" @click="showModal"> Click me! </b-button>
+    </b-jumbotron>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-}
+  methods: {
+    showModal() {
+      this.$bvModal.msgBoxOk('Modal ');
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
