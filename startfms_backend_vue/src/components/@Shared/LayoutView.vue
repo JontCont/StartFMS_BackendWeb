@@ -1,15 +1,17 @@
 <template>
   <div class="wrapper">
-    <PreloadPage></PreloadPage>
+    <!-- <PreloadPage></PreloadPage> -->
     <HeaderPage></HeaderPage>
+    <MenuPage></MenuPage>
     <div class="content-wrapper">
 			<!-- /.content-header -->
+      <HeaderContentPage></HeaderContentPage>
 			<!-- Main content -->
 			<section class="content">
 				<div class="container-fluid">
         <!-- Html Content -->
-
-
+          
+          <router-view></router-view>
 
 				</div><!-- /.container-fluid -->
 			</section>
@@ -25,13 +27,17 @@
   
 <script>
   import HeaderPage from './Header/HeaderPage.vue'
-  import PreloadPage from './Preload/PreloadPage.vue'
+  import HeaderContentPage from './Header/HeaderContentPage.vue'
+  import MenuPage from './Menu/MenuPage.vue'
+  // import PreloadPage from './Preload/PreloadPage.vue'
 
   export default {
     name: 'LayoutView',
     components: {
       HeaderPage,
-      PreloadPage
+      MenuPage,
+      HeaderContentPage
+      // PreloadPage
     }
   }
 </script>
