@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-if="!$route.meta.noLayout" >
     <!-- <PreloadPage></PreloadPage> -->
     <HeaderPage></HeaderPage>
     <MenuPage></MenuPage>
@@ -23,6 +23,11 @@
 			<!-- Control sidebar content goes here -->
 		</aside>
   </div>
+  <div v-else>
+    <router-view></router-view>
+  </div>
+
+
 </template>
   
 <script>
@@ -53,7 +58,5 @@
 
 /* adminlte */
 @import '../../assets/lib/adminlte/css/adminlte.min.css';
-
-
 
 </style>
