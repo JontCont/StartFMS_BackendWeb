@@ -37,6 +37,8 @@
 
 <script>
 import SHA256 from 'js-sha256';
+import axios from 'axios';
+import cookie from 'js-cookie';
 
 export default {
   data() {
@@ -44,28 +46,30 @@ export default {
       form: {
         users: "",
         pwd: "",
-        checked: [],
+        checked: false,
       },
       show: true,
     };
   },
   methods: {
     onSubmit(event) {
+      this.$router.push("/Home");
+
       event.preventDefault();
       this.form.pwd = SHA256(this.form.pwd);
-      alert(JSON.stringify(this.form));
-    },
-    onReset(event) {
-      event.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
+      axios.post('https://localhost:7254/Identity', this.form)
+      .then((res)=>{
+        let result = res.data;
+        if(result.Success){
+          let token = res.data.Token;
+          cookie.set('token-id',token);
+          
+        }else{
+          alert('登入失敗');
+          this.form.pwd = '';
+        }
+      })
+      .catch(() => {  })
     },
   },
 };
