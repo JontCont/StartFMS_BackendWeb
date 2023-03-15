@@ -44,11 +44,7 @@
   
 <style>
 /* FontAwesomeKit */
-/*
-@import '../../assets/css/free-v4-font-face.min.css';
-@import '../../assets/css/free-v4-shims.min.css';
-@import '../../assets/css/free.min.css';
-*/
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css';
 
 /*Google Font: Source Sans Pro*/
 @import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback';
@@ -56,8 +52,6 @@
 /* Ionicons */
 @import 'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css';
 
-@import '../../assets/lib/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css';
-@import '../../assets/lib/icheck-bootstrap/icheck-bootstrap.min.css';
 @import '../../assets/lib/jqvmap/jqvmap.min.css';
 @import '../../assets/lib/adminlte/css/adminlte.min.css';
 @import '../../assets/lib/overlayScrollbars/css/OverlayScrollbars.min.css';
@@ -69,11 +63,6 @@
 @import '../../assets/lib/select2/css/select2.min.css';
 @import '../../assets/lib/select2-bootstrap4-theme/select2-bootstrap4.min.css';
 
-/* table - UI */
-@import '../../assets/lib/bootstrap-table/dist/bootstrap-table.min.css';
-@import '../../assets/lib/datatables-bs4/css/dataTables.bootstrap4.min.css';
-@import '../../assets/lib/datatables-responsive/css/responsive.bootstrap4.min.css';
-@import '../../assets/lib/datatables-buttons/css/buttons.bootstrap4.min.css';
 
 
 /*----- Script ------
