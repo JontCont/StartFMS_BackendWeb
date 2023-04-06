@@ -44,7 +44,18 @@
       MenuPage,
       HeaderContentPage
       // PreloadPage
+    },
+    created(){
+      this.updateBodyClass();
+    },
+    methods: {
+      updateBodyClass() {
+        const list = document.body.classList;
+        list.add("hold-transition");
+        list.add("layout-fixed");
+      },
     }
+
   }
 </script>
   
