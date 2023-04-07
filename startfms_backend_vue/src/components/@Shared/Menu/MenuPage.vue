@@ -12,12 +12,15 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-between">
                 <div class="image">
-                    <a class="nav-link text-dark " asp-area="Identity" asp-page="/Account/Login">
-                        <img src="" class="img-circle elevation-2" alt="User Image">
-                    </a>
+                    <router-link class="d-block" :to="{name:'Login'}" >
+                        <img src="../../../assets/logo.png" class="img-circle elevation-2" alt="User Image">
+                        <span class="mr-2 ml-2">Alexander Pierce</span>
+                    </router-link>
                 </div>
                 <div class="info">
-                    <a class="d-block" asp-area="Identity" asp-page="/Account/Login">尚未登入</a>
+                    <router-link class="d-block" :to="{name:'Login'}" >
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </router-link>
                 </div>
             </div>
 
