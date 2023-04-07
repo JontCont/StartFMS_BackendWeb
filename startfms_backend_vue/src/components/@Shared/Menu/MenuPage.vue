@@ -36,22 +36,20 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
-                        <a href="#" class="nav-link active">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <li :class="{'nav-item': true, 'menu-is-opening menu-open': true }" v-for="menu in menus" :key="menu.id">
+                        <a :href="menu.url? menu.url :'javascript:void(0)'" class="nav-link">
+                            <i class="nav-icon {{ menu.icon }}"></i>
                             <p>
-                                Dashboard
+                                {{ menu.menuName }}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/home" class="nav-link active">
+                            <li class="nav-item" v-for="child in menu.children" :key="child.id">
+                                <router-link :class="{'nav-link': true, 'active': '/'+$route.name === child.url }" :to="{name: child.url}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v1</p>
-                                </a>
+                                    <p>{{ child.menuName }}</p>
+                                </router-link> 
                             </li>
                         </ul>
                     </li>
@@ -64,7 +62,28 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-    name: 'MenuPage',
-}
+  data() {
+    return {
+      menus: [],
+    };
+  },
+  created() {
+    this.loadMenus();
+  },
+  methods: {
+    async loadMenus() {
+      try {
+        const response = await axios.get(
+          "https://startfms-backendapi.azurewebsites.net/api/user/menus"
+        );
+        this.menus = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+};
 </script>

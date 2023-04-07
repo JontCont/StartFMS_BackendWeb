@@ -29,7 +29,7 @@
 
 
 </template>
-  
+
 <script>
   // 公用 Layout compoent
   import HeaderPage from './Header/HeaderPage.vue'

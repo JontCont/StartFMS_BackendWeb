@@ -42,6 +42,8 @@ const router = createRouter({
   });
   
   router.beforeEach(async(to, from, next) => {
+    next(); // 測試用 ，暫時不卡任何東西
+
     // if (to.meta.requiresAuth) {
     //   // 如果訪問的頁面需要登入，但是使用者尚未登入，則導向登入頁面
     //   next('/');
