@@ -23,6 +23,14 @@ const router = createRouter({
         }
       },
       {
+        path: '/Meun',
+        name: 'Meun',
+        component: ()=> import('../components/System/menus.vue'),
+        meta:{
+          requiresAuth: true
+        }
+      },
+      {
         path: '/Test',
         name: 'Test',
         component: ()=> import('../components/Test/TestPage.vue'),
