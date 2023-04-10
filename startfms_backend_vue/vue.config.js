@@ -1,20 +1,14 @@
-const { defineConfig } = require('@vue/cli-service')
+const {defineConfig} = require('@vue/cli-service');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+
 module.exports = defineConfig({
-  transpileDependencies: true,
-  chainWebpack : config =>{
-    config.resolve.alias.set('vue', '@vue/compat')
-    config.module
-      .rule('vue')
-      .use('vue-loader')
-      .tap(options => {
-        return {
-          options,
-          compilerOptions: {
-            compatConfig: {
-              MODE: 2
+    transpileDependencies: true,
+    configureWebpack: {
+        plugins: [new NodePolyfillPlugin()],
+        resolve: {
+            fallback: {
+                fs: false
             }
-          }
         }
-      })//tap()
-  }//chainWebpack : config
-})//defineConfig
+    }
+});
