@@ -1,6 +1,5 @@
 // About.js
 import React from 'react';
-import 'admin-lte/dist/css/adminlte.min.css'
 const About = () => {
   return (
     <div>
