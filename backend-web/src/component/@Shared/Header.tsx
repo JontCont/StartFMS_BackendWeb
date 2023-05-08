@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import logo from 'admin-lte/dist/img/AdminLTELogo.png'
 import users from 'admin-lte/dist/img/user1-128x128.jpg'
 import users_8 from 'admin-lte/dist/img/user8-128x128.jpg'
 import users_3 from 'admin-lte/dist/img/user3-128x128.jpg'
