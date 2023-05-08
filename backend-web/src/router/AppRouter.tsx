@@ -6,7 +6,7 @@ import About from '../component/template-page/About';
 const AppRouter = () => {
     return (
         <BrowserRouter>
-            <div>
+            <div className="wrapper">
                 <nav>
                     <ul>
                         <li>
@@ -17,12 +17,11 @@ const AppRouter = () => {
                         </li>
                     </ul>
                 </nav>
-
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                </Routes>
             </div>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-            </Routes>
         </BrowserRouter>
     );
 }
