@@ -2,21 +2,13 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from '../component/template-page/Home';
 import About from '../component/template-page/About';
+import Header from '../component/@Shared/Header';
 
 const AppRouter = () => {
     return (
         <BrowserRouter>
             <div className="wrapper">
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/about">About</Link>
-                        </li>
-                    </ul>
-                </nav>
+                <Header />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
