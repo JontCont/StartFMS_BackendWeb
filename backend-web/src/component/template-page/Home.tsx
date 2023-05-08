@@ -4,7 +4,7 @@ import React from 'react';
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
+      <section className='content-header'>Home</section>
       <p>Welcome to my home page!</p>
     </div>
   );
