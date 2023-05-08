@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
-
+import logo from 'admin-lte/dist/img/AdminLTELogo.png'
+import users from 'admin-lte/dist/img/user1-128x128.jpg'
+import users_8 from 'admin-lte/dist/img/user8-128x128.jpg'
+import users_3 from 'admin-lte/dist/img/user3-128x128.jpg'
 
 const Header = () => {
     return (
@@ -46,7 +49,7 @@ const Header = () => {
               <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="#" className="dropdown-item">
                   <div className="media">
-                    <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" className="img-size-50 mr-3 img-circle" />
+                    <img src={users} alt="User Avatar" className="img-size-50 mr-3 img-circle" />
                     <div className="media-body">
                       <h3 className="dropdown-item-title">
                         Brad Diesel
@@ -60,7 +63,7 @@ const Header = () => {
                 <div className="dropdown-divider"></div>
                 <a href="#" className="dropdown-item">
                   <div className="media">
-                    <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" className="img-size-50 img-circle mr-3" />
+                    <img src={users_8} alt="User Avatar" className="img-size-50 img-circle mr-3" />
                     <div className="media-body">
                       <h3 className="dropdown-item-title">
                         John Pierce
@@ -74,7 +77,7 @@ const Header = () => {
                 <div className="dropdown-divider"></div>
                 <a href="#" className="dropdown-item">
                   <div className="media">
-                    <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" className="img-size-50 img-circle mr-3" />
+                    <img src={users_3}alt="User Avatar" className="img-size-50 img-circle mr-3" />
                     <div className="media-body">
                       <h3 className="dropdown-item-title">
                         Nora Silvester
