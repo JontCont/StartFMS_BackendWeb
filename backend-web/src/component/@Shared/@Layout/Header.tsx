@@ -2,21 +2,12 @@ import { Link } from 'react-router-dom';
 import users from 'admin-lte/dist/img/user1-128x128.jpg'
 import users_8 from 'admin-lte/dist/img/user8-128x128.jpg'
 import users_3 from 'admin-lte/dist/img/user3-128x128.jpg'
+import HeaderTitle from './Header/HeaderTitle';
 
 const Header = () => {
     return (
         <nav className="main-header navbar navbar-expand navbar-white navbar-light">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars"></i></a>
-            </li>
-            <li className="nav-item d-none d-sm-inline-block">
-                <Link to="/" className="nav-link">Home</Link>
-            </li>
-            <li className="nav-item d-none d-sm-inline-block">
-              <Link to="/about" className="nav-link">About</Link>
-            </li>
-          </ul>
+          <HeaderTitle></HeaderTitle>
       
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">

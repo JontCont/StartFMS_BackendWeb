@@ -22,7 +22,7 @@ const About = () => {
         <div className="container-fluid">
           <div className="card card-primary card-outline">
             <div className="card-header">
-              <h3 className="card-title">Home</h3>
+              <h3 className="card-title">About</h3>
             </div>
             <div className="card-body">
               <p>Learn more about me and my skills!</p>
