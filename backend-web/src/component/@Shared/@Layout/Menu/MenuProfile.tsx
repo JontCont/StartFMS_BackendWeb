@@ -1,4 +1,5 @@
 import users from 'admin-lte/dist/img/user1-128x128.jpg'
+import { Link } from 'react-router-dom';
 
 
 const MenuProfile = () => {
@@ -8,7 +9,7 @@ const MenuProfile = () => {
                 <img src={users} className="img-circle elevation-2" alt="User Image" />
             </div>
             <div className="info">
-                <a href="#" className="d-block">Alexander Pierce</a>
+                <Link to="/Profile" className="d-block">Alexander Pierce</Link>
             </div>
         </div>
 

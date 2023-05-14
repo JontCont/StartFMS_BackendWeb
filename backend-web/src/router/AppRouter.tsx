@@ -15,6 +15,9 @@ import MenuSidebar from '../component/@Shared/@Layout/MenuSidebar';
 import Home from '../component/@Views/TopList/Home';
 import About from '../component/@Views/TopList/About';
 
+import BDP000A from '../component/@Views/Systems/BDP000A';
+import ProfileHome from '../component/@Views/Profile/ProfileHome';
+
 const AppRouter = () => {
     return (
         <BrowserRouter>
@@ -26,6 +29,11 @@ const AppRouter = () => {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
+                    </Routes>
+
+                    <Routes>
+                        <Route path="/Profile" element={<ProfileHome />} />
+                        <Route path="/BDP000A" element={<BDP000A />} />
                     </Routes>
                 </div>
             </div>
