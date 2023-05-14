@@ -13,7 +13,7 @@ const MenuSidebar = () => {
             <div className="sidebar">
                 <MenuProfile />
                 <MenuSearch />
-                <MenuItems></MenuItems>
+                <MenuItems />
             </div>
         </aside>
     );
