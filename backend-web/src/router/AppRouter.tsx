@@ -20,7 +20,7 @@ const AppRouter = () => {
         <BrowserRouter>
             <div className="wrapper">
                 <Header />
-                <MenuSidebar />
+                <MenuSidebar  />
 
                 <div className='content-wrapper'>
                     <Routes>
