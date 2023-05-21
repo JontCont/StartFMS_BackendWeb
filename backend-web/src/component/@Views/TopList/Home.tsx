@@ -1,24 +1,11 @@
 // Home.js
 import React from 'react';
+import Content from '../../@Shared/@Layout/Content';
+const titleName = "Hoem";
 
 const Home = () => {
   return (
-    <div>
-      <section className="content-header">
-        <div className="container-fluid">
-          <div className="row mb-2">
-            <div className="col-sm-6">
-              <h1>Home</h1>
-            </div>
-            <div className="col-sm-6">
-              <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item active">Home</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </section>
-
+    <Content titleName='Home' >
       <section className="content">
         <div className="container-fluid">
           <div className="card card-primary card-outline">
@@ -38,7 +25,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-    </div>
+    </Content>
   );
 };
 

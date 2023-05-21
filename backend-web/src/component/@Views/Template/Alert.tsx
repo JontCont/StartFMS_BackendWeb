@@ -3,13 +3,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const notify = () => toast("Wow so easy!");
 
-const BDP000A = () => {
+const  Alert = () => {
     return (
         <div>
+            Alert : 
             <button onClick={notify}>Notify!</button>
             <ToastContainer />
         </div>
     );
 }
 
-export default BDP000A;
+export default Alert;

@@ -1,11 +1,6 @@
 import logo from 'admin-lte/dist/img/AdminLTELogo.png'
 import { Link } from 'react-router-dom';
-
-interface MenuTitleProps{
-    name : string,
-    url? : string 
-}
-
+import { MenuTitleProps } from '../../../../interface/layout';
 
 const MenuTitle = ({name, url = "/" }:MenuTitleProps) => {
     return (

@@ -2,16 +2,7 @@ import { getUsersMenus } from '../../../../services/auth';
 import { useState, useEffect } from 'react';
 import MenuFile from './MenuFile';
 import MenuFolder from './MenuFolder';
-
-interface MenuTypeProps {
-  children: Array<MenuTypeProps>,
-  description: string,
-  displayOrder: string,
-  icon: string,
-  id: string,
-  menuName: string,
-  url: string
-}
+import { MenuTypeProps } from '../../../../interface/layout';
 
 const getMenuSidebar = async () => {
   const element = await getUsersMenus();
@@ -25,11 +16,11 @@ const getMenuSidebar = async () => {
                 <MenuFolder
                   name={el.menuName}
                   url={el.url}
-                  icon = {el.icon}
+                  icon={el.icon}
                 />
                 <ul className="nav nav-treeview">
-                    {MenuItem(el.children)}
-                  </ul>
+                  {MenuItem(el.children)}
+                </ul>
               </li>
             );
           } else {
@@ -38,7 +29,7 @@ const getMenuSidebar = async () => {
                 <MenuFile
                   name={el.menuName}
                   url={el.url}
-                  icon = {el.icon}
+                  icon={el.icon}
                 />
               </li>
             );
@@ -75,7 +66,7 @@ const MenuItem = (menuList: Array<MenuTypeProps>) => {
           <MenuFile
             name={el.menuName}
             url={el.url}
-            // icon={el.icon}
+          // icon={el.icon}
           />
         </li>
       );

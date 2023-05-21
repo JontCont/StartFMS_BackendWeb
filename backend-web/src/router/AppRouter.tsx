@@ -17,6 +17,7 @@ import About from '../component/@Views/TopList/About';
 
 import BDP000A from '../component/@Views/Systems/BDP000A';
 import ProfileHome from '../component/@Views/Profile/ProfileHome';
+import Alert from '../component/@Views/Template/Alert';
 
 const AppRouter = () => {
     return (
@@ -34,6 +35,7 @@ const AppRouter = () => {
                     <Routes>
                         <Route path="/Profile" element={<ProfileHome />} />
                         <Route path="/BDP000A" element={<BDP000A />} />
+                        <Route path="/Alert" element={<Alert />} />
                     </Routes>
                 </div>
             </div>
