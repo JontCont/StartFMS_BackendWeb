@@ -24,7 +24,8 @@ const getMenuSidebar = async () => {
               <li className="nav-item">
                 <MenuFolder
                   name={el.menuName}
-                  url={el.icon}
+                  url={el.url}
+                  icon = {el.icon}
                 />
                 <ul className="nav nav-treeview">
                     {MenuItem(el.children)}
@@ -37,7 +38,7 @@ const getMenuSidebar = async () => {
                 <MenuFile
                   name={el.menuName}
                   url={el.url}
-                  // icon={el.icon}
+                  icon = {el.icon}
                 />
               </li>
             );
@@ -60,7 +61,7 @@ const MenuItem = (menuList: Array<MenuTypeProps>) => {
         <li className="nav-item">
           <MenuFolder
             name={el.menuName}
-            url={el.icon}
+            url={el.url}
           >
             <ul className="nav nav-treeview">
               {MenuItem(el.children)}
