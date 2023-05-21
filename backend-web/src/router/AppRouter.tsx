@@ -18,6 +18,7 @@ import About from '../component/@Views/TopList/About';
 import BDP000A from '../component/@Views/Systems/BDP000A';
 import ProfileHome from '../component/@Views/Profile/ProfileHome';
 import Alert from '../component/@Views/Template/Alert';
+import Table from '../component/@Views/Template/Table';
 
 const AppRouter = () => {
     return (
@@ -35,7 +36,8 @@ const AppRouter = () => {
                     <Routes>
                         <Route path="/Profile" element={<ProfileHome />} />
                         <Route path="/BDP000A" element={<BDP000A />} />
-                        <Route path="/Alert" element={<Alert />} />
+                        <Route path="/Temp/Alert" element={<Alert />} />
+                        <Route path="/Temp/Table" element={<Table />} />
                     </Routes>
                 </div>
             </div>

@@ -4,11 +4,12 @@ import CardBodyFrame from '../../@Shared/@Layout/Frame/CardBodyFrame';
 import DataTable from '../../@Shared/@Tools/DataTable';
 import CardFrame from '../../@Shared/@Layout/Frame/CardFrame';
 
-const BDP000A = () => {
+const Table = () => {
     return (
-        <Content titleName='BDP000A' >
-            <CardBodyFrame titleName='BDP000A' IsZoomOut={true}>
-                <p>Welcome to my BDP000A page!</p>
+        <Content titleName='Table' >
+
+            <CardBodyFrame titleName='Table introduce' IsZoomOut={true}>
+                <p>Welcome to my Table page!</p>
                 <p>You can use any font library you like with AdminLTE 3.</p>
                 <strong>Recommendations</strong>
                 <div>
@@ -19,12 +20,12 @@ const BDP000A = () => {
             </CardBodyFrame>
 
 
-            <CardBodyFrame titleName='BDP000A' columnsStyle='col-6' IsZoomOut={true}>
+            <CardBodyFrame titleName='Basic Table' columnsStyle='col-6' IsZoomOut={true}>
                 <DataTable></DataTable>
             </CardBodyFrame>
 
 
-            <CardFrame titleName='BDP000A' columnsStyle='col-6' IsZoomOut={true}>
+            <CardFrame titleName='Table' columnsStyle='col-6' IsZoomOut={true}>
                 <div className="card-header">
                     <h3 className="card-title">Bordered Table</h3>
                     <div className="card-tools">
@@ -55,4 +56,4 @@ const BDP000A = () => {
     );
 }
 
-export default BDP000A;
+export default Table;

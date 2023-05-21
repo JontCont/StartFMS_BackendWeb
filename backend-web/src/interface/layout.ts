@@ -19,3 +19,12 @@ export interface MenuTitleProps{
     name : string,
     url? : string 
 }
+
+
+export interface CardFrameProps{
+    columnsStyle?: string,
+    children: ReactNode,
+    titleName: string,
+    IsClose?: boolean,
+    IsZoomOut?: boolean
+}

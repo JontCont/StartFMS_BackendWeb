@@ -19,7 +19,13 @@ const Content = (props: ContentPageProps) => {
                     </div>
                 </div>
             </section>
-            {props.children}
+            <div className="content">
+                <div className="container-fluid">
+                    <div className="row">
+                        {props.children}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
