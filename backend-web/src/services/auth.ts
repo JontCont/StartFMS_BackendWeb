@@ -29,7 +29,7 @@ export const loginByAuth = async (email: string, password: string) => {
 
   export const getUsersMenus = async () =>{
     try{
-        const url :string = LocalHost + "/api/users/menus";
+        const url :string = `${LocalHost}/api/users/menus`;
         let result :any;
         await axios
             .get(url)
