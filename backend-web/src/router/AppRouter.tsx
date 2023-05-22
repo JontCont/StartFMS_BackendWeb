@@ -19,6 +19,7 @@ import BDP000A from '../component/@Views/Systems/BDP000A';
 import ProfileHome from '../component/@Views/Profile/ProfileHome';
 import Alert from '../component/@Views/Template/Alert';
 import SampleTable from '../component/@Views/Template/SampleTable';
+import SampleReactTable from '../component/@Views/Template/SampleReactTable';
 
 const AppRouter = () => {
     return (
@@ -36,6 +37,7 @@ const AppRouter = () => {
                     <Routes>
                         <Route path="/Profile" element={<ProfileHome />} />
                         <Route path="/BDP000A" element={<BDP000A />} />
+                        <Route path="/Menu" element={<SampleReactTable />} />
                         <Route path="/Temp/Alert" element={<Alert />} />
                         <Route path="/Temp/Table" element={<SampleTable />} />
                     </Routes>

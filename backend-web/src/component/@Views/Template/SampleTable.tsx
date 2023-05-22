@@ -6,7 +6,7 @@ import CardFrame from '../../@Shared/@Layout/Frame/CardFrame';
 
 const SampleTable = () => {
     return (
-        <Content titleName='Table' >
+        <Content titleName='SampleTable' >
 
             <CardBodyFrame titleName='Table introduce' IsZoomOut={true}>
                 <p>Welcome to my Table page!</p>
@@ -52,8 +52,30 @@ const SampleTable = () => {
                     </ul>
                 </div>
             </CardFrame>
+
+            <CardFrame titleName='Table' columnsStyle='col-12' IsZoomOut={true}>
+                <div className="card-header">
+                    <h3 className="card-title">Bordered Table</h3>
+                    <div className="card-tools">
+                        <div className="input-group input-group-sm" >
+                            <input type="text" name="table_search" className="form-control float-right" placeholder="Search" />
+                            <div className="input-group-append">
+                                <button type="submit" className="btn btn-default">
+                                    <i className="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='card-body p-0'>
+                    <DataTable></DataTable>
+                </div>
+            </CardFrame>
+
         </Content>
     );
 }
+
+
 
 export default SampleTable;

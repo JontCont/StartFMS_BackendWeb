@@ -2,7 +2,7 @@
 const DataTable = () => {
     return (
         <div>
-            <table className="table table-bordered">
+            <table className="table table-bordered table-striped mb-0">
                 <thead>
                     <tr>
                         <th>#</th>
