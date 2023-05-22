@@ -4,7 +4,7 @@ import CardBodyFrame from '../../@Shared/@Layout/Frame/CardBodyFrame';
 import DataTable from '../../@Shared/@Tools/DataTable';
 import CardFrame from '../../@Shared/@Layout/Frame/CardFrame';
 
-const Table = () => {
+const SampleTable = () => {
     return (
         <Content titleName='Table' >
 
@@ -56,4 +56,4 @@ const Table = () => {
     );
 }
 
-export default Table;
+export default SampleTable;
