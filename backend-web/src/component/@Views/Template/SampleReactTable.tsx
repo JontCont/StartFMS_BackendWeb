@@ -7,6 +7,8 @@ import {
     getCoreRowModel, // 取得行的資料來渲染新表格
     useReactTable, // 使用此 Hook 來掌握表格
 } from "@tanstack/react-table";
+import { ColumnsProp } from "../../../interface/table";
+import ReactTable from "../../@Shared/@Tools/ReactTable";
 
 
 type Person = {
@@ -77,14 +79,29 @@ const columns = [
     }),
 ]
 
+const tstcolumns: Array<ColumnsProp> = [
+    {
+        name: "firstName",
+        label: "firstName3",
+    },
+    {
+        name: "lastName",
+        label: "lastName2",
+    },
+    {
+        name: "age",
+        label: "age1",
+    }
+];
+
 const SampleReactTable = () => {
     const [data, setData] = React.useState(() => [...defaultData])
     const rerender = React.useReducer(() => ({}), {})[1]
-  
+
     const table = useReactTable({
-      data,
-      columns,
-      getCoreRowModel: getCoreRowModel(),
+        data,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
     })
     return (
         <Content titleName="React Table">
@@ -134,6 +151,13 @@ const SampleReactTable = () => {
                         ))}
                     </tfoot>
                 </table>
+            </CardBodyFrame>
+
+
+            <CardBodyFrame titleName="Test Area" >
+                <ReactTable columns={tstcolumns} data={defaultData}></ReactTable>
+
+
             </CardBodyFrame>
         </Content>
 
