@@ -12,7 +12,7 @@ const getMenuSidebar = async () => {
         {element.map((el: MenuTypeProps) => {
           if (el.children != null) {
             return (
-              <li className="nav-item">
+              <li className="nav-item"  key={el.id}>
                 <MenuFolder
                   name={el.menuName}
                   url={el.url}
@@ -25,7 +25,7 @@ const getMenuSidebar = async () => {
             );
           } else {
             return (
-              <li className="nav-item">
+              <li className="nav-item" key={el.id}>
                 <MenuFile
                   name={el.menuName}
                   url={el.url}
@@ -49,7 +49,7 @@ const MenuItem = (menuList: Array<MenuTypeProps>) => {
   return menuList.map((el: MenuTypeProps) => {
     if (el.children != null) {
       return (
-        <li className="nav-item">
+        <li className="nav-item" key={el.id}>
           <MenuFolder
             name={el.menuName}
             url={el.url}
@@ -62,7 +62,7 @@ const MenuItem = (menuList: Array<MenuTypeProps>) => {
       );
     } else {
       return (
-        <li className="nav-item">
+        <li className="nav-item" key={el.id}>
           <MenuFile
             name={el.menuName}
             url={el.url}
