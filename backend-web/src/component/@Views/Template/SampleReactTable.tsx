@@ -89,10 +89,21 @@ const tstcolumns: Array<ColumnsProp> = [
         label: "lastName2",
     },
     {
+        name: "status",
+        label: "status",
+    },
+    {
         name: "age",
         label: "age1",
+        hidden: true
     }
 ];
+
+const tstactions = {
+    isUse: true,
+    data: [0, 1],
+    url: 'https://localhost:5001/api/user/MenuBasicSetting/{id}'
+};
 
 const SampleReactTable = () => {
     const [data, setData] = React.useState(() => [...defaultData])
@@ -155,9 +166,10 @@ const SampleReactTable = () => {
 
 
             <CardBodyFrame titleName="Test Area" >
-                <ReactTable columns={tstcolumns} data={defaultData}></ReactTable>
-
-
+                <ReactTable 
+                    columns={tstcolumns} 
+                    data={defaultData}
+                    actions={tstactions}></ReactTable>
             </CardBodyFrame>
         </Content>
 

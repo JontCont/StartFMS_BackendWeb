@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnsProp } from "../../../interface/table";
+import { ActionsProp, ColumnsProp } from "../../../interface/table";
 import { TableProp } from "../../../interface/table";
 import {
     createColumnHelper, // 幫忙製作表格列的工具
@@ -7,30 +7,68 @@ import {
     getCoreRowModel, // 取得行的資料來渲染新表格
     useReactTable, // 使用此 Hook 來掌握表格
 } from "@tanstack/react-table";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 
 const columnHelper = createColumnHelper<any>();
 
-const InitialColumns = (cols: Array<ColumnsProp>) => {
+const InitialColumns = (cols: Array<ColumnsProp>, actions: ActionsProp) => {
     const result: any = [];
-
     cols.map(row => {
+        if (row.hidden) return true;
         result.push(
             columnHelper.accessor(
                 row.name,
                 {
                     header: () => row.label,
-                    cell: info => info.getValue()
+                    cell: info => { return info.getValue(); }
                 }
             )
         );
     });
+
+    if (actions.isUse) {
+        result.push(
+            columnHelper.accessor(
+                'Action',
+                {
+                    cell: (info) => {
+                        let row = info.row.original;
+                        console.log(row);
+                        return (
+                            <div>
+                                {
+                                    actions.data.map((value) => {
+                                        switch (value) {
+                                            case 0:
+                                                return (<Link to={actions.editorUrl??""}><button key={value} className="btn btn-outline-secondary mr-1 ml-1">Edit</button></Link>);
+                                            case 1:
+                                                return <button key={value} className="btn btn-outline-danger mr-1 ml-1">Delete</button>;
+                                            case 40:
+                                                return <button key={value} className="btn btn-outline-primary mr-1 ml-1">View</button>;
+                                            case 50:
+                                                return <button key={value} className="btn btn-outline-primary mr-1 ml-1">Print</button>;
+                                            case 60:
+                                                return <button key={value} className="btn btn-outline-primary mr-1 ml-1">Custom</button>;
+                                            default:
+                                                return null;
+                                        }
+                                    })}
+                            </div>
+                        );
+                    }//cell: (info)
+                }
+            )
+        )
+    }
+
     return result;
 }
 
 const ReactTable = (prop: TableProp) => {
-    const columns = InitialColumns(prop.columns);
+    const columns = InitialColumns(prop.columns, prop.actions);
     const dataset = (prop.data == undefined || prop.data == null) ? [] : prop.data;
     const [data, setData] = React.useState(() => [...dataset])
 
@@ -76,6 +114,16 @@ const ReactTable = (prop: TableProp) => {
 
         </div>
     );
+}
+
+
+const fromUrlParams = (url: string, type: string) => {
+    axios({
+        method: type,
+        url : url
+    })
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
 }
 
 export default ReactTable;
