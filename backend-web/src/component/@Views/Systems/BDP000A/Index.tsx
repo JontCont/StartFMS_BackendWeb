@@ -1,10 +1,10 @@
 import 'react-toastify/dist/ReactToastify.css';
-import Content from '../../@Shared/@Layout/Content';
-import CardBodyFrame from '../../@Shared/@Layout/Frame/CardBodyFrame';
-import DataTable from '../../@Shared/@Tools/DataTable';
-import CardFrame from '../../@Shared/@Layout/Frame/CardFrame';
+import Content from '../../../@Shared/@Layout/Content';
+import CardBodyFrame from '../../../@Shared/@Layout/Frame/CardBodyFrame';
+import DataTable from '../../../@Shared/@Tools/DataTable';
+import CardFrame from '../../../@Shared/@Layout/Frame/CardFrame';
 
-const BDP000A = () => {
+const Index = () => {
     return (
         <Content titleName='BDP000A' >
             <CardBodyFrame titleName='BDP000A' IsZoomOut={true}>
@@ -55,4 +55,4 @@ const BDP000A = () => {
     );
 }
 
-export default BDP000A;
+export default Index;
