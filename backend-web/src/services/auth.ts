@@ -4,33 +4,30 @@ const LocalHost = 'https://localhost:5001';
 
 export const loginByAuth = async (email: string, password: string) => {
 
-    // try{
-    //     const url :string = "https://localhost:5001/api/auth/v1.0/Login/jwtLogin";
-    //     let token:any;
-    //     await axios
-    //         .post(url,{ Account : email, Password : password})
-    //         .then((res) => {
-    //             token = res.data;
-    //             return token;
-    //         });
-        
-    //     return token;
-    // }catch(error : any){
-    //     // throw getError({
-    //     //     message : "伺服器暫時無法使用"
-    //     // });
-    // }
+    try {
+        const url: string = `${LocalHost}/api/auth/v1.0/Login/jwtLogin`;
+        let token: any;
+        await axios
+            .post(url, { Account: email, Password: password })
+            .then((res) => {
+                token = res.data;
+                return token;
+            });
 
-    const token = "";
-    return token;
-  };
-  
+        return token;
+    } catch (error: any) {
+        // throw getError({
+        //     message : "伺服器暫時無法使用"
+        // });
+    }
+};
 
 
-  export const getUsersMenus = async () =>{
-    try{
-        const url :string = `${LocalHost}/api/users/menus`;
-        let result :any;
+
+export const getUsersMenus = async () => {
+    try {
+        const url: string = `${LocalHost}/api/users/menus`;
+        let result: any;
         await axios
             .get(url)
             .then((res) => {
@@ -39,9 +36,9 @@ export const loginByAuth = async (email: string, password: string) => {
                 return result;
             });
         return result;
-    }catch(error : any){
+    } catch (error: any) {
         // throw getError({
         //     message : "伺服器暫時無法使用"
         // });
     }
-  }
+}
