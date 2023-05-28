@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const MenuProfile = () => {
     return (
-        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div className="user-panel mt-3 pb-3 mb-3 d-flex justify-content-between">
             <div className="image">
                 <img src={users} className="img-circle elevation-2" alt="User Image" />
             </div>
