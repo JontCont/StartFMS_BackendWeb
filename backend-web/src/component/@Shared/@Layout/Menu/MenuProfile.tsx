@@ -11,6 +11,9 @@ const MenuProfile = () => {
             <div className="info">
                 <Link to="/Profile" className="d-block">Alexander Pierce</Link>
             </div>
+            <div className='btn btn btn-outline-light border-0'>
+                <i className="fas fa-sign-out-alt"></i>
+            </div>
         </div>
 
     );
