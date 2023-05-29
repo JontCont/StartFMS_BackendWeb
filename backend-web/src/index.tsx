@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Authorize from './router/AuthorizeRouter';
+import AppRouter from './router/AppRouter';
 // import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(
@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <Authorize />
+  <AppRouter />
 );
 
 

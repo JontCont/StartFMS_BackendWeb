@@ -4,7 +4,7 @@ import { useState } from "react";
 
 
 
-const Login = () => {
+const LoginIndex = () => {
     const [useremail, setUseremail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -69,9 +69,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
-
-
     );
 }
 
-export default Login;
+export default LoginIndex;
