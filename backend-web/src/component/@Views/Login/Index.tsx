@@ -16,7 +16,7 @@ const LoginIndex = () => {
         setLoading(true);
         setErrorMessage("");
         loginByAuth(useremail, password).then((data) => {
-            if (data == null) {
+            if (data == null || data =="帳號密碼錯誤") {
                 setLoading(false);
                 return setErrorMessage(data.status);
             }
@@ -34,34 +34,26 @@ const LoginIndex = () => {
     };
     
     return (
-        <div className="hero min-h-screen bg-base-200">
-            <div className="flex-col justify-center hero-content lg:flex-row">
-                <div className="text-center lg:text-left">
-                    <h1 className="mb-5 text-5xl font-bold">
-                        IT鐵人賽
-                    </h1>
-                    <p className="mb-5">
-                        30天全端挑戰!React+Spring Boot+Mongo DB 串接永豐API 打造金融網站
-                    </p>
-                </div>
-                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="hero h-100">
+            <div className="d-flex justify-content-center align-self-center">
+                <div className="card">
                     <div className="card-body">
-                        <div className="form-control">
+                        <div className="form-row">
                             <label className="label">
                                 <span className="label-text">信箱</span>
                             </label>
-                            <input type="text" placeholder="email" className="input input-bordered" value={useremail} onChange={handleUseremail} />
+                            <input type="text" placeholder="email" className="form-control" value={useremail} onChange={handleUseremail} />
                         </div>
-                        <div className="form-control">
+                        <div className="form-row">
                             <label className="label">
                                 <span className="label-text">密碼</span>
                             </label>
-                            <input placeholder="password" className="input input-bordered" type="password" value={password} onChange={handlePassword} />
+                            <input placeholder="password" className="form-control" type="password" value={password} onChange={handlePassword} />
                             <label className="label">
                             </label>
                         </div>
                         {errorMessage && <><small style={{ color: 'red' }}>{errorMessage}</small><br /></>}<br />
-                        <div className="form-control mt-6">
+                        <div className="mt-6">
                             <input type="button" className="btn btn-primary" value={loading ? '登入中...' : '登入'} onClick={handleLogin} disabled={loading} />
 
                         </div>
