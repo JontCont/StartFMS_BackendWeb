@@ -10,6 +10,8 @@ const LoginIndex = () => {
         console.log(isAuthenticated());
         if (!isAuthenticated()) {
           navigate("/login", { replace: true });
+        }else{
+            navigate("/");
         }
       }, []);
     
