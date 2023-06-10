@@ -18,6 +18,7 @@ import LoginLayout from '../component/@Shared/@Layout/LoginLayout';
 import Login from '../component/@Views/Auth/LoginForm';
 import MainLayout from '../component/@Shared/@Layout/MainLayout';
 import { RequireAuth } from "react-auth-kit";
+import { ToastContainer } from 'react-toastify';
 
 const AppRouter = () => {
     const privateElement = (element: JSX.Element) => {
@@ -28,9 +29,9 @@ const AppRouter = () => {
         );
     }
 
-
     return (
         <BrowserRouter>
+            <ToastContainer />
             <Routes>
                 {/* user authrozie element */}
                 <Route path="/Login" element={<LoginLayout />}>
