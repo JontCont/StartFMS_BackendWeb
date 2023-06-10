@@ -4,7 +4,7 @@ import CardBodyFrame from '../../../@Shared/@Layout/Frame/CardBodyFrame';
 import Content from '../../../@Shared/@Layout/Content';
 import ReactTable from '../../../@Shared/@Tools/ReactTable';
 
-const Index = () => {
+const SystemConfigIndex = () => {
   const [tstcolumns, setTstColumns] = useState(null);
   const [data, setData] = useState(null);
   const tstactions = {
@@ -41,4 +41,4 @@ const Index = () => {
   );
 }
 
-export default Index;
+export default SystemConfigIndex;

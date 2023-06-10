@@ -13,7 +13,7 @@ import Alert from '../component/@Views/Template/Alert';
 import SampleTable from '../component/@Views/Template/SampleTable';
 import SampleReactTable from '../component/@Views/Template/SampleReactTable';
 
-import SystemConfig from '../component/@Views/Systems/SystemConfig/Index'
+import SystemConfig from '../component/@Views/Systems/SystemConfig/SystemConfigIndex'
 import LoginLayout from '../component/@Shared/@Layout/LoginLayout';
 import Login from '../component/@Views/Auth/LoginForm';
 import MainLayout from '../component/@Shared/@Layout/MainLayout';
@@ -45,7 +45,7 @@ const AppRouter = () => {
                     <Route path="/Profile" element={privateElement(<ProfileHome />)} />
                     <Route path="/about" element={privateElement(<About />)} />
 
-                    <Route path="/BDP000A" element={privateElement(<BDP000A />)} />
+                    <Route path="/BDP000A" element={privateElement(<SystemConfig />)} />
                     <Route path="/Menu" element={privateElement(<SampleTable />)} />
                 </Route>
 

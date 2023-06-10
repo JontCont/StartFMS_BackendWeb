@@ -3,6 +3,7 @@ import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import './css/login.css'
 import { loginByAuth } from "../../../services/auth";
+import { toast } from "react-toastify";
 const LoginForm = () => {
     //initial : auth kit 
     const isAuthenticated = useIsAuthenticated();
@@ -14,7 +15,6 @@ const LoginForm = () => {
             navigate("/");
         }
       }, []);
-    
 
     const [useremail, setUseremail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,22 +22,29 @@ const LoginForm = () => {
     const navigate = useNavigate();
     //login 
     const loginHandler = async () => {
-        // Assuming that, all network Request is successfull, and the user is authenticated
-        const token = await loginByAuth(useremail,password);
-        if(token) 
-        {
-            signIn({
-                token: token, //Just a random token
-                tokenType: "Bearer", // Token type set as Bearer
-                authState: { name: "React User", uid: 123456 }, // Dummy auth user state
-                expiresIn: 120 // Token Expriration time, in minutes
-            })
-            // If Login Successfull, then Redirect the user to secure route
-            navigate("/");
-        } else {
-            // Else, there must be some error. So, throw an error
-            alert("Error Occoured. Try Again");
+        // 判斷
+        if(!useremail || !password){
+            toast.error('請輸入使用者帳號、密碼');
+            return false;
         }
+
+        // 權限
+        const token = await loginByAuth(useremail,password);
+        if(!token){
+            toast.error('帳號或密碼輸入錯誤，請重新輸入');
+            return false;
+        }
+
+        // 登入
+        signIn({
+            token: token, //Just a random token
+            tokenType: "Bearer", // Token type set as Bearer
+            authState: { name: "React User", uid: 123456 }, // Dummy auth user state
+            expiresIn: 120 // Token Expriration time, in minutes
+        })
+        // If Login Successfull, then Redirect the user to secure route
+        navigate("/");
+        
     };
 
     return (
