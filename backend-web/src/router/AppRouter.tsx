@@ -17,17 +17,31 @@ import SystemConfig from '../component/@Views/Systems/SystemConfig/Index'
 import LoginLayout from '../component/@Shared/@Layout/LoginLayout';
 import Login from '../component/@Views/Login/Index';
 import MainLayout from '../component/@Shared/@Layout/MainLayout';
+import { RequireAuth } from "react-auth-kit";
 
 const AppRouter = () => {
+    const privateElement = (element: JSX.Element) => {
+        return (
+            <RequireAuth loginPath={"/login"}>
+                {element}
+            </RequireAuth>
+        );
+    }
+
+
     return (
         <BrowserRouter>
             <Routes>
+                {/* user authrozie element */}
                 <Route path="/Login" element={<LoginLayout />}>
                     <Route path="/Login" element={<Login />} />
                 </Route>
+
+
+                {/* System element */}
                 <Route path="/" element={<MainLayout />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
+                    <Route path="/"      element={privateElement(<Home />)} />
+                    <Route path="/about" element={privateElement(<About />)} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import Header from "./Header";
 import MenuSidebar from "./MenuSidebar";
 //append css or js
@@ -7,9 +6,20 @@ import 'admin-lte/plugins/fontawesome-free/css/all.css'
 import 'admin-lte/plugins/bootstrap/js/bootstrap'
 import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle'
 import 'admin-lte/dist/js/adminlte'
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 
 const MainLayout = () => {
+    const navigate = useNavigate();
+    const isAuthenticated = useIsAuthenticated();
+
+    useEffect(() => {
+        if(!isAuthenticated()){
+            navigate("/login", { replace: true });
+        }
+      }, []);
+
     return (
         <div className="wrapper">
             <Header />
@@ -23,3 +33,7 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
+
+function isAuthenticated(): any {
+    throw new Error("Function not implemented.");
+}

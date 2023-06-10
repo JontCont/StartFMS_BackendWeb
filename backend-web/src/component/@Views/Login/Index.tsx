@@ -1,38 +1,42 @@
+import { useState,useEffect,useRef } from "react";
+import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
-import { loginByAuth } from "../../../services/auth";
-import { useState } from "react";
-
 
 
 const LoginIndex = () => {
-    const [useremail, setUseremail] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate(); // 使用 useNavigate 鉤子來進行路由導航
-
-    const handleLogin = (e: any) => {
-        setLoading(true);
-        setErrorMessage("");
-        loginByAuth(useremail, password).then((data) => {
-            if (data == null || data =="帳號密碼錯誤") {
-                setLoading(false);
-                return setErrorMessage(data.status);
-            }
-            setLoading(false);
-            navigate("/"); // 登入成功後進行路由導航到 "/app"
-        });
-    };
-
-    const handleUseremail = (e: any) => {
-        setUseremail(e.target.value);
-    };
-
-    const handlePassword = (e: any) => {
-        setPassword(e.target.value);
-    };
+    //initial : auth kit 
+    const isAuthenticated = useIsAuthenticated();
+    useEffect(() => {
+        console.log(isAuthenticated());
+        if (!isAuthenticated()) {
+          navigate("/login", { replace: true });
+        }
+      }, []);
     
+
+    const [useremail, setUseremail] = useState('');
+    const [password, setPassword] = useState('');
+    const signIn = useSignIn();
+    const navigate = useNavigate();
+    //login 
+    const loginHandler = () => {
+        // Assuming that, all network Request is successfull, and the user is authenticated
+        if (
+            signIn({
+                token: "35v3443bn368367n306306wbn407qn420b436b4", //Just a random token
+                tokenType: "Bearer", // Token type set as Bearer
+                authState: { name: "React User", uid: 123456 }, // Dummy auth user state
+                expiresIn: 120 // Token Expriration time, in minutes
+            })
+        ) {
+            // If Login Successfull, then Redirect the user to secure route
+            navigate("/");
+        } else {
+            // Else, there must be some error. So, throw an error
+            alert("Error Occoured. Try Again");
+        }
+    };
+
     return (
         <div className="hero h-100">
             <div className="d-flex justify-content-center align-self-center">
@@ -42,20 +46,25 @@ const LoginIndex = () => {
                             <label className="label">
                                 <span className="label-text">信箱</span>
                             </label>
-                            <input type="text" placeholder="email" className="form-control" value={useremail} onChange={handleUseremail} />
+                            <input type="text" 
+                                placeholder="email" 
+                                className="form-control" 
+                                value={useremail}
+                                onChange={(e)=>setUseremail(e.target.value)} />
                         </div>
                         <div className="form-row">
                             <label className="label">
                                 <span className="label-text">密碼</span>
                             </label>
-                            <input placeholder="password" className="form-control" type="password" value={password} onChange={handlePassword} />
+                            <input type="password" className="form-control" 
+                                placeholder="password"   
+                                value={password} 
+                                onChange={(e)=>setPassword(e.target.value)} />
                             <label className="label">
                             </label>
                         </div>
-                        {errorMessage && <><small style={{ color: 'red' }}>{errorMessage}</small><br /></>}<br />
                         <div className="mt-6">
-                            <input type="button" className="btn btn-primary" value={loading ? '登入中...' : '登入'} onClick={handleLogin} disabled={loading} />
-
+                            <input type="button" className="btn btn-primary" onClick={loginHandler} value="Sign In" />
                         </div>
                     </div>
                 </div>

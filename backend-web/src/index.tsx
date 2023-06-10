@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import AppRouter from './router/AppRouter';
-// import { Provider } from 'react-redux';
+import { AuthProvider, RequireAuth } from 'react-auth-kit';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  <AppRouter />
+  <AuthProvider authName={"_auth"} authType={"cookie"}>
+    <AppRouter />
+  </AuthProvider>
 );
 
 
