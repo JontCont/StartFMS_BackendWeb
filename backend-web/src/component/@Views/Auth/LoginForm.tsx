@@ -1,9 +1,9 @@
 import { useState,useEffect,useRef } from "react";
 import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
+import './css/login.css'
 
-
-const LoginIndex = () => {
+const LoginForm = () => {
     //initial : auth kit 
     const isAuthenticated = useIsAuthenticated();
     useEffect(() => {
@@ -40,9 +40,12 @@ const LoginIndex = () => {
     };
 
     return (
-        <div className="hero h-100">
-            <div className="d-flex justify-content-center align-self-center">
+        <div className="h-100vh d-flex justify-content-center">
+            <div className="align-self-center">
                 <div className="card">
+                    <div className="card-header text-center">
+                        <h3>Sign In</h3>
+                    </div>
                     <div className="card-body">
                         <div className="form-row">
                             <label className="label">
@@ -65,7 +68,7 @@ const LoginIndex = () => {
                             <label className="label">
                             </label>
                         </div>
-                        <div className="mt-6">
+                        <div className="mt-6 input-buttons">
                             <input type="button" className="btn btn-primary" onClick={loginHandler} value="Sign In" />
                         </div>
                     </div>
@@ -75,4 +78,4 @@ const LoginIndex = () => {
     );
 }
 
-export default LoginIndex;
+export default LoginForm;

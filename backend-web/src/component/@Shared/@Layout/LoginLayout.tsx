@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Login from "../../@Views/Login/Index";
+import Login from "../../@Views/Auth/LoginForm";
 import { Outlet } from "react-router-dom";
 
 //append css or js

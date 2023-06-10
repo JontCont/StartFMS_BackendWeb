@@ -15,7 +15,7 @@ import SampleReactTable from '../component/@Views/Template/SampleReactTable';
 
 import SystemConfig from '../component/@Views/Systems/SystemConfig/Index'
 import LoginLayout from '../component/@Shared/@Layout/LoginLayout';
-import Login from '../component/@Views/Login/Index';
+import Login from '../component/@Views/Auth/LoginForm';
 import MainLayout from '../component/@Shared/@Layout/MainLayout';
 import { RequireAuth } from "react-auth-kit";
 
