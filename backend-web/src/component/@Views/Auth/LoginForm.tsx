@@ -2,6 +2,7 @@ import { useState,useEffect,useRef } from "react";
 import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import './css/login.css'
+import { loginByAuth } from "../../../services/auth";
 
 const LoginForm = () => {
     //initial : auth kit 
@@ -21,16 +22,17 @@ const LoginForm = () => {
     const signIn = useSignIn();
     const navigate = useNavigate();
     //login 
-    const loginHandler = () => {
+    const loginHandler = async () => {
         // Assuming that, all network Request is successfull, and the user is authenticated
-        if (
+        const token = await loginByAuth(useremail,password);
+        if(token) 
+        {
             signIn({
-                token: "35v3443bn368367n306306wbn407qn420b436b4", //Just a random token
+                token: token, //Just a random token
                 tokenType: "Bearer", // Token type set as Bearer
                 authState: { name: "React User", uid: 123456 }, // Dummy auth user state
                 expiresIn: 120 // Token Expriration time, in minutes
             })
-        ) {
             // If Login Successfull, then Redirect the user to secure route
             navigate("/");
         } else {

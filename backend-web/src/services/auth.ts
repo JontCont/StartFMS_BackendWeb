@@ -10,7 +10,7 @@ export const loginByAuth = async (email: string, password: string) => {
         await axios
             .post(url, { Account: email, Password: password })
             .then((res) => {
-                token = res.data;
+                token = res.data.token;
                 return token;
             });
 
