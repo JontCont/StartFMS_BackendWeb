@@ -1,8 +1,8 @@
-import { getUsersMenus } from '../../../../services/auth';
 import { useState, useEffect } from 'react';
 import MenuFile from './MenuFile';
 import MenuFolder from './MenuFolder';
 import { MenuTypeProps } from '../../../../interface/layout';
+import { getUsersMenus } from '../../../../services/users';
 
 const getMenuSidebar = async () => {
   const element = await getUsersMenus();

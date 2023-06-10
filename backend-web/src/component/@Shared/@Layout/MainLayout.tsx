@@ -8,17 +8,20 @@ import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle'
 import 'admin-lte/dist/js/adminlte'
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useIsAuthenticated, useSignIn } from "react-auth-kit";
-
+import { useIsAuthenticated, useAuthHeader } from "react-auth-kit";
+import {setAuthHeaderFunction} from '../../../services/users'
 const MainLayout = () => {
     const navigate = useNavigate();
     const isAuthenticated = useIsAuthenticated();
+    const authHeader = useAuthHeader();
+    setAuthHeaderFunction(authHeader());
 
     useEffect(() => {
         if(!isAuthenticated()){
             navigate("/login", { replace: true });
         }
       }, []);
+
 
     return (
         <div className="wrapper">

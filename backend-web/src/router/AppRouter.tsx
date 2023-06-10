@@ -40,9 +40,14 @@ const AppRouter = () => {
 
                 {/* System element */}
                 <Route path="/" element={<MainLayout />}>
-                    <Route path="/"      element={privateElement(<Home />)} />
+                    <Route path="/" element={privateElement(<Home />)} />
+                    <Route path="/Profile" element={privateElement(<ProfileHome />)} />
                     <Route path="/about" element={privateElement(<About />)} />
+
+                    <Route path="/BDP000A" element={privateElement(<BDP000A />)} />
+                    <Route path="/Menu" element={privateElement(<SampleTable />)} />
                 </Route>
+
             </Routes>
         </BrowserRouter>
     );
