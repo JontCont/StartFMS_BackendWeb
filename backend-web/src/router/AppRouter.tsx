@@ -6,7 +6,7 @@ import Home from '../component/@Views/TopList/Home';
 import About from '../component/@Views/TopList/About';
 
 import ProfileHome from '../component/@Views/Profile/ProfileHome';
-import SampleTable from '../component/@Views/Template/SampleTable';
+import SampleTable from '../component/@Views/Template/TempleDataTable';
 
 import SystemConfig from '../component/@Views/Systems/SystemConfig/SystemConfigIndex'
 import SystemConfigEdit from '../component/@Views/Systems/SystemConfig/SytemConfigEdit'

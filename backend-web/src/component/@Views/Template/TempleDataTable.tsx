@@ -1,10 +1,9 @@
 import 'react-toastify/dist/ReactToastify.css';
-import Content from '../../@Shared/@Layout/Content';
-import CardBodyFrame from '../../@Shared/@Layout/Frame/CardBodyFrame';
-import DataTable from '../../@Shared/@Tools/DataTable';
-import CardFrame from '../../@Shared/@Layout/Frame/CardFrame';
+import { CardBodyFrame, CardFrame, Content } from '../../extensions/AdminLte';
+import SampleTable from '../../@Shared/@Tools/SampleTable';
 
-const SampleTable = () => {
+
+const TempleDataTable = () => {
     return (
         <Content titleName='SampleTable' >
 
@@ -21,7 +20,7 @@ const SampleTable = () => {
 
 
             <CardBodyFrame titleName='Basic Table' columnsStyle='col-6' IsZoomOut={true}>
-                <DataTable></DataTable>
+                <SampleTable></SampleTable>
             </CardBodyFrame>
 
 
@@ -40,7 +39,7 @@ const SampleTable = () => {
                     </div>
                 </div>
                 <div className='card-body'>
-                    <DataTable></DataTable>
+                    <SampleTable></SampleTable>
                 </div>
                 <div className="card-footer clearfix">
                     <ul className="pagination pagination-sm m-0 float-right">
@@ -68,7 +67,7 @@ const SampleTable = () => {
                     </div>
                 </div>
                 <div className='card-body p-0'>
-                    <DataTable></DataTable>
+                    <SampleTable></SampleTable>
                 </div>
             </CardFrame>
 
@@ -78,4 +77,4 @@ const SampleTable = () => {
 
 
 
-export default SampleTable;
+export default TempleDataTable;

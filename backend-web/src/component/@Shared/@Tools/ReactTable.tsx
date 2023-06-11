@@ -11,11 +11,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 
-
-const columnHelper = createColumnHelper<any>();
-
 const InitialColumns = (cols: Array<ColumnsProp>, actions: ActionsProp) => {
+    const columnHelper = createColumnHelper<any>();
     const result: any = [];
+
+    //一般欄位
     cols.map(row => {
         if (row.hidden) return true;
         result.push(
@@ -36,6 +36,7 @@ const InitialColumns = (cols: Array<ColumnsProp>, actions: ActionsProp) => {
                 {
                     cell: (info) => {
                         let row = info.row.original;
+                        console.log(row);
                         return (
                             <div>
                                 {
@@ -113,16 +114,6 @@ const ReactTable = (prop: TableProp) => {
 
         </div>
     );
-}
-
-
-const fromUrlParams = (url: string, type: string) => {
-    axios({
-        method: type,
-        url : url
-    })
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error));
 }
 
 export default ReactTable;

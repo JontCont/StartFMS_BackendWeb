@@ -1,65 +1,113 @@
+import {
+    createColumnHelper, // 幫忙製作表格列的工具
+    flexRender, // 其實就是 flex box
+    getCoreRowModel, // 取得行的資料來渲染新表格
+    useReactTable, // 使用此 Hook 來掌握表格
+} from "@tanstack/react-table";
 
-const DataTable = () => {
+export interface DataTableProp {
+    className?: any,
+    columns?: any,
+    data?: any,
+    columnsFormatter?: (columns:any) => void
+};
+
+const createColumns = (data: any, columns: any) => {
+    const columnHelper = createColumnHelper<any>();
+    const result: any = [];
+    if (data != null && columns == null) {
+        let firstData = data[0]
+        let keys = Object.keys(firstData);
+        keys.map((x: any) => {
+            result.push(
+                columnHelper.accessor(x,
+                    {
+                        header: () => x,
+                        cell: info => { return info.getValue(); }
+                    }
+                )
+            );
+        })
+        return result;
+    }
+
+    if (columns != null) {
+        columns.map((row: any) => {
+            if (row.hidden) return true;
+            result.push(
+                columnHelper.accessor(row.name,
+                    {
+                        header: () => row.label,
+                        cell: info => { return info.getValue(); }
+                    }
+                )
+            );
+        });
+        return result;
+    }
+
+    return [];
+}
+
+const DataTable = (prop: DataTableProp) => {
+    const data = prop.data;
+    const columns = createColumns(prop.data, prop.columns);
+    if (prop.columnsFormatter != null) {
+        prop.columnsFormatter(columns);
+    }
+    const table = useReactTable({
+        data,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+    })
+
+
+    const getColumns = () => {
+        return (
+            table.getHeaderGroups().map(headerGroup => (
+                <tr key={headerGroup.id}>
+                    {headerGroup.headers.map(header =>
+                    (
+                        <th key={header.id}>
+                            {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                )}
+                        </th>
+                    ))}
+                </tr>
+            )));
+    }
+
+    const getData = () => {
+        return (
+            table.getRowModel().rows.map(row => (
+                <tr key={row.id}>
+                    {row.getVisibleCells().map(cell => (
+                        <td key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                    ))}
+                </tr>
+            ))
+        );
+    }
+
+
     return (
         <div>
-            <table className="table table-bordered table-striped mb-0">
+            <table className={prop.className}>
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Task</th>
-                        <th>Progress</th>
-                        <th>Label</th>
-                    </tr>
+                    {getColumns()}
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                            <div className="progress progress-xs">
-                                <div className="progress-bar progress-bar-danger"></div>
-                            </div>
-                        </td>
-                        <td><span className="badge bg-danger">55%</span></td>
-                    </tr>
-                    <tr>
-                        <td>2.</td>
-                        <td>Clean database</td>
-                        <td>
-                            <div className="progress progress-xs">
-                                <div className="progress-bar bg-warning"></div>
-                            </div>
-                        </td>
-                        <td><span className="badge bg-warning">70%</span></td>
-                    </tr>
-                    <tr>
-                        <td>3.</td>
-                        <td>Cron job running</td>
-                        <td>
-                            <div className="progress progress-xs progress-striped active">
-                                <div className="progress-bar bg-primary"></div>
-                            </div>
-                        </td>
-                        <td><span className="badge bg-primary">30%</span></td>
-                    </tr>
-                    <tr>
-                        <td>4.</td>
-                        <td>Fix and squish bugs</td>
-                        <td>
-                            <div className="progress progress-xs progress-striped active">
-                                <div className="progress-bar bg-success"></div>
-                            </div>
-                        </td>
-                        <td><span className="badge bg-success">90%</span></td>
-                    </tr>
+                    {getData()}
                 </tbody>
             </table>
         </div>
     );
-
 };
-
-
-
 
 export default DataTable;

@@ -16,7 +16,7 @@ const MainLayout = () => {
     const isAuthenticated = useIsAuthenticated();
     const authHeader = useAuthHeader();
     setAuthHeaderFunction(authHeader());
-
+    
     useEffect(() => {
         if(!isAuthenticated()){
             navigate("/login", { replace: true });

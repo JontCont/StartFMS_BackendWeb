@@ -28,3 +28,5 @@ export const getUsersMenus = async () => {
         // });
     }
 }
+
+export {setAuthHeader}
