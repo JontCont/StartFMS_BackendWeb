@@ -36,7 +36,6 @@ const InitialColumns = (cols: Array<ColumnsProp>, actions: ActionsProp) => {
                 {
                     cell: (info) => {
                         let row = info.row.original;
-                        console.log(row);
                         return (
                             <div>
                                 {

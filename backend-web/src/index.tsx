@@ -10,9 +10,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <AuthProvider authName={"_auth"} authType={"cookie"}>
-    <AppRouter />
-  </AuthProvider>
+  <React.StrictMode>
+    <AuthProvider authName={"_auth"} authType={"cookie"}>
+      <AppRouter />
+    </AuthProvider>
+  </React.StrictMode>
 );
 
 

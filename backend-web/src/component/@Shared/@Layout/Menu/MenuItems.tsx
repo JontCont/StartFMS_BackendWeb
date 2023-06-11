@@ -3,90 +3,58 @@ import MenuFile from './MenuFile';
 import MenuFolder from './MenuFolder';
 import { MenuTypeProps } from '../../../../interface/layout';
 import { getUsersMenus } from '../../../../services/users';
+import ReactDomServer from 'react-dom/server';
 
-const getMenuSidebar = async () => {
-  const element = await getUsersMenus();
-  return (
-    <nav className="mt-2">
-      <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        {element.map((el: MenuTypeProps) => {
-          if (el.children != null) {
-            return (
-              <li className="nav-item"  key={el.id}>
-                <MenuFolder
-                  name={el.menuName}
-                  url={el.url}
-                  icon={el.icon}
-                />
-                <ul className="nav nav-treeview">
-                  {MenuItem(el.children)}
-                </ul>
-              </li>
-            );
-          } else {
-            return (
-              <li className="nav-item" key={el.id}>
-                <MenuFile
-                  name={el.menuName}
-                  url={el.url}
-                  icon={el.icon}
-                />
-              </li>
-            );
-          }
-        })}
-      </ul>
-    </nav>
-  );
-};
+const getMenusElement = (menuList: any) => {
+  if (menuList == null) return null;
 
-//加入遞回 medthod
-const MenuItem = (menuList: Array<MenuTypeProps>) => {
-  if (menuList == null) {
-    return [];
-  }
-
-  return menuList.map((el: MenuTypeProps) => {
-    if (el.children != null) {
-      return (
-        <li className="nav-item" key={el.id}>
-          <MenuFolder
-            name={el.menuName}
-            url={el.url}
-          >
-            <ul className="nav nav-treeview">
-              {MenuItem(el.children)}
-            </ul>
-          </MenuFolder>
-        </li>
-      );
-    } else {
-      return (
-        <li className="nav-item" key={el.id}>
-          <MenuFile
-            name={el.menuName}
-            url={el.url}
-          // icon={el.icon}
-          />
-        </li>
-      );
-    }
+  return menuList.map((el: MenuTypeProps, index: number) => {
+    return (el.children != null) ? getMenuFolder(el) : getMenuFile(el);
   });
 };
 
+const getMenuFolder = (el: any) => {
+
+  return (
+    <MenuFolder name={el.menuName}>
+      <ul className="nav nav-treeview">
+        {getMenusElement(el.children)}
+      </ul>
+    </MenuFolder>
+  );
+}
+
+const getMenuFile = (el: any) => {
+  return (
+    <MenuFile name={el.menuName} url={el.url} icon={el.icon} />
+  );
+}
+
+
 const MenuItems = () => {
-  const [menu, setMenu] = useState<JSX.Element | null>(null);
+  const [menuElement, setMenuElement] = useState(null);
 
   useEffect(() => {
-    const getMenu = async () => {
-      const menu = await getMenuSidebar();
-      setMenu(menu);
-    };
+    const getMenuList = async () => {
+      //取得 menu 清單
+      const element = await getUsersMenus();
+      if (element == null || element == undefined) {
+        return (<nav className="mt-2"></nav>);
+      }
 
-    getMenu();
+      const menuElement = getMenusElement(element);
+      setMenuElement(menuElement);
+    };
+    getMenuList();
   }, []);
 
-  return menu;
+  return (
+    <nav className="mt-2">
+      <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        {menuElement}
+      </ul>
+    </nav>
+  );
 };
 
 export default MenuItems;

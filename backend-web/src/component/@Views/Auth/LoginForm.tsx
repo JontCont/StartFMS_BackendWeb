@@ -8,7 +8,6 @@ const LoginForm = () => {
     //initial : auth kit 
     const isAuthenticated = useIsAuthenticated();
     useEffect(() => {
-        console.log(isAuthenticated());
         if (!isAuthenticated()) {
           navigate("/login", { replace: true });
         }else{
@@ -42,9 +41,11 @@ const LoginForm = () => {
             authState: { name: "React User", uid: 123456 }, // Dummy auth user state
             expiresIn: 120 // Token Expriration time, in minutes
         })
+
         // If Login Successfull, then Redirect the user to secure route
-        navigate("/");
-        
+        // 如果登入使用 navigate adminlte js 會失效
+        window.location.href = '/';
+        //navigate("/");
     };
 
     return (

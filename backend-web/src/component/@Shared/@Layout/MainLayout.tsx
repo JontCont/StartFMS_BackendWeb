@@ -5,6 +5,7 @@ import 'admin-lte/dist/css/adminlte.min.css'
 import 'admin-lte/plugins/fontawesome-free/css/all.css'
 import 'admin-lte/plugins/bootstrap/js/bootstrap'
 import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle'
+import 'jquery/dist/jquery'
 import 'admin-lte/dist/js/adminlte'
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";

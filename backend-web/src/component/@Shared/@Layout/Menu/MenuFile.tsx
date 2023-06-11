@@ -1,12 +1,21 @@
+import { ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+class MenuFileType {
+    id?: string;
+    name?: string;
+    icon?: string = 'fas fa-tachometer-alt';
+    url: string = "/";
+}
 
-const MenuFile = ({ name, url = "/", icon = "far fa-circle nav-icon" }: any) => {
+const MenuFile = (type: MenuFileType) => {
     return (
-        <Link to={url} className="nav-link">
-            <i className={`nav-icon ${icon} `}></i>
-            <p>{name}</p>
-        </Link>
+        <li className="nav-item" key={type.id}>
+            <Link to={type.url} className={"nav-link"}>
+                <i className={`nav-icon ${type.icon} `}></i>
+                <p>{type.name}</p>
+            </Link>
+        </li>
     );
 }
 

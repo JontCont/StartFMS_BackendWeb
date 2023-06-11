@@ -11,7 +11,6 @@ export const setAuthHeaderFunction = (header:any) => {
 };
 
 export const getUsersMenus = async () => {
-    console.log(setAuthHeader);
     const url: string = `${LocalHost}/api/users/menus`;
     let result: any;
     try {
