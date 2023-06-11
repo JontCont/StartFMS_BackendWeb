@@ -5,15 +5,11 @@ import { BrowserRouter, Routes, Route, Link, Await } from 'react-router-dom';
 import Home from '../component/@Views/TopList/Home';
 import About from '../component/@Views/TopList/About';
 
-import BDP000A from '../component/@Views/Systems/BDP000A/Index';
-import BDP000A_EditorForm from '../component/@Views/Systems/BDP000A/EditorForm';
-
 import ProfileHome from '../component/@Views/Profile/ProfileHome';
-import Alert from '../component/@Views/Template/Alert';
 import SampleTable from '../component/@Views/Template/SampleTable';
-import SampleReactTable from '../component/@Views/Template/SampleReactTable';
 
 import SystemConfig from '../component/@Views/Systems/SystemConfig/SystemConfigIndex'
+import SystemConfigEdit from '../component/@Views/Systems/SystemConfig/SytemConfigEdit'
 import LoginLayout from '../component/@Shared/@Layout/LoginLayout';
 import Login from '../component/@Views/Auth/LoginForm';
 import MainLayout from '../component/@Shared/@Layout/MainLayout';
@@ -46,6 +42,7 @@ const AppRouter = () => {
                     <Route path="/about" element={privateElement(<About />)} />
 
                     <Route path="/BDP000A" element={privateElement(<SystemConfig />)} />
+                    <Route path="/BDP000A/:id" element={privateElement(<SystemConfigEdit />)} />
                     <Route path="/Menu" element={privateElement(<SampleTable />)} />
                 </Route>
 

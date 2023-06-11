@@ -7,7 +7,7 @@ import ReactTable from '../../../@Shared/@Tools/ReactTable';
 const SystemConfigIndex = () => {
   const [tstcolumns, setTstColumns] = useState(null);
   const [data, setData] = useState(null);
-  const tstactions = {
+  const buttonsSetting = {
     isUse: true,
     data: [0, 1],
     url: 'https://localhost:5001/api/user/MenuBasicSetting/{id}'
@@ -34,7 +34,7 @@ const SystemConfigIndex = () => {
         <ReactTable
           columns={tstcolumns}
           data={data}
-          actions={tstactions}
+          actions={buttonsSetting}
         />
       </CardBodyFrame>
     </Content>
