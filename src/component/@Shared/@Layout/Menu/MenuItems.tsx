@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import MenuFile from './MenuFile';
 import MenuFolder from './MenuFolder';
 import { MenuTypeProps } from '../../../../interface/layout';
-import { getUsersMenus } from '../../../../services/users';
-import ReactDomServer from 'react-dom/server';
+import { Services, ServicesContext } from '../../../../services/services';
 
 const getMenusElement = (menuList: any) => {
   if (menuList == null) return null;
@@ -33,11 +32,12 @@ const getMenuFile = (el: any) => {
 
 const MenuItems = () => {
   const [menuElement, setMenuElement] = useState(null);
+  const services: Services | null = useContext(ServicesContext);
 
   useEffect(() => {
     const getMenuList = async () => {
       //取得 menu 清單
-      const element = await getUsersMenus();
+      const element = await services?.users.getUsersMenus();
       if (element == null || element == undefined) {
         return (<nav className="mt-2"></nav>);
       }

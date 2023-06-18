@@ -10,7 +10,8 @@ import 'admin-lte/dist/js/adminlte'
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useIsAuthenticated, useAuthHeader } from "react-auth-kit";
-import {setAuthHeaderFunction} from '../../../services/users'
+import { setAuthHeaderFunction } from "../../../services/services";
+
 const MainLayout = () => {
     const navigate = useNavigate();
     const isAuthenticated = useIsAuthenticated();

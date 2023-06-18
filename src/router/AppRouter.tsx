@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { ReactNode, createContext, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Link, Await } from 'react-router-dom';
 
 // append page (only views)
@@ -15,8 +15,14 @@ import Login from '../component/@Views/Auth/LoginForm';
 import MainLayout from '../component/@Shared/@Layout/MainLayout';
 import { RequireAuth } from "react-auth-kit";
 import { ToastContainer } from 'react-toastify';
+import { Services, ServicesContext } from '../services/services';
+import Modal from 'react-modal';
+
+
+Modal.setAppElement('body');
 
 const AppRouter = () => {
+    //ajax
     const privateElement = (element: JSX.Element) => {
         return (
             <RequireAuth loginPath={"/login"}>
@@ -25,28 +31,30 @@ const AppRouter = () => {
         );
     }
 
+    const services: Services = new Services();
     return (
         <BrowserRouter>
-            <ToastContainer />
-            <Routes>
-                {/* user authrozie element */}
-                <Route path="/Login" element={<LoginLayout />}>
-                    <Route path="/Login" element={<Login />} />
-                </Route>
+            <ServicesContext.Provider value={services} >
+                <ToastContainer />
+                <Routes>
+                    {/* user authrozie element */}
+                    <Route path="/Login" element={<LoginLayout />}>
+                        <Route path="/Login" element={<Login />} />
+                    </Route>
 
+                    {/* System element */}
+                    <Route path="/" element={<MainLayout />}>
+                        <Route path="/" element={privateElement(<Home />)} />
+                        <Route path="/Profile" element={privateElement(<ProfileHome />)} />
+                        <Route path="/about" element={privateElement(<About />)} />
 
-                {/* System element */}
-                <Route path="/" element={<MainLayout />}>
-                    <Route path="/" element={privateElement(<Home />)} />
-                    <Route path="/Profile" element={privateElement(<ProfileHome />)} />
-                    <Route path="/about" element={privateElement(<About />)} />
+                        <Route path="/BDP000A" element={privateElement(<SystemConfig />)} />
+                        <Route path="/BDP000A/:id" element={privateElement(<SystemConfigEdit />)} />
+                        <Route path="/Menu" element={privateElement(<SampleTable />)} />
+                    </Route>
 
-                    <Route path="/BDP000A" element={privateElement(<SystemConfig />)} />
-                    <Route path="/BDP000A/:id" element={privateElement(<SystemConfigEdit />)} />
-                    <Route path="/Menu" element={privateElement(<SampleTable />)} />
-                </Route>
-
-            </Routes>
+                </Routes>
+            </ServicesContext.Provider>
         </BrowserRouter>
     );
 }

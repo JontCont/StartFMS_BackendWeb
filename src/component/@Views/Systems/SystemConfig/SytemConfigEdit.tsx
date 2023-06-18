@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { SystemConfigType, getSystemConfig, putSystemConfig } from "../../../../services/backend";
 import { CardBodyFrame, CardFrame, Content } from "../../../extensions/AdminLte";
 import { toast } from "react-toastify";
+import { Services, ServicesContext } from "../../../../services/services";
+import { SystemConfigType } from "../../../../services/backend";
 
 
 
 const SytemConfigEdit = () => {
     const { id } = useParams();
     const [data, setData] = useState<SystemConfigType>();
+    const services: Services | null = useContext(ServicesContext);
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getSystemConfig(id ?? "");
+            const data = await services?.backend.getSystemConfig(id ?? "");
             setData(data);
         };
         fetchData();
@@ -25,7 +27,7 @@ const SytemConfigEdit = () => {
             toast.error('更新失敗! 請確認資料是否都有填寫');
             return false;
         }
-        putSystemConfig(id,data);
+        services?.backend.putSystemConfig(id,data);
     }
 
 

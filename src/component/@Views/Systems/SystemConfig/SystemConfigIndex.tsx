@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { CardBodyFrame, Content, DataTable } from '../../../extensions/AdminLte';
+import { CardBodyFrame, CardFrame, Content, DataTable } from '../../../extensions/AdminLte';
 import { createColumnHelper } from "@tanstack/react-table";
 import { useNavigate } from 'react-router';
-import { SystemConfigType, deleteSystemConfig, postSystemConfig } from '../../../../services/backend';
 import { toast } from 'react-toastify';
+import { SystemConfigType } from '../../../../services/backend';
+import { Services, ServicesContext } from '../../../../services/services';
 
 const SystemConfigIndex = () => {
   const navigate = useNavigate();
   const [columns, setTstColumns] = useState(null);
   const [data, setData] = useState(null);
   const [form, setForm] = useState<SystemConfigType>();
+  const services: Services | null = useContext(ServicesContext);
 
   const buttonsSetting = {
     isUse: true,
@@ -36,8 +38,8 @@ const SystemConfigIndex = () => {
 
     const onClickDeleteButton = (row: any) => {
       let key = Object.keys(row)[0];
-      let val :string = row[key];
-      deleteSystemConfig(val);
+      let val: string = row[key];
+      services?.backend.deleteSystemConfig(val);
       console.log('delete');
     }
 
@@ -60,13 +62,13 @@ const SystemConfigIndex = () => {
     );
   }
 
-  const onClickSave = () =>{
-    if(form == null){
-        toast.error('更新失敗! 請確認資料是否都有填寫');
-        return false;
+  const onClickSave = () => {
+    if (form == null) {
+      toast.error('更新失敗! 請確認資料是否都有填寫');
+      return false;
     }
-    postSystemConfig(form);
-}
+    services?.backend.postSystemConfig(form);
+  }
 
 
   // 當資料還在加載時顯示的內容
@@ -76,7 +78,7 @@ const SystemConfigIndex = () => {
 
   return (
     <Content titleName='SystemConfig'>
-      <CardBodyFrame titleName="主檔">
+      {/* <CardFrame titleName="主檔">
         <div>
           <label>參數名稱</label>
           <div>
@@ -108,16 +110,21 @@ const SystemConfigIndex = () => {
         <div>
           <button type='button' onClick={onClickSave}>儲存</button>
         </div>
-      </CardBodyFrame>
+      </CardFrame> */}
 
-      <CardBodyFrame titleName="Test Area">
+
+      <div className='col-12 mb-2 mt-2'>
+        <button type='button' className='btn btn-success'>Create</button>
+      </div>
+
+      <CardFrame titleName="Test Area" cardBodyStyle='p-0' IsCardTitle={false}>
         <DataTable
-          className="table table-boder"
+          className="table table-boder table-striped"
           data={data}
           columns={columns}
           columnsFormatter={columsCuston}
         ></DataTable>
-      </CardBodyFrame>
+      </CardFrame>
     </Content>
   );
 }

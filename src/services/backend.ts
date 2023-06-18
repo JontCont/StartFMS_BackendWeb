@@ -1,6 +1,6 @@
 import axios from "axios";
-import { setAuthHeader } from "./users";
-const LocalHost = 'https://localhost:5001';
+import { setAuthHeader } from "./services";
+import { connectionConfig } from "./config";
 
 export interface SystemConfigType {
     parMemo: string,
@@ -8,79 +8,110 @@ export interface SystemConfigType {
     parValue: string
 }
 
-export const getSystemConfig = async (id: string) => {
-    const url: string = `${LocalHost}/api/backend/sys/SystemConfigSetting/${id}`;
-    let result: any;
-    try {
-        await axios
-            .get(url, setAuthHeader)
-            .then((res) => {
-                result = res.data;
-                return result;
-            });
-        return result;
-    } catch (error: any) {
-        // throw getError({
-        //     message : "伺服器暫時無法使用"
-        // });
+export interface IBackendServices {
+    // 定義其他需要的服務方法
+    getSystemConfig(id: string): Promise<SystemConfigType>;
+    postSystemConfig(data: SystemConfigType): Promise<SystemConfigType>;
+    putSystemConfig(id: string, data: SystemConfigType): Promise<SystemConfigType>;
+    deleteSystemConfig(id: string): Promise<SystemConfigType>;
+}
+
+export class BackendServices implements IBackendServices {
+    private connection: connectionConfig;
+    private host?: string;
+
+    constructor(connection: connectionConfig) {
+        this.connection = connection;
+        this.host = this.connection.backendHost ?? this.connection.localHost;
+    }
+
+
+    async getSystemConfig(id: string) {
+        try {
+            const url: string = `${this.host}/api/backend/sys/SystemConfigSetting/${id}`;
+            const result = await getSystemConfig(url);
+            return result;
+        } catch (error) {
+            throw new Error("Error"); // 自訂錯誤訊息
+        }
+    }
+
+    async postSystemConfig(data: SystemConfigType) {
+        try {
+            const url: string = `${this.host}/api/backend/sys/SystemConfigSetting`;
+            const result = await postSystemConfig(data, url);
+            return result;
+        } catch (error) {
+            throw new Error("Error"); // 自訂錯誤訊息
+        }
+    }
+
+    async putSystemConfig(id: string, data: SystemConfigType) {
+        try {
+            const url: string = `${this.host}/api/backend/sys/SystemConfigSetting/${id}`;
+            const result = await putSystemConfig(id, data, url);
+            return result;
+        } catch (error) {
+            throw new Error("Error"); // 自訂錯誤訊息
+        }
+    }
+
+    async deleteSystemConfig(id: string) {
+        try {
+            const url: string = `${this.host}/api/backend/sys/SystemConfigSetting/${id}`;
+            const result = await deleteSystemConfig(id, url);
+            return result;
+        } catch (error) {
+            throw new Error("Error"); // 自訂錯誤訊息
+        }
     }
 }
 
-export const postSystemConfig = async (data: SystemConfigType) => {
-    const url: string = `${LocalHost}/api/backend/sys/SystemConfigSetting`;
+
+const getSystemConfig = async (url: string) => {
     let result: any;
-    try {
-        await axios
-            .post(url, data, setAuthHeader)
-            .then((res) => {
-                // token = res.data;
-                result = res.data;
-                return result;
-            });
-        return result;
-    } catch (error: any) {
-        // throw getError({
-        //     message : "伺服器暫時無法使用"
-        // });
-    }
+    await axios
+        .get(url, setAuthHeader)
+        .then((res) => {
+            result = res.data;
+            return result;
+        });
+    return result;
 }
 
-export const putSystemConfig = async (id: string, data: SystemConfigType) => {
-    const url: string = `${LocalHost}/api/backend/sys/SystemConfigSetting/${id}`;
+const postSystemConfig = async (data: SystemConfigType, url: string) => {
     let result: any;
-    try {
-        await axios
-            .put(url, data, setAuthHeader)
-            .then((res) => {
-                result = res.data;
-                return result;
-            });
-        console.log(result);
-        return result;
-    } catch (error: any) {
-        // throw getError({
-        //     message : "伺服器暫時無法使用"
-        // });
-    }
+    await axios
+        .post(url, data, setAuthHeader)
+        .then((res) => {
+            result = res.data;
+            return result;
+        });
+    return result;
+}
+
+const putSystemConfig = async (id: string, data: SystemConfigType, url: string) => {
+    let result: any;
+    await axios
+        .put(url, data, setAuthHeader)
+        .then((res) => {
+            result = res.data;
+            return result;
+        });
+    console.log(result);
+    return result;
 }
 
 
-export const deleteSystemConfig = async (id: string) => {
-    const url: string = `${LocalHost}/api/backend/sys/SystemConfigSetting/${id}`;
+const deleteSystemConfig = async (id: string, url: string) => {
     let result: any;
-    try {
-        await axios
-            .delete(url, setAuthHeader)
-            .then((res) => {
-                result = res.data;
-                return result;
-            });
-        console.log(result);
-        return result;
-    } catch (error: any) {
-        // throw getError({
-        //     message : "伺服器暫時無法使用"
-        // });
-    }
+    await axios
+        .delete(url, setAuthHeader)
+        .then((res) => {
+            result = res.data;
+            return result;
+        });
+    console.log(result);
+    return result;
 }
 

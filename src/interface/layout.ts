@@ -15,16 +15,19 @@ export interface MenuTypeProps {
     url: string
 }
 
-export interface MenuTitleProps{
-    name : string,
-    url? : string 
+export interface MenuTitleProps {
+    name: string,
+    url?: string
 }
 
 
-export interface CardFrameProps{
-    columnsStyle?: string,
+export interface CardFrameProps {
     children: ReactNode,
     titleName: string,
+    columnsStyle?: string,
+    cardTitleStyle?: string,
+    cardBodyStyle?: string,
+    IsCardTitle?: boolean,
     IsClose?: boolean,
     IsZoomOut?: boolean
 }

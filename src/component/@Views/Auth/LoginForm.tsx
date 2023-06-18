@@ -1,35 +1,41 @@
-import { useState,useEffect,useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import './css/login.css'
-import { loginByAuth } from "../../../services/auth";
 import { toast } from "react-toastify";
+import { Services, ServicesContext } from "../../../services/services";
 const LoginForm = () => {
-    //initial : auth kit 
+    // initial : auth kit 
+    // 確認身分是否有登入
     const isAuthenticated = useIsAuthenticated();
+    const services: Services | null = useContext(ServicesContext);
+
     useEffect(() => {
         if (!isAuthenticated()) {
-          navigate("/login", { replace: true });
-        }else{
+            navigate("/login", { replace: true });
+        } else {
             navigate("/");
         }
-      }, []);
+    }, []);
 
+    // 登入時候所需要變數
     const [useremail, setUseremail] = useState('');
     const [password, setPassword] = useState('');
     const signIn = useSignIn();
     const navigate = useNavigate();
+
+
     //login 
     const loginHandler = async () => {
         // 判斷
-        if(!useremail || !password){
+        if (!useremail || !password) {
             toast.error('請輸入使用者帳號、密碼');
             return false;
         }
-
+        
         // 權限
-        const token = await loginByAuth(useremail,password);
-        if(!token){
+        const token = await services?.auth.login(useremail, password);
+        if (!token) {
             toast.error('帳號或密碼輸入錯誤，請重新輸入');
             return false;
         }
@@ -60,20 +66,20 @@ const LoginForm = () => {
                             <label className="label">
                                 <span className="label-text">信箱</span>
                             </label>
-                            <input type="text" 
-                                placeholder="email" 
-                                className="form-control" 
+                            <input type="text"
+                                placeholder="email"
+                                className="form-control"
                                 value={useremail}
-                                onChange={(e)=>setUseremail(e.target.value)} />
+                                onChange={(e) => setUseremail(e.target.value)} />
                         </div>
                         <div className="form-row">
                             <label className="label">
                                 <span className="label-text">密碼</span>
                             </label>
-                            <input type="password" className="form-control" 
-                                placeholder="password"   
-                                value={password} 
-                                onChange={(e)=>setPassword(e.target.value)} />
+                            <input type="password" className="form-control"
+                                placeholder="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} />
                             <label className="label">
                             </label>
                         </div>
