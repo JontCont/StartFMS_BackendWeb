@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { CardBodyFrame, CardFrame, Content, DataTable } from '../../../extensions/AdminLte';
+import { CardBodyFrame, CardFrame, Content, DataTable, ModalFrame } from '../../../extensions/AdminLte';
 import { createColumnHelper } from "@tanstack/react-table";
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -13,6 +13,7 @@ const SystemConfigIndex = () => {
   const [data, setData] = useState(null);
   const [form, setForm] = useState<SystemConfigType>();
   const services: Services | null = useContext(ServicesContext);
+  const [showModal, setShowModal] = React.useState(false);
 
   const buttonsSetting = {
     isUse: true,
@@ -114,7 +115,7 @@ const SystemConfigIndex = () => {
 
 
       <div className='col-12 mb-2 mt-2'>
-        <button type='button' className='btn btn-success'>Create</button>
+        <button type='button' className='btn btn-success' onClick={() => setShowModal(true)}>Create</button>
       </div>
 
       <CardFrame titleName="Test Area" cardBodyStyle='p-0' IsCardTitle={false}>
@@ -125,6 +126,42 @@ const SystemConfigIndex = () => {
           columnsFormatter={columsCuston}
         ></DataTable>
       </CardFrame>
+
+
+
+      <ModalFrame isOpen={showModal} closeModal={() => setShowModal(false)}>
+        <div>
+          <label>參數名稱</label>
+          <div>
+            <input type="text"
+              value={form?.parName || ''}
+              onChange={(e) => setForm((prevData: any) => ({ ...prevData, parName: e.target.value }))}
+            ></input>
+          </div>
+        </div>
+        <div>
+          <label>參數值</label>
+          <div>
+            <input type="text"
+              value={form?.parValue || ''}
+              onChange={(e) => setForm((prevData: any) => ({ ...prevData, parValue: e.target.value }))}
+            ></input>
+          </div>
+        </div>
+        <div>
+          <label>說明</label>
+          <div>
+            <input type="text"
+              value={form?.parMemo || ''}
+              onChange={(e) => setForm((prevData: any) => ({ ...prevData, parMemo: e.target.value }))}
+            ></input>
+          </div>
+        </div>
+
+        <div>
+          <button type='button' onClick={onClickSave}>儲存</button>
+        </div>
+      </ModalFrame>
     </Content>
   );
 }

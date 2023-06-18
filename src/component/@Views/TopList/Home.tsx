@@ -1,26 +1,20 @@
 // Home.js
-import React from 'react';
+import React, { useState } from 'react';
 import Content from '../../@Shared/@Layout/Content';
 import CardFrame from '../../@Shared/@Layout/Frame/CardBodyFrame';
-import Modal from 'react-modal';
 import ModalFrame from '../../@Shared/@Tools/ModalFrame';
 
-const titleName = "Hoem";
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
+const titleName = "Home";
 
 const Home = () => {
-  const [showModal, setShowModal] = React.useState(false);
+  const handleOpenModal = () => {
+    console.log('true');
+  };
 
+  const Test = (setModalIsOpen: any) => {
+    console.log(setModalIsOpen);
+    // setModalIsOpen(true);
+  }
   return (
     <Content titleName={titleName} >
       <CardFrame titleName='Home' IsZoomOut={true}>
@@ -33,12 +27,29 @@ const Home = () => {
           <a href="https://ionicons.com/">Ion Icons</a>
         </div>
 
-        <button onClick={() => setShowModal(true)}>Open Modal</button>
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Launch demo modal
+        </button>
+
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#test">
+          Launch demo modal
+        </button>
       </CardFrame>
 
-      <ModalFrame isOpen={showModal} closeModal={() => setShowModal(false)}>
-        <div>
+      <ModalFrame id="exampleModal">
+        <div className="modal-body">
           123
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" className="btn btn-primary">Save changes</button>
+        </div>
+      </ModalFrame>
+
+      <ModalFrame id="test">
+        <div className="modal-footer">
+          <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" className="btn btn-primary">Save changes</button>
         </div>
       </ModalFrame>
     </Content>
@@ -46,3 +57,4 @@ const Home = () => {
 };
 
 export default Home;
+
