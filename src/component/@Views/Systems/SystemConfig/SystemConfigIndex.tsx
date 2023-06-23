@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { CardBodyFrame, CardFrame, Content, DataTable, ModalFrame } from '../../../extensions/AdminLte';
+import { CardBodyFrame, CardFrame, Confirm, Content, DataTable, ModalFrame } from '../../../extensions/AdminLte';
 import { createColumnHelper } from "@tanstack/react-table";
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { SystemConfigType } from '../../../../services/backend';
 import { Services, ServicesContext } from '../../../../services/services';
+import { ConfirmProp } from '../../../@Shared/@Tools/Confirm';
 
 const SystemConfigIndex = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const SystemConfigIndex = () => {
   const [form, setForm] = useState<SystemConfigType>();
   const services: Services | null = useContext(ServicesContext);
   const [showModal, setShowModal] = React.useState(false);
+  const [show, setShow] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const buttonsSetting = {
     isUse: true,
@@ -37,12 +40,7 @@ const SystemConfigIndex = () => {
       navigate(`${window.location.pathname}/${val}`);
     }
 
-    const onClickDeleteButton = (row: any) => {
-      let key = Object.keys(row)[0];
-      let val: string = row[key];
-      services?.backend.deleteSystemConfig(val);
-      console.log('delete');
-    }
+
 
     const columnHelper = createColumnHelper<any>();
     columns.push(
@@ -76,44 +74,35 @@ const SystemConfigIndex = () => {
   if (!columns || !data) {
     return <div>Loading...</div>;
   }
+  
+  const onClickDeleteButton = (row: any) => {
+    setShowConfirm(true);
+    // Confirm({id="delete", }:confirmProp);
+
+    // let key = Object.keys(row)[0];
+    // let val: string = row[key];
+    // services?.backend.deleteSystemConfig(val);
+    // console.log('delete');
+  }
+
+  const handleCancel = () => {
+    setShowConfirm(false);
+    // 取消操作的逻辑...
+  };
+
+  const handleConfirm = () => {
+    setShowConfirm(false);
+    // 确认操作的逻辑...
+  };
+  const confirmProps: ConfirmProp = {
+    isOpen: showConfirm,
+    onCancel: handleCancel,
+    onConfirm: handleConfirm,
+  };
 
   return (
     <Content titleName='SystemConfig'>
-      {/* <CardFrame titleName="主檔">
-        <div>
-          <label>參數名稱</label>
-          <div>
-            <input type="text"
-              value={form?.parName || ''}
-              onChange={(e) => setForm((prevData: any) => ({ ...prevData, parName: e.target.value }))}
-            ></input>
-          </div>
-        </div>
-        <div>
-          <label>參數值</label>
-          <div>
-            <input type="text"
-              value={form?.parValue || ''}
-              onChange={(e) => setForm((prevData: any) => ({ ...prevData, parValue: e.target.value }))}
-            ></input>
-          </div>
-        </div>
-        <div>
-          <label>說明</label>
-          <div>
-            <input type="text"
-              value={form?.parMemo || ''}
-              onChange={(e) => setForm((prevData: any) => ({ ...prevData, parMemo: e.target.value }))}
-            ></input>
-          </div>
-        </div>
-
-        <div>
-          <button type='button' onClick={onClickSave}>儲存</button>
-        </div>
-      </CardFrame> */}
-
-
+      <Confirm {...confirmProps} />
       <div className='col-12 mb-2 mt-2'>
         <button type='button' className='btn btn-success' onClick={() => setShowModal(true)}>Create</button>
       </div>

@@ -36,7 +36,7 @@ const Home = () => {
         </button>
       </CardFrame>
 
-      <ModalFrame id="exampleModal">
+      <ModalFrame id="exampleModal" titleName='Modal Title'>
         <div className="modal-body">
           123
         </div>
@@ -46,7 +46,7 @@ const Home = () => {
         </div>
       </ModalFrame>
 
-      <ModalFrame id="test">
+      <ModalFrame id="test" titleName='Modal Title2'>
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" className="btn btn-primary">Save changes</button>
