@@ -2,11 +2,6 @@ import React, { useRef } from 'react';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-//theme
-import "primereact/resources/themes/lara-light-indigo/theme.css";     
-    
-//core
-import "primereact/resources/primereact.min.css";     
 
 const About = () => {
   const toast = useRef(null);

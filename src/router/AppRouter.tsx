@@ -9,7 +9,6 @@ import ProfileHome from '../component/@Views/Profile/ProfileHome';
 import SampleTable from '../component/@Views/Template/TempleDataTable';
 
 import SystemConfig from '../component/@Views/Systems/SystemConfig/SystemConfigIndex'
-import SystemConfigEdit from '../component/@Views/Systems/SystemConfig/SytemConfigEdit'
 import LoginLayout from '../component/@Shared/@Layout/LoginLayout';
 import Login from '../component/@Views/Auth/LoginForm';
 import MainLayout from '../component/@Shared/@Layout/MainLayout';
@@ -49,7 +48,6 @@ const AppRouter = () => {
                         <Route path="/about" element={privateElement(<About />)} />
 
                         <Route path="/BDP000A" element={privateElement(<SystemConfig />)} />
-                        <Route path="/BDP000A/:id" element={privateElement(<SystemConfigEdit />)} />
                         <Route path="/Menu" element={privateElement(<SampleTable />)} />
                     </Route>
 

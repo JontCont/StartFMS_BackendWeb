@@ -7,6 +7,9 @@ import 'admin-lte/plugins/bootstrap/js/bootstrap'
 import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle'
 import 'jquery/dist/jquery'
 import 'admin-lte/dist/js/adminlte'
+//primereact theme 
+import "primereact/resources/themes/lara-light-indigo/theme.css";     
+import "primereact/resources/primereact.min.css";     
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useIsAuthenticated, useAuthHeader } from "react-auth-kit";
