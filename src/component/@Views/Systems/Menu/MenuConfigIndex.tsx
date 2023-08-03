@@ -11,7 +11,7 @@ import { Dialog } from 'primereact/dialog';
 import { SystemConfigType } from '../../../../services/Backend/SystemConfigServices';
 import { toast } from "react-toastify";
 
-const SystemConfigIndex = () => {
+const MenuConfigIndex = () => {
   //initial data (prop)
   let emptyProduct: SystemConfigType = {
     ParMemo: '',
@@ -26,9 +26,6 @@ const SystemConfigIndex = () => {
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    'ParName': { value: null, matchMode: FilterMatchMode.CONTAINS },
-    'ParValue': { value: null, matchMode: FilterMatchMode.CONTAINS },
-    'ParMemo': { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
 
   //Dialog (prop)
@@ -60,8 +57,8 @@ const SystemConfigIndex = () => {
   };
 
   const deleteProduct = () => {
-    services?.backend.deleteSystemConfig(sysConfig.ParName).then(() => {
-      services?.backend.getSystemConfigByData().then((data: any) => setDataTables(data));
+    services?.backend.deleteDirectory(sysConfig.ParName).then(() => {
+      services?.backend.getDirectoryByData().then((data: any) => setDataTables(data));
       setDeleteProductDialog(false);
       setSysConfig(emptyProduct);
     }).catch(() => {
@@ -71,9 +68,9 @@ const SystemConfigIndex = () => {
 
   const saveProduct = () => {
     if (SysConfigDialog.Type == "Edit") {
-      services?.backend.putSystemConfig(sysConfig.ParName, sysConfig)
+      services?.backend.putDirectory(sysConfig.ParName, sysConfig)
         .then(() => {
-          services?.backend.getSystemConfigByData().then((data: any) => setDataTables(data));
+          services?.backend.getDirectoryByData().then((data: any) => setDataTables(data));
           setSysConfig(emptyProduct);
           setSysConfigDialog({ IsOpen: false, Type: '' });
         })
@@ -82,9 +79,9 @@ const SystemConfigIndex = () => {
           return false;
         });
     } else {
-      services?.backend.postSystemConfig(sysConfig)
+      services?.backend.postDirectory(sysConfig)
         .then(() => {
-          services?.backend.getSystemConfigByData().then((data: any) => setDataTables(data));
+          services?.backend.getDirectoryByData().then((data: any) => setDataTables(data));
           setSysConfig(emptyProduct);
           setSysConfigDialog({ IsOpen: false, Type: '' });
         })
@@ -128,31 +125,32 @@ const SystemConfigIndex = () => {
 
   // react function 
   useEffect(() => {
-    services?.backend.getSystemConfigByData().then((data: any) => setDataTables(data));
+    services?.backend.getDirectoryByData().then((data: any) => {console.log(data); setDataTables(data); });
   }, []);
 
   return (
-    <Content titleName='系統參數'>
+    <Content titleName='目錄設定檔'>
       <CardFrame titleName='' IsCardTitle={false}>
         <div className="flex flex-wrap gap-2">
           <Button label="Create" className='btn' severity="success" onClick={openNew} />
         </div>
       </CardFrame>
-
       <CardFrame titleName='資料檔案' cardBodyStyle='p-0'>
-        <DataTable value={dataTables.data} filters={filters} paginator showGridlines 
+        <DataTable value={dataTables} filters={filters} paginator showGridlines
           rowsPerPageOptions={[15, 50, 100]} rows={15}
-          filterDisplay="row" globalFilterFields={['ParName', 'ParValue', 'ParMemo']} emptyMessage="No customers found.">
-          <Column header="名稱" field="ParName" sortable filter filterPlaceholder="請輸入名稱"   ></Column>
-          <Column header="參數" field="ParValue" sortable filter filterPlaceholder="請輸入參數"  ></Column>
-          <Column header="備註" field="ParMemo" sortable filter filterPlaceholder="請輸入備註"   ></Column>
+          filterDisplay="row" globalFilterFields={['menuName']} emptyMessage="No customers found.">
+          <Column header="名稱" field="menuName" sortable filter filterPlaceholder="請輸入名稱"   ></Column>
+          <Column header="圖示(Icon)" field="icon"></Column>
+          <Column header="備註" field="description" sortable filter filterPlaceholder="請輸入備註"  ></Column>
+          <Column header="顯示順序" field="displayOrder" sortable filter filterPlaceholder="請輸入顯示順序"   ></Column>
+          <Column header="父層ID" field="parentId" ></Column>
           <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
         </DataTable>
       </CardFrame>
 
       <Dialog modal visible={SysConfigDialog.IsOpen} style={{ width: '32rem' }}
         breakpoints={{ '960px': '75vw', '641px': '90vw' }}
-        header={(SysConfigDialog.Type == "Edit")?"編輯 Edit":"新增 Create"} className="p-fluid"
+        header={(SysConfigDialog.Type == "Edit") ? "編輯 Edit" : "新增 Create"} className="p-fluid"
         footer={SysConfigDialogFooter}
         onHide={hideDialog}>
 
@@ -185,4 +183,4 @@ const SystemConfigIndex = () => {
   );
 }
 
-export default SystemConfigIndex;
+export default MenuConfigIndex;

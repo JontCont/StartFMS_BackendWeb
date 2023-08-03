@@ -16,6 +16,7 @@ import { RequireAuth } from "react-auth-kit";
 import { ToastContainer } from 'react-toastify';
 import { Services, ServicesContext } from '../services/services';
 import Modal from 'react-modal';
+import MenuConfigIndex from '../component/@Views/Systems/Menu/MenuConfigIndex';
 
 
 Modal.setAppElement('body');
@@ -48,7 +49,7 @@ const AppRouter = () => {
                         <Route path="/about" element={privateElement(<About />)} />
 
                         <Route path="/BDP000A" element={privateElement(<SystemConfig />)} />
-                        <Route path="/Menu" element={privateElement(<SampleTable />)} />
+                        <Route path="/Menu" element={privateElement(<MenuConfigIndex />)} />
                     </Route>
 
                 </Routes>

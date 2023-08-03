@@ -1,8 +1,10 @@
 import { createContext } from "react";
 import { AuthServices, IAuthServices } from "./auth";
-import { BackendServices, IBackendServices } from "./backend";
 import { connectionConfig } from "./config";
-import { IUserServices, UserServices } from "./users";
+import { UserServices } from "./users";
+import { IBackendServices } from "../interface/IBackendServices";
+import { IUserServices } from "../interface/IUserServices";
+import { SystemConfigServices } from "./Backend/SystemConfigServices";
 
 export const ServicesContext = createContext<Services | null>(null);
 export let setAuthHeader = {};
@@ -26,7 +28,7 @@ export class Services extends connectionConfig {
         this.connection = connection?? new connectionConfig();
         this.auth = new AuthServices(this.connection);
         this.users = new UserServices(this.connection);
-        this.backend = new BackendServices(this.connection);
+        this.backend = new SystemConfigServices(this.connection);
     }
     
 
