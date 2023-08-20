@@ -23,10 +23,6 @@ const MenuConfigIndex = () => {
   //DataTable Config (prop)
   const [dataTables, setDataTables] = useState<any>([]);
   const [sysConfig, setSysConfig] = useState<SystemConfigType>(emptyProduct);
-  const [filters, setFilters] = useState({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-  });
 
   //Dialog (prop)
   const [SysConfigDialog, setSysConfigDialog] = useState<any>({ IsOpen: false, Type: '' });
@@ -103,8 +99,8 @@ const MenuConfigIndex = () => {
   const actionBodyTemplate = (rowData: any) => {
     return (
       <React.Fragment>
-        <Button icon="fa fa-pen" rounded outlined className="mr-2" onClick={() => editProduct(rowData)} />
-        <Button icon="fa fa-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
+        <Button icon="fa fa-pen" rounded outlined className="mr-2 small-icon" onClick={() => editProduct(rowData)} />
+        <Button icon="fa fa-trash" rounded outlined severity="danger" className='small-icon' onClick={() => confirmDeleteProduct(rowData)} />
       </React.Fragment>
     );
   };
@@ -125,7 +121,7 @@ const MenuConfigIndex = () => {
 
   // react function 
   useEffect(() => {
-    services?.backend.getDirectoryByData().then((data: any) => {console.log(data); setDataTables(data); });
+    services?.backend.getDirectoryByData().then((data: any) => { console.log(data); setDataTables(data); });
   }, []);
 
   return (
@@ -136,14 +132,12 @@ const MenuConfigIndex = () => {
         </div>
       </CardFrame>
       <CardFrame titleName='資料檔案' cardBodyStyle='p-0'>
-        <DataTable value={dataTables} filters={filters} paginator showGridlines
-          rowsPerPageOptions={[15, 50, 100]} rows={15}
-          filterDisplay="row" globalFilterFields={['menuName']} emptyMessage="No customers found.">
-          <Column header="名稱" field="menuName" sortable filter filterPlaceholder="請輸入名稱"   ></Column>
+        <DataTable value={dataTables} paginator
+          rowsPerPageOptions={[15, 50, 100]} rows={15} globalFilterFields={['menuName']} emptyMessage="No customers found.">
+          <Column header="名稱" field="menuName" sortable></Column>
           <Column header="圖示(Icon)" field="icon"></Column>
-          <Column header="備註" field="description" sortable filter filterPlaceholder="請輸入備註"  ></Column>
-          <Column header="顯示順序" field="displayOrder" sortable filter filterPlaceholder="請輸入顯示順序"   ></Column>
-          <Column header="父層ID" field="parentId" ></Column>
+          <Column header="備註" field="description" sortable></Column>
+          <Column header="顯示順序" field="displayOrder" sortable></Column>
           <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
         </DataTable>
       </CardFrame>
