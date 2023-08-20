@@ -10,6 +10,8 @@ import 'admin-lte/dist/js/adminlte'
 //primereact theme 
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css";     
+//custom css
+import "../../../stylesheet/global.css";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useIsAuthenticated, useAuthHeader } from "react-auth-kit";
