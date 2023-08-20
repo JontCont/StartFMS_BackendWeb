@@ -4,7 +4,6 @@ import { Column } from 'primereact/column';
 import { Services, ServicesContext } from '../../../../services/services';
 import { CardFrame, Content } from '../../../extensions/AdminLte';
 import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { toast } from "react-toastify";
@@ -12,7 +11,8 @@ import { S01MenuBasicSetting } from '../../../../models/System/S01MenuBasicSetti
 
 const MenuConfigIndex = () => {
   const services: Services | null = useContext(ServicesContext);
-  let emptyProduct = {} as S01MenuBasicSetting;
+  let emptyProduct = {
+  } as S01MenuBasicSetting;
   //DataTable Config (prop)
   const [dataTables, setDataTables] = useState<any>([]);
   const [models, setSysConfig] = useState<S01MenuBasicSetting>(emptyProduct);
@@ -21,7 +21,7 @@ const MenuConfigIndex = () => {
   const [SysConfigDialog, setSysConfigDialog] = useState<any>({ IsOpen: false, Type: '' });
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
 
-  //Dialog Function  
+  //Dialog Function
   const hideDialog = () => {
     setSysConfigDialog({ IsOpen: false, Type: '' });
   };
@@ -112,7 +112,7 @@ const MenuConfigIndex = () => {
     </React.Fragment>
   );
 
-  // react function 
+  // react function
   useEffect(() => {
     services?.backend.getDirectoryByData().then((data: any) => { console.log(data); setDataTables(data); });
   }, []);
@@ -130,7 +130,7 @@ const MenuConfigIndex = () => {
           <Column header="名稱" field="menuName" sortable></Column>
           <Column header="網址" field="url" sortable></Column>
           <Column header="圖示(Icon)" field="icon"></Column>
-          <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
+          <Column header="操作" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
         </DataTable>
       </CardFrame>
 
@@ -142,15 +142,19 @@ const MenuConfigIndex = () => {
 
         <div className="field">
           <label htmlFor="parName" className="font-bold">名稱</label>
-          <InputText id="parName" value={models.menuName} onChange={(e: any) => onInputChange(e, 'menuName')} disabled={(SysConfigDialog.Type == "Edit") ? true : false} />
+          <InputText value={models.menuName} onChange={(e: any) => onInputChange(e, 'menuName')} disabled={(SysConfigDialog.Type == "Edit") ? true : false} />
+        </div>
+        <div className="field">
+          <label htmlFor="parValue" className="font-bold">階層</label>
+          <InputText value={models.parentId ?? ''} onChange={(e: any) => onInputChange(e, 'parentId')} required />
         </div>
         <div className="field">
           <label htmlFor="parValue" className="font-bold">預設網址</label>
-          <InputText id="parValue" value={models.url ?? ''} onChange={(e: any) => onInputChange(e, 'url')} required />
+          <InputText value={models.url ?? ''} onChange={(e: any) => onInputChange(e, 'url')} required />
         </div>
         <div className="field">
           <label htmlFor="parMemo" className="font-bold">圖示</label>
-          <InputText id="parMemo" value={models.icon ?? ''} onChange={(e) => onInputChange(e, 'icon')} />
+          <InputText value={models.icon ?? ''} onChange={(e) => onInputChange(e, 'icon')} />
         </div>
       </Dialog>
 

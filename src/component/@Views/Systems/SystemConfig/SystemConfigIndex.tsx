@@ -146,7 +146,7 @@ const SystemConfigIndex = () => {
           <Column header="名稱" field="ParName" sortable filter filterPlaceholder="請輸入名稱"   ></Column>
           <Column header="參數" field="ParValue" sortable filter filterPlaceholder="請輸入參數"  ></Column>
           <Column header="備註" field="ParMemo" sortable filter filterPlaceholder="請輸入備註"   ></Column>
-          <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
+          <Column header="操作" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
         </DataTable>
       </CardFrame>
 

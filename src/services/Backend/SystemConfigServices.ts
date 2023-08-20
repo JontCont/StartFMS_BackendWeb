@@ -3,6 +3,7 @@ import { setAuthHeader } from "../services";
 import { connectionConfig } from "../config";
 import { IBackendServices } from "../../interface/IBackendServices";
 import { SystemConfigType } from "../../models/System/SystemConfigType";
+import { S01MenuBasicSetting } from "../../models/System/S01MenuBasicSetting";
 
 export class SystemConfigServices implements IBackendServices {
     private connection: connectionConfig;
@@ -69,7 +70,7 @@ export class SystemConfigServices implements IBackendServices {
         try {
             const url: string = `${this.host}/api/user/MenuBasicSetting`;
             const result = await getMethod(url);
-            return result;
+            return result as S01MenuBasicSetting;
         } catch (error) {
             throw new Error("Error"); // 自訂錯誤訊息
         }
