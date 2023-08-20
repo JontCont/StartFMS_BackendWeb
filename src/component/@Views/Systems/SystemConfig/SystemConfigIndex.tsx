@@ -8,8 +8,8 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { SystemConfigType } from '../../../../services/Backend/SystemConfigServices';
 import { toast } from "react-toastify";
+import { SystemConfigType } from '../../../../models/System/SystemConfigType';
 
 const SystemConfigIndex = () => {
   //initial data (prop)
@@ -135,7 +135,7 @@ const SystemConfigIndex = () => {
     <Content titleName='系統參數'>
       <CardFrame titleName='' IsCardTitle={false}>
         <div className="flex flex-wrap gap-2">
-          <Button label="Create" className='btn' severity="success" onClick={openNew} />
+          <Button label="加入" className='btn' severity="success" onClick={openNew} />
         </div>
       </CardFrame>
 

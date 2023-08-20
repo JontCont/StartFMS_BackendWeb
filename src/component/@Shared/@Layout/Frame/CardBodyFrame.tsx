@@ -1,4 +1,4 @@
-import { CardFrameProps } from "../../../../interface/layout";
+import { CardFrameProps } from "../../../../models/System/layout";
 
 const CardBodyFrame = (props: CardFrameProps) => {
     return (

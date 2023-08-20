@@ -3,26 +3,19 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Services, ServicesContext } from '../../../../services/services';
 import { CardFrame, Content } from '../../../extensions/AdminLte';
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { SystemConfigType } from '../../../../services/Backend/SystemConfigServices';
 import { toast } from "react-toastify";
+import { S01MenuBasicSetting } from '../../../../models/System/S01MenuBasicSetting';
 
 const MenuConfigIndex = () => {
-  //initial data (prop)
-  let emptyProduct: SystemConfigType = {
-    ParMemo: '',
-    ParName: '',
-    ParValue: ''
-  };
   const services: Services | null = useContext(ServicesContext);
-
+  let emptyProduct = {} as S01MenuBasicSetting;
   //DataTable Config (prop)
   const [dataTables, setDataTables] = useState<any>([]);
-  const [sysConfig, setSysConfig] = useState<SystemConfigType>(emptyProduct);
+  const [models, setSysConfig] = useState<S01MenuBasicSetting>(emptyProduct);
 
   //Dialog (prop)
   const [SysConfigDialog, setSysConfigDialog] = useState<any>({ IsOpen: false, Type: '' });
@@ -42,18 +35,18 @@ const MenuConfigIndex = () => {
     setSysConfigDialog({ IsOpen: true, Type: 'New' });
   };
 
-  const editProduct = (prop: SystemConfigType) => {
+  const editProduct = (prop: S01MenuBasicSetting) => {
     setSysConfig({ ...prop });
     setSysConfigDialog({ IsOpen: true, Type: 'Edit' });
   };
 
-  const confirmDeleteProduct = (prop: SystemConfigType) => {
+  const confirmDeleteProduct = (prop: S01MenuBasicSetting) => {
     setSysConfig({ ...prop });
     setDeleteProductDialog(true);
   };
 
   const deleteProduct = () => {
-    services?.backend.deleteDirectory(sysConfig.ParName).then(() => {
+    services?.backend.deleteDirectory(models.id).then(() => {
       services?.backend.getDirectoryByData().then((data: any) => setDataTables(data));
       setDeleteProductDialog(false);
       setSysConfig(emptyProduct);
@@ -64,7 +57,7 @@ const MenuConfigIndex = () => {
 
   const saveProduct = () => {
     if (SysConfigDialog.Type == "Edit") {
-      services?.backend.putDirectory(sysConfig.ParName, sysConfig)
+      services?.backend.putDirectory(models.id, models)
         .then(() => {
           services?.backend.getDirectoryByData().then((data: any) => setDataTables(data));
           setSysConfig(emptyProduct);
@@ -75,7 +68,7 @@ const MenuConfigIndex = () => {
           return false;
         });
     } else {
-      services?.backend.postDirectory(sysConfig)
+      services?.backend.postDirectory(models)
         .then(() => {
           services?.backend.getDirectoryByData().then((data: any) => setDataTables(data));
           setSysConfig(emptyProduct);
@@ -90,9 +83,9 @@ const MenuConfigIndex = () => {
 
   const onInputChange = (e: any, name: string) => {
     const val = (e.target && e.target.value) || '';
-    let _sysConfig: any = { ...sysConfig };
-    _sysConfig[`${name}`] = val;
-    setSysConfig(_sysConfig);
+    let _models: any = { ...models };
+    _models[`${name}`] = val;
+    setSysConfig(_models);
   };
 
   //datatable tempale
@@ -128,16 +121,15 @@ const MenuConfigIndex = () => {
     <Content titleName='目錄設定檔'>
       <CardFrame titleName='' IsCardTitle={false}>
         <div className="flex flex-wrap gap-2">
-          <Button label="Create" className='btn' severity="success" onClick={openNew} />
+          <Button label="加入" className='btn' severity="success" onClick={openNew} />
         </div>
       </CardFrame>
       <CardFrame titleName='資料檔案' cardBodyStyle='p-0'>
         <DataTable value={dataTables} paginator
           rowsPerPageOptions={[15, 50, 100]} rows={15} globalFilterFields={['menuName']} emptyMessage="No customers found.">
           <Column header="名稱" field="menuName" sortable></Column>
+          <Column header="網址" field="url" sortable></Column>
           <Column header="圖示(Icon)" field="icon"></Column>
-          <Column header="備註" field="description" sortable></Column>
-          <Column header="顯示順序" field="displayOrder" sortable></Column>
           <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
         </DataTable>
       </CardFrame>
@@ -150,15 +142,15 @@ const MenuConfigIndex = () => {
 
         <div className="field">
           <label htmlFor="parName" className="font-bold">名稱</label>
-          <InputText id="parName" value={sysConfig.ParName} onChange={(e: any) => onInputChange(e, 'ParName')} disabled={(SysConfigDialog.Type == "Edit") ? true : false} />
+          <InputText id="parName" value={models.menuName} onChange={(e: any) => onInputChange(e, 'menuName')} disabled={(SysConfigDialog.Type == "Edit") ? true : false} />
         </div>
         <div className="field">
-          <label htmlFor="parValue" className="font-bold">參數</label>
-          <InputText id="parValue" value={sysConfig.ParValue} onChange={(e: any) => onInputChange(e, 'ParValue')} />
+          <label htmlFor="parValue" className="font-bold">預設網址</label>
+          <InputText id="parValue" value={models.url ?? ''} onChange={(e: any) => onInputChange(e, 'url')} required />
         </div>
         <div className="field">
-          <label htmlFor="parMemo" className="font-bold">備註</label>
-          <InputTextarea id="parMemo" value={sysConfig.ParMemo} onChange={(e) => onInputChange(e, 'ParMemo')} required rows={3} cols={20} />
+          <label htmlFor="parMemo" className="font-bold">圖示</label>
+          <InputText id="parMemo" value={models.icon ?? ''} onChange={(e) => onInputChange(e, 'icon')} />
         </div>
       </Dialog>
 
@@ -166,9 +158,9 @@ const MenuConfigIndex = () => {
       <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
         <div className="confirmation-content">
           <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-          {sysConfig && (
+          {models && (
             <span>
-              您是否確定刪除 <b>"{sysConfig.ParName}"</b> ?
+              您是否確定刪除 <b className='text-danger'>"{models.menuName}"</b> ?
             </span>
           )}
         </div>

@@ -2,12 +2,7 @@ import axios from "axios";
 import { setAuthHeader } from "../services";
 import { connectionConfig } from "../config";
 import { IBackendServices } from "../../interface/IBackendServices";
-
-export interface SystemConfigType {
-    ParMemo: string,
-    ParName: string,
-    ParValue: string
-}
+import { SystemConfigType } from "../../models/System/SystemConfigType";
 
 export class SystemConfigServices implements IBackendServices {
     private connection: connectionConfig;

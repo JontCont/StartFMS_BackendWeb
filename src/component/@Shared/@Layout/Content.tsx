@@ -1,4 +1,4 @@
-import { ContentPageProps } from "../../../interface/layout";
+import { ContentPageProps } from "../../../models/System/layout";
 
 const Content = (props: ContentPageProps) => {
     return (

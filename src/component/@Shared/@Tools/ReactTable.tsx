@@ -1,6 +1,6 @@
 import React from "react";
-import { ActionsProp, ColumnsProp } from "../../../interface/table";
-import { TableProp } from "../../../interface/table";
+import { ColumnsProp } from "../../../models/System/ColumnsProp";
+import { ActionsProp } from "../../../models/System/ActionsProp";
 import {
     createColumnHelper, // 幫忙製作表格列的工具
     flexRender, // 其實就是 flex box
@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-table";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { TableProp } from "../../../models/System/TableProp";
 
 
 const InitialColumns = (cols: Array<ColumnsProp>, actions: ActionsProp) => {
@@ -43,7 +44,7 @@ const InitialColumns = (cols: Array<ColumnsProp>, actions: ActionsProp) => {
                                     actions.data.map((value) => {
                                         switch (value) {
                                             case 0:
-                                                return (<Link to={actions.editorUrl??""}><button key={value} className="btn btn-outline-secondary mr-1 ml-1">Edit</button></Link>);
+                                                return (<Link to={actions.editorUrl ?? ""}><button key={value} className="btn btn-outline-secondary mr-1 ml-1">Edit</button></Link>);
                                             case 1:
                                                 return <button key={value} className="btn btn-outline-danger mr-1 ml-1">Delete</button>;
                                             case 40:
