@@ -4,12 +4,12 @@ import { ReactNode, useState } from "react";
 class MenuFolderType {
     id?: string;
     name?: string;
-    icon?: string = 'fas fa-tachometer-alt';
+    icon?: string | null;
     children: ReactNode;
 }
 
 
-const MenuFolder = (type: MenuFolderType) => {
+const MenuFolder = (models: MenuFolderType) => {
     const [menuActionState, setmenuActionState] = useState(false);
 
     const handleClick = () => {
@@ -17,17 +17,16 @@ const MenuFolder = (type: MenuFolderType) => {
     };
 
     return (
-        <li
-            className={`nav-item ${menuActionState ? "menu-open" : ""}`}
-            onClick={handleClick} key={type.id}>
+        <li className={`nav-item ${menuActionState ? "menu-open" : ""}`}
+            onClick={handleClick} key={models.id}>
             <Link to="#" onClick={e => e.preventDefault()} className="nav-link">
-                <i className="nav-icon fas fa-tachometer-alt"></i>
+                <i className={`nav-icon ` + models.icon ?? 'fas fa-tachometer-alt'}></i>
                 <p>
-                    {type.name}
+                    {models.name}
                     <i className="right fas fa-angle-left"></i>
                 </p>
             </Link>
-            {type.children}
+            {models.children}
         </li>
     );
 }

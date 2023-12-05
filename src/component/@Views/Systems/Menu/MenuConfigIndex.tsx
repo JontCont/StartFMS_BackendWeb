@@ -4,6 +4,7 @@ import { Column } from 'primereact/column';
 import { Services, ServicesContext } from '../../../../services/services';
 import { CardFrame, Content } from '../../../extensions/AdminLte';
 import { InputText } from 'primereact/inputtext';
+import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { toast } from "react-toastify";
@@ -130,6 +131,7 @@ const MenuConfigIndex = () => {
           <Column header="名稱" field="menuName" sortable></Column>
           <Column header="網址" field="url" sortable></Column>
           <Column header="圖示(Icon)" field="icon"></Column>
+          <Column header="顯示順序" field="displayOrder"></Column>
           <Column header="操作" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
         </DataTable>
       </CardFrame>
@@ -151,6 +153,10 @@ const MenuConfigIndex = () => {
         <div className="field">
           <label htmlFor="parValue" className="font-bold">預設網址</label>
           <InputText value={models.url ?? ''} onChange={(e: any) => onInputChange(e, 'url')} required />
+        </div>
+        <div className="field">
+          <label htmlFor="parValue" className="font-bold">顯示順序</label>
+          <InputNumber  value={models.displayOrder} onChange={(e: any) => onInputChange(e, 'displayOrder')} required />
         </div>
         <div className="field">
           <label htmlFor="parMemo" className="font-bold">圖示</label>

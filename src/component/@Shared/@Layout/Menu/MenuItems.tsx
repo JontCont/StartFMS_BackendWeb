@@ -13,9 +13,10 @@ const getMenusElement = (menuList: any) => {
 };
 
 const getMenuFolder = (el: any) => {
+  console.log(el);
 
   return (
-    <MenuFolder name={el.menuName}>
+    <MenuFolder name={el.menuName} icon={el.icon}>
       <ul className="nav nav-treeview">
         {getMenusElement(el.children)}
       </ul>
