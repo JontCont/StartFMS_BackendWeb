@@ -1,6 +1,6 @@
 import React from "react";
-import { ColumnsProp } from "../../../models/System/ColumnsProp";
-import { ActionsProp } from "../../../models/System/ActionsProp";
+import { ColumnsProp } from "../../../models/Layout/ColumnsProp";
+import { ActionsProp } from "../../../models/Layout/ActionsProp";
 import {
     createColumnHelper, // 幫忙製作表格列的工具
     flexRender, // 其實就是 flex box
@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-table";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { TableProp } from "../../../models/System/TableProp";
+import { TableProp } from "../../../models/Layout/TableProp";
 
 
 const InitialColumns = (cols: Array<ColumnsProp>, actions: ActionsProp) => {

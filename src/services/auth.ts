@@ -17,7 +17,7 @@ export class AuthServices implements IAuthServices {
 
     async login(email: string, password: string): Promise<string> {
         try {
-            const url: string = `${this.host}/api/auth/v1.0/Login/jwtLogin`;
+            const url: string = `${this.host}/api/auth/Login`;
             const token = await loginByAuth(email, password,url);
             return token;
         } catch (error) {

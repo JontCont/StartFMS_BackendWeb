@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import MenuFile from './MenuFile';
 import MenuFolder from './MenuFolder';
-import { MenuTypeProps } from '../../../../models/System/layout';
 import { Services, ServicesContext } from '../../../../services/services';
+import { MenuTypeProps } from '../../../../models/Layout/MenuTypeProps';
 
 const getMenusElement = (menuList: any) => {
   if (menuList == null) return null;

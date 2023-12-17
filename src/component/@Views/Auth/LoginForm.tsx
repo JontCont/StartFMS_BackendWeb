@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
-import './css/login.css'
+import "./login.css";
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../services/services";
+
 const LoginForm = () => {
-    // initial : auth kit 
-    // 確認身分是否有登入
     const isAuthenticated = useIsAuthenticated();
     const services: Services | null = useContext(ServicesContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!isAuthenticated()) {
@@ -16,42 +16,37 @@ const LoginForm = () => {
         } else {
             navigate("/");
         }
-    }, []);
+    }, [isAuthenticated, navigate]);
 
-    // 登入時候所需要變數
-    const [useremail, setUseremail] = useState('');
-    const [password, setPassword] = useState('');
+    const [useremail, setUseremail] = useState("");
+    const [password, setPassword] = useState("");
     const signIn = useSignIn();
-    const navigate = useNavigate();
 
-
-    //login 
     const loginHandler = async () => {
-        // 判斷
         if (!useremail || !password) {
-            toast.error('請輸入使用者帳號、密碼');
-            return false;
-        }
-        
-        // 權限
-        const token = await services?.auth.login(useremail, password);
-        if (!token) {
-            toast.error('帳號或密碼輸入錯誤，請重新輸入');
+            toast.error("請輸入使用者帳號、密碼");
             return false;
         }
 
-        // 登入
-        signIn({
-            token: token, //Just a random token
-            tokenType: "Bearer", // Token type set as Bearer
-            authState: { name: "React User", uid: 123456 }, // Dummy auth user state
-            expiresIn: 120 // Token Expriration time, in minutes
-        })
+        try {
+            const token = await services?.auth.login(useremail, password);
+            if (!token) {
+                toast.error("帳號或密碼輸入錯誤，請重新輸入");
+                return false;
+            }
 
-        // If Login Successfull, then Redirect the user to secure route
-        // 如果登入使用 navigate adminlte js 會失效
-        window.location.href = '/';
-        //navigate("/");
+            signIn({
+                token: token,
+                tokenType: "Bearer",
+                authState: { name: "React User", uid: 123456 },
+                expiresIn: 120,
+            });
+
+            window.location.href = "/";
+        } catch (error) {
+            console.error("An error occurred during login:", error);
+            toast.error("登入時發生錯誤，請稍後再試");
+        }
     };
 
     return (
@@ -66,31 +61,40 @@ const LoginForm = () => {
                             <label className="label">
                                 <span className="label-text">信箱</span>
                             </label>
-                            <input type="text"
+                            <input
+                                type="text"
                                 placeholder="email"
                                 className="form-control"
                                 value={useremail}
-                                onChange={(e) => setUseremail(e.target.value)} />
+                                onChange={(e) => setUseremail(e.target.value)}
+                            />
                         </div>
                         <div className="form-row">
                             <label className="label">
                                 <span className="label-text">密碼</span>
                             </label>
-                            <input type="password" className="form-control"
+                            <input
+                                type="password"
+                                className="form-control"
                                 placeholder="password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)} />
-                            <label className="label">
-                            </label>
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <label className="label"></label>
                         </div>
                         <div className="mt-6 input-buttons">
-                            <input type="button" className="btn btn-primary" onClick={loginHandler} value="Sign In" />
+                            <input
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={() => loginHandler()}
+                                value="Sign In"
+                            />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default LoginForm;

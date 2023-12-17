@@ -7,7 +7,7 @@ import {
     getCoreRowModel, // 取得行的資料來渲染新表格
     useReactTable, // 使用此 Hook 來掌握表格
 } from "@tanstack/react-table";
-import { ColumnsProp } from "../../../models/System/ColumnsProp";
+import { ColumnsProp } from "../../../models/Layout/ColumnsProp";
 import ReactTable from "../../@Shared/@Tools/ReactTable";
 
 

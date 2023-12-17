@@ -1,8 +1,11 @@
 import axios from "axios";
-import { connectionConfig } from "./config";
-import { setAuthHeader } from "./services";
-import { IUserServices } from "../interface/IUserServices";
+import { connectionConfig } from "../services/config";
+import { setAuthHeader } from "../services/services";
 
+export interface IUserServices {
+    // 定義其他需要的服務方法
+    getUsersMenus(): Promise<string>;
+}
 
 export class UserServices implements IUserServices {
     private connection: connectionConfig;
