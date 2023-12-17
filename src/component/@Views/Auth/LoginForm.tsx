@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../services/services";
 
