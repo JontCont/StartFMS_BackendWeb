@@ -13,8 +13,6 @@ const getMenusElement = (menuList: any) => {
 };
 
 const getMenuFolder = (el: any) => {
-  console.log(el);
-
   return (
     <MenuFolder name={el.menuName} icon={el.icon}>
       <ul className="nav nav-treeview">
@@ -39,7 +37,7 @@ const MenuItems = () => {
     const getMenuList = async () => {
       //取得 menu 清單
       const element = await services?.users.getUsersMenus();
-      if (element == null || element == undefined) {
+      if (element == null || element === undefined) {
         return (<nav className="mt-2"></nav>);
       }
 

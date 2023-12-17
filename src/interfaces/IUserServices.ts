@@ -1,6 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { connectionConfig } from "../services/config";
 import { setAuthHeader } from "../services/services";
+import { toast } from "react-toastify";
 
 export interface IUserServices {
     // 定義其他需要的服務方法
@@ -23,6 +25,7 @@ export class UserServices implements IUserServices {
             const result = await getUsersMenus(url);
             return result;
         } catch (error) {
+            toast.error("無法登入");
             throw new Error("無法登入"); // 自訂錯誤訊息
         }
     }

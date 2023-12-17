@@ -1,8 +1,8 @@
+import "./login.css";
+import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect, useContext } from "react";
 import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
-import "./login.css";
-import 'react-toastify/dist/ReactToastify.css';
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../services/services";
 
@@ -12,15 +12,16 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated() === true) {
-      navigate("/login", { replace: true });
-    } else {
+    let isAuth = isAuthenticated();
+    if (isAuth) {
       navigate("/");
+    } else {
+      navigate("/login");
     }
-  }, [isAuthenticated, navigate]);
+  }, [navigate]);
 
-  const [useremail, setUseremail] = useState("");
-  const [password, setPassword] = useState("");
+  let [useremail, setUseremail] = useState("");
+  let [password, setPassword] = useState("");
   const signIn = useSignIn();
 
   const loginHandler = async () => {
