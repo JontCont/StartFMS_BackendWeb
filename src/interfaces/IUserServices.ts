@@ -26,7 +26,6 @@ export class UserServices implements IUserServices {
             return result;
         } catch (error) {
             toast.error("無法登入");
-            throw new Error("無法登入"); // 自訂錯誤訊息
         }
     }
 }
