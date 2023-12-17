@@ -5,6 +5,7 @@ import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../services/services";
+import React from "react";
 
 const LoginForm = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -22,6 +23,7 @@ const LoginForm = () => {
 
   let [useremail, setUseremail] = useState("");
   let [password, setPassword] = useState("");
+
   const signIn = useSignIn();
 
   const loginHandler = async () => {
@@ -61,7 +63,7 @@ const LoginForm = () => {
           <div className="card-body">
             <div className="form-row">
               <label className="label">
-                <span className="label-text">信箱</span>
+                <span className="label-text">使用者/Email</span>
               </label>
               <input
                 type="text"
@@ -81,6 +83,7 @@ const LoginForm = () => {
                 placeholder="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { loginHandler(); }}}
               />
               <label className="label"></label>
             </div>
