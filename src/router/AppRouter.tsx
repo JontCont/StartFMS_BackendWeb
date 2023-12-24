@@ -12,10 +12,8 @@ import { RequireAuth } from "react-auth-kit";
 import { ToastContainer } from "react-toastify";
 import { Services, ServicesContext } from "../services/services";
 import Modal from "react-modal";
-import TempleDataTable from "../component/@Views/Template/TempleDataTable";
-import SampleReactTable from "../component/@Views/Template/SampleReactTable";
-import Alert from "../component/@Views/Template/Alert";
-import React, { startTransition, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { connectionConfig } from "../services/config";
 
 Modal.setAppElement("body");
 
@@ -25,21 +23,34 @@ const AppRouter = () => {
 
   useEffect(() => {
     // 這裡進行 API 調用，並將獲取的數據設置到狀態中
-    fetch("https://localhost:5001/api/users/menus/items")
+    fetch(`${services.localHost}/api/users/menus/items`)
       .then((response) => response.json())
-      .then((data) => setRoutesData(data));
+      .then(({data}) => setRoutesData(data));
   }, []);
 
   //ajax
   const privateElement = (element: JSX.Element) => {
     return <RequireAuth loginPath={"/login"}>{element}</RequireAuth>;
   };
-  const components = routesData.map((route: any) => ({
-    ...route,
-    component: React.lazy(
-      () => import(`../component/@Views/${route.importAt}`)
-    ),
-  }));
+  let components: any[] = [];
+
+  if(routesData.length > 0){
+    components = routesData?.map((route: any) => ({
+      ...route,
+      component: React.lazy(
+        () => import(`../component/@Views/${route.importAt}`)
+      ),
+    }));
+  }
+  console.log(routesData);
+  console.log(components);
+  // components = routesData?.map((route: any) => ({
+  //   ...route,
+  //   component: React.lazy(
+  //     () => import(`../component/@Views/${route.importAt}`)
+  //   ),
+  // }));
+
   return (
     <BrowserRouter>
       <ServicesContext.Provider value={services}>
