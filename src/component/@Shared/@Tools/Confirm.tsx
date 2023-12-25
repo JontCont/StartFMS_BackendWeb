@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-import ModalFrame from "./ModalFrame";
 import { Button, Modal } from "react-bootstrap";
 
 export interface ConfirmProp {

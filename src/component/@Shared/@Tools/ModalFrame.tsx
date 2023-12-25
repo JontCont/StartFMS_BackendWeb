@@ -1,6 +1,4 @@
-import { title } from "process";
-import React, { ReactNode, useState } from "react";
-import Modal from 'react-modal';
+import { ReactNode } from "react";
 
 interface ModalProp {
   id: string,
@@ -15,7 +13,7 @@ const ModalFrame = (prop: ModalProp) => {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             {
-              (prop.titleName != null && prop.titleName != undefined) ?
+              (prop.titleName != null && prop.titleName !== undefined) ?
                 (
                   <div className="modal-header">
                     <h5 className="modal-title" id={`${prop.id}-label`}>{prop.titleName}</h5>

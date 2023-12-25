@@ -1,5 +1,3 @@
-// Home.js
-import React, { useState } from 'react';
 import Content from '../../@Shared/@Layout/Content';
 import CardFrame from '../../@Shared/@Layout/Frame/CardBodyFrame';
 import ModalFrame from '../../@Shared/@Tools/ModalFrame';
@@ -7,14 +5,6 @@ import ModalFrame from '../../@Shared/@Tools/ModalFrame';
 const titleName = "Home";
 
 const Home = () => {
-  const handleOpenModal = () => {
-    console.log('true');
-  };
-
-  const Test = (setModalIsOpen: any) => {
-    console.log(setModalIsOpen);
-    // setModalIsOpen(true);
-  }
   return (
     <Content titleName={titleName} >
       <CardFrame titleName='Home' IsZoomOut={true}>

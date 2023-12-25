@@ -27,7 +27,7 @@ const MainLayout = () => {
         if(!isAuthenticated()){
             navigate("/login", { replace: true });
         }
-      }, []);
+      }, [isAuthenticated, navigate]);
 
 
     return (
@@ -43,7 +43,3 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
-
-function isAuthenticated(): any {
-    throw new Error("Function not implemented.");
-}

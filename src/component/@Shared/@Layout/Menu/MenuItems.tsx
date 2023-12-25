@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useContext } from 'react';
 import MenuFile from './MenuFile';
 import MenuFolder from './MenuFolder';

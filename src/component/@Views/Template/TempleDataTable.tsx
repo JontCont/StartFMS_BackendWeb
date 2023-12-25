@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import 'react-toastify/dist/ReactToastify.css';
 import { CardBodyFrame, CardFrame, Content } from '../../extensions/AdminLte';
 import SampleTable from '../../@Shared/@Tools/SampleTable';
