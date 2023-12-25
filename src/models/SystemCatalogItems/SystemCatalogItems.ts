@@ -1,4 +1,4 @@
-export class S01MenuBasicSetting {
+export class SystemCatalogItems {
     id: string;
     menuName: string;
     description: string | null;
@@ -7,8 +7,8 @@ export class S01MenuBasicSetting {
     icon: string | null;
     parentId: string | null;
 
-    children: S01MenuBasicSetting[] | null;
-    parent: S01MenuBasicSetting | null;
+    children: SystemCatalogItems[] | null;
+    parent: SystemCatalogItems | null;
 
     constructor(
         id: string,
@@ -18,8 +18,8 @@ export class S01MenuBasicSetting {
         description: string | null = null,
         url: string | null = null,
         icon: string | null = null,
-        children: S01MenuBasicSetting[] | null = null,
-        parent: S01MenuBasicSetting | null = null
+        children: SystemCatalogItems[] | null = null,
+        parent: SystemCatalogItems | null = null
     ) {
         this.id = id;
         this.menuName = menuName;
