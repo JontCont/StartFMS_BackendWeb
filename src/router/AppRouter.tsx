@@ -14,6 +14,7 @@ import { Services, ServicesContext } from "../services/services";
 import Modal from "react-modal";
 import React, { useContext, useEffect, useState } from "react";
 import { connectionConfig } from "../services/config";
+import FinancialRecords from "../component/@Views/FinancialRecords/FinancialRecords";
 
 Modal.setAppElement("body");
 
@@ -42,14 +43,13 @@ const AppRouter = () => {
       ),
     }));
   }
-  console.log(routesData);
-  console.log(components);
-  // components = routesData?.map((route: any) => ({
-  //   ...route,
-  //   component: React.lazy(
-  //     () => import(`../component/@Views/${route.importAt}`)
-  //   ),
-  // }));
+
+  components = routesData?.map((route: any) => ({
+    ...route,
+    component: React.lazy(
+      () => import(`../component/@Views/${route.importAt}`)
+    ),
+  }));
 
   return (
     <BrowserRouter>
@@ -59,6 +59,10 @@ const AppRouter = () => {
           {/* user authrozie element */}
           <Route path="/Login" element={<LoginLayout />}>
             <Route path="/Login" element={<Login />} />
+          </Route>
+
+          <Route path="/front">
+            <Route path="/front" element={<FinancialRecords />} />
           </Route>
 
           {/* System element */}

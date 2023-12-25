@@ -1,145 +1,278 @@
-import React, { useEffect, useState } from "react";
-import {
-  createColumnHelper, // 幫忙製作表格列的工具
-  flexRender, // 其實就是 flex box
-  getCoreRowModel, // 取得行的資料來渲染新表格
-  useReactTable, // 使用此 Hook 來掌握表格
-} from "@tanstack/react-table";
-//理財紀錄 (以下都不使用資料庫，只是紀錄)
-// 1. 需要紀錄角色、日期、金額、備註
-// 2. 顯示紀錄列表
-// 3. 新增紀錄
-// 4. 修改紀錄
-// 5. 刪除紀錄
-// 6. 查詢紀錄
+import React, { useState, useEffect, useContext } from "react";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { FilterMatchMode, FilterOperator } from "primereact/api";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { toast } from "react-toastify";
+import { Services, ServicesContext } from "../../../services/services";
+import { CardFrame, Content } from "../../extensions/AdminLte";
+class SystemConfigType {
+  index?: number = 0;
+  ParName: string = "";
+  ParValue: string = "";
+  ParMemo: string = "";
+}
 
-type financial = {
-  role: string;
-  date: string;
-  amount: number;
-  note: string;
-};
+const FinancialRecords = () => {
+  //initial data (prop)
+  let emptyProduct: SystemConfigType = {
+    ParMemo: "",
+    ParName: "",
+    ParValue: "",
+  };
+  const services: Services | null = useContext(ServicesContext);
 
-const FinancialRecords: React.FC = () => {
-  const columnHelper = createColumnHelper<financial>();
-  let defaultData: financial[] = [];
-  const columns = [
-    columnHelper.accessor("role", {
-      cell: (info) => info.getValue(),
-      header: (info) => info.column.id,
-    }),
-    columnHelper.accessor((row) => row.date, {
-      id: "date",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>Date</span>,
-    }),
-    columnHelper.accessor((row) => row.amount, {
-      id: "amount",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>Amount</span>,
-    }),
-    columnHelper.accessor((row) => row.note, {
-      id: "note",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>Note</span>,
-    }),
-  ];
-  const table = useReactTable({
-    columns,
-    data: [...defaultData],
-    getCoreRowModel: getCoreRowModel(),
+  //DataTable Config (prop)
+  const [dataTables, setDataTables] = useState<any>([]);
+  const [sysConfig, setSysConfig] = useState<SystemConfigType>(emptyProduct);
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    ParName: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    ParValue: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    ParMemo: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
 
-  //
+  //Dialog (prop)
+  const [SysConfigDialog, setSysConfigDialog] = useState<any>({
+    IsOpen: false,
+    Type: "",
+  });
+  const [deleteProductDialog, setDeleteProductDialog] = useState(false);
+
+  //Dialog Function
+  const hideDialog = () => {
+    setSysConfigDialog({ IsOpen: false, Type: "" });
+  };
+
+  const hideDeleteProductDialog = () => {
+    setDeleteProductDialog(false);
+  };
+
+  const openNew = () => {
+    setSysConfig(emptyProduct);
+    setSysConfigDialog({ IsOpen: true, Type: "New" });
+  };
+
+  const editProduct = (prop: SystemConfigType, index: number) => {
+    prop.index = index;
+    setSysConfig({ ...prop });
+    setSysConfigDialog({ IsOpen: true, Type: "Edit" });
+  };
+
+  const confirmDeleteProduct = (prop: SystemConfigType, index: number) => {
+    prop.index = index;
+    setSysConfig({ ...prop });
+    setDeleteProductDialog(true);
+  };
+
+  const deleteProduct = () => {
+    let _dataTables = { ...dataTables };
+    let _index = sysConfig.index;
+    _dataTables.data.splice(_index, 1);
+    setDataTables(_dataTables);
+    setSysConfig(emptyProduct);
+    setDeleteProductDialog(false);
+    toast.success("刪除成功");
+  };
+
+  const saveProduct = () => {
+    if (dataTables.data == null) {
+      dataTables.data = [];
+    }
+    if(sysConfig.index != null){
+      dataTables.data[sysConfig.index] = sysConfig;
+    }else{
+      dataTables.data.push(sysConfig);
+    }
+    setDataTables(dataTables);
+    setSysConfig(emptyProduct);
+    setSysConfigDialog({ IsOpen: false, Type: "" });
+  };
+
+  const onInputChange = (e: any, name: string) => {
+    const val = (e.target && e.target.value) || "";
+    let _sysConfig: any = { ...sysConfig };
+    _sysConfig[`${name}`] = val;
+    setSysConfig(_sysConfig);
+  };
+
+  //datatable tempale
+  const actionBodyTemplate = (rowData: any, options: any) => {
+    console.log(options);
+    return (
+      <React.Fragment>
+        <Button
+          icon="fa fa-pen"
+          rounded
+          outlined
+          className="mr-2"
+          onClick={() => editProduct(rowData, options.rowIndex)}
+        />
+        <Button
+          icon="fa fa-trash"
+          rounded
+          outlined
+          severity="danger"
+          onClick={() => confirmDeleteProduct(rowData, options.rowIndex)}
+        />
+      </React.Fragment>
+    );
+  };
+
+  const deleteProductDialogFooter = (
+    <React.Fragment>
+      <Button
+        label="No"
+        icon="pi pi-times"
+        outlined
+        onClick={hideDeleteProductDialog}
+      />
+      <Button
+        label="Yes"
+        icon="pi pi-check"
+        severity="danger"
+        onClick={deleteProduct}
+      />
+    </React.Fragment>
+  );
+
+  const SysConfigDialogFooter = (
+    <React.Fragment>
+      <Button label="Save" icon="pi pi-check" onClick={saveProduct} />
+      <Button label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
+    </React.Fragment>
+  );
+
+  // react function
   useEffect(() => {}, []);
-  let [userName, setUserName] = useState('');
 
   return (
-    <div>
-      <div>
-        <h2>FinancialRecords</h2>
-      </div>
-      <div>
-        <div>
-          <label>名字</label>
-          <input
-            type="text"
-            value={userName}
-            onChange={(e) => {
-              setUserName(e.target.value);
-            }}
+    <Content titleName="系統參數">
+      <CardFrame titleName="" IsCardTitle={false}>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            label="加入"
+            className="btn"
+            severity="success"
+            onClick={openNew}
           />
         </div>
-        <div>
-          <label>對象(選填)</label>
-          {/* <input type="text" onChange={(e) => setOname(e.target.value)} /> */}
+      </CardFrame>
+
+      <CardFrame titleName="資料檔案" cardBodyStyle="p-0">
+        <DataTable
+          value={dataTables.data}
+          filters={filters}
+          paginator
+          showGridlines
+          rowsPerPageOptions={[15, 50, 100]}
+          rows={15}
+          filterDisplay="row"
+          globalFilterFields={["ParName", "ParValue", "ParMemo"]}
+          emptyMessage="No customers found."
+        >
+          <Column
+            header="名稱"
+            field="ParName"
+            sortable
+            filter
+            filterPlaceholder="請輸入名稱"
+          ></Column>
+          <Column
+            header="參數"
+            field="ParValue"
+            sortable
+            filter
+            filterPlaceholder="請輸入參數"
+          ></Column>
+          <Column
+            header="備註"
+            field="ParMemo"
+            sortable
+            filter
+            filterPlaceholder="請輸入備註"
+          ></Column>
+          <Column
+            header="操作"
+            body={actionBodyTemplate}
+            exportable={false}
+            style={{ minWidth: "12rem" }}
+          ></Column>
+        </DataTable>
+      </CardFrame>
+
+      <Dialog
+        modal
+        visible={SysConfigDialog.IsOpen}
+        style={{ width: "32rem" }}
+        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+        header={SysConfigDialog.Type == "Edit" ? "編輯 Edit" : "新增 Create"}
+        className="p-fluid"
+        footer={SysConfigDialogFooter}
+        onHide={hideDialog}
+      >
+        <div className="field">
+          <label htmlFor="parName" className="font-bold">
+            名稱
+          </label>
+          <InputText
+            id="parName"
+            value={sysConfig.ParName}
+            onChange={(e: any) => onInputChange(e, "ParName")}
+            disabled={SysConfigDialog.Type == "Edit" ? true : false}
+          />
         </div>
-        <div>
-          <label>金額</label>
-          {/* <input type="text" onChange={(e) => setCash(e.target.value)} /> */}
+        <div className="field">
+          <label htmlFor="parValue" className="font-bold">
+            參數
+          </label>
+          <InputText
+            id="parValue"
+            value={sysConfig.ParValue}
+            onChange={(e: any) => onInputChange(e, "ParValue")}
+          />
         </div>
-        <div>
-          <label>日期</label>
-          {/* <input type="date" onChange={(e) => setDate(e.target.value)} /> */}
+        <div className="field">
+          <label htmlFor="parMemo" className="font-bold">
+            備註
+          </label>
+          <InputTextarea
+            id="parMemo"
+            value={sysConfig.ParMemo}
+            onChange={(e) => onInputChange(e, "ParMemo")}
+            required
+            rows={3}
+            cols={20}
+          />
         </div>
-        <input
-          type="button"
-          className="btn btn-success"
-          onClick={() => {
-            console.log("確認");
-          }}
-          value="確認"
-        />
-      </div>
-      <div>
-        <table className="table table-boder">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            {table.getFooterGroups().map((footerGroup) => (
-              <tr key={footerGroup.id}>
-                {footerGroup.headers.map((header) => (
-                  <th key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.footer,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </tfoot>
-        </table>
-      </div>
-    </div>
+      </Dialog>
+
+      <Dialog
+        visible={deleteProductDialog}
+        style={{ width: "32rem" }}
+        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+        header="Confirm"
+        modal
+        footer={deleteProductDialogFooter}
+        onHide={hideDeleteProductDialog}
+      >
+        <div className="confirmation-content">
+          <i
+            className="pi pi-exclamation-triangle mr-3"
+            style={{ fontSize: "2rem" }}
+          />
+          {sysConfig && (
+            <span>
+              您是否確定刪除 <b>"{sysConfig.ParName}"</b> ?
+            </span>
+          )}
+        </div>
+      </Dialog>
+    </Content>
   );
 };
-
 export default FinancialRecords;
