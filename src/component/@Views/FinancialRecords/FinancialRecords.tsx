@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -9,24 +11,22 @@ import { Dialog } from "primereact/dialog";
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../services/services";
 import { CardFrame, Content } from "../../extensions/AdminLte";
-class SystemConfigType {
-  index?: number = 0;
-  ParName: string = "";
-  ParValue: string = "";
-  ParMemo: string = "";
+interface SystemConfigType {
+  index?: number;
+  ParName: string;
+  ParValue: string;
+  ParMemo: string;
 }
 
 const FinancialRecords = () => {
-  //initial data (prop)
-  let emptyProduct: SystemConfigType = {
+  const emptyProduct: SystemConfigType = {
     ParMemo: "",
     ParName: "",
     ParValue: "",
   };
-  const services: Services | null = useContext(ServicesContext);
+  const services = useContext(ServicesContext);
 
-  //DataTable Config (prop)
-  const [dataTables, setDataTables] = useState<any>([]);
+  const [dataTables, setDataTables] = useState<SystemConfigType[]>([]);
   const [sysConfig, setSysConfig] = useState<SystemConfigType>(emptyProduct);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -36,16 +36,14 @@ const FinancialRecords = () => {
     ParMemo: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
 
-  //Dialog (prop)
-  const [SysConfigDialog, setSysConfigDialog] = useState<any>({
-    IsOpen: false,
-    Type: "",
+  const [sysConfigDialog, setSysConfigDialog] = useState({
+    isOpen: false,
+    type: "",
   });
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
 
-  //Dialog Function
   const hideDialog = () => {
-    setSysConfigDialog({ IsOpen: false, Type: "" });
+    setSysConfigDialog({ isOpen: false, type: "" });
   };
 
   const hideDeleteProductDialog = () => {
@@ -54,13 +52,13 @@ const FinancialRecords = () => {
 
   const openNew = () => {
     setSysConfig(emptyProduct);
-    setSysConfigDialog({ IsOpen: true, Type: "New" });
+    setSysConfigDialog({ isOpen: true, type: "New" });
   };
 
   const editProduct = (prop: SystemConfigType, index: number) => {
     prop.index = index;
     setSysConfig({ ...prop });
-    setSysConfigDialog({ IsOpen: true, Type: "Edit" });
+    setSysConfigDialog({ isOpen: true, type: "Edit" });
   };
 
   const confirmDeleteProduct = (prop: SystemConfigType, index: number) => {
@@ -70,41 +68,38 @@ const FinancialRecords = () => {
   };
 
   const deleteProduct = () => {
-    let _dataTables = { ...dataTables };
-    let _index = sysConfig.index;
-    _dataTables.data.splice(_index, 1);
-    setDataTables(_dataTables);
+    const updatedDataTables = [...dataTables];
+    const index = sysConfig.index!;
+    updatedDataTables.splice(index, 1);
+    setDataTables(updatedDataTables);
     setSysConfig(emptyProduct);
     setDeleteProductDialog(false);
     toast.success("刪除成功");
   };
 
   const saveProduct = () => {
-    if (dataTables.data == null) {
-      dataTables.data = [];
+    const updatedDataTables = [...dataTables];
+    if (sysConfig.index != null) {
+      updatedDataTables[sysConfig.index] = sysConfig;
+    } else {
+      updatedDataTables.push(sysConfig);
     }
-    if(sysConfig.index != null){
-      dataTables.data[sysConfig.index] = sysConfig;
-    }else{
-      dataTables.data.push(sysConfig);
-    }
-    setDataTables(dataTables);
+    setDataTables(updatedDataTables);
     setSysConfig(emptyProduct);
-    setSysConfigDialog({ IsOpen: false, Type: "" });
+    setSysConfigDialog({ isOpen: false, type: "" });
   };
 
-  const onInputChange = (e: any, name: string) => {
-    const val = (e.target && e.target.value) || "";
-    let _sysConfig: any = { ...sysConfig };
-    _sysConfig[`${name}`] = val;
-    setSysConfig(_sysConfig);
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
+    const val = e.target.value || "";
+    setSysConfig((prevSysConfig) => ({
+      ...prevSysConfig,
+      [name]: val,
+    }));
   };
 
-  //datatable tempale
-  const actionBodyTemplate = (rowData: any, options: any) => {
-    console.log(options);
+  const actionBodyTemplate = (rowData: SystemConfigType, options: any) => {
     return (
-      <React.Fragment>
+      <>
         <Button
           icon="fa fa-pen"
           rounded
@@ -119,12 +114,12 @@ const FinancialRecords = () => {
           severity="danger"
           onClick={() => confirmDeleteProduct(rowData, options.rowIndex)}
         />
-      </React.Fragment>
+      </>
     );
   };
 
   const deleteProductDialogFooter = (
-    <React.Fragment>
+    <>
       <Button
         label="No"
         icon="pi pi-times"
@@ -137,17 +132,16 @@ const FinancialRecords = () => {
         severity="danger"
         onClick={deleteProduct}
       />
-    </React.Fragment>
+    </>
   );
 
-  const SysConfigDialogFooter = (
-    <React.Fragment>
+  const sysConfigDialogFooter = (
+    <>
       <Button label="Save" icon="pi pi-check" onClick={saveProduct} />
       <Button label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
-    </React.Fragment>
+    </>
   );
 
-  // react function
   useEffect(() => {}, []);
 
   return (
@@ -165,7 +159,7 @@ const FinancialRecords = () => {
 
       <CardFrame titleName="資料檔案" cardBodyStyle="p-0">
         <DataTable
-          value={dataTables.data}
+          value={dataTables}
           filters={filters}
           paginator
           showGridlines
@@ -207,12 +201,12 @@ const FinancialRecords = () => {
 
       <Dialog
         modal
-        visible={SysConfigDialog.IsOpen}
+        visible={sysConfigDialog.isOpen}
         style={{ width: "32rem" }}
         breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-        header={SysConfigDialog.Type == "Edit" ? "編輯 Edit" : "新增 Create"}
+        header={sysConfigDialog.type === "Edit" ? "編輯 Edit" : "新增 Create"}
         className="p-fluid"
-        footer={SysConfigDialogFooter}
+        footer={sysConfigDialogFooter}
         onHide={hideDialog}
       >
         <div className="field">
@@ -222,8 +216,8 @@ const FinancialRecords = () => {
           <InputText
             id="parName"
             value={sysConfig.ParName}
-            onChange={(e: any) => onInputChange(e, "ParName")}
-            disabled={SysConfigDialog.Type == "Edit" ? true : false}
+            onChange={(e) => onInputChange(e, "ParName")}
+            disabled={sysConfigDialog.type === "Edit"}
           />
         </div>
         <div className="field">
@@ -233,7 +227,7 @@ const FinancialRecords = () => {
           <InputText
             id="parValue"
             value={sysConfig.ParValue}
-            onChange={(e: any) => onInputChange(e, "ParValue")}
+            onChange={(e) => onInputChange(e, "ParValue")}
           />
         </div>
         <div className="field">
@@ -275,4 +269,5 @@ const FinancialRecords = () => {
     </Content>
   );
 };
+
 export default FinancialRecords;

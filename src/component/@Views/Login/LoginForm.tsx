@@ -5,7 +5,6 @@ import { useIsAuthenticated, useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../services/services";
-import React from "react";
 
 const LoginForm = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -19,7 +18,7 @@ const LoginForm = () => {
     } else {
       navigate("/login");
     }
-  }, [navigate]);
+  }, [isAuthenticated, navigate]);
 
   let [useremail, setUseremail] = useState("");
   let [password, setPassword] = useState("");

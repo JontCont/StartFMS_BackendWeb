@@ -12,9 +12,7 @@ import { RequireAuth } from "react-auth-kit";
 import { ToastContainer } from "react-toastify";
 import { Services, ServicesContext } from "../services/services";
 import Modal from "react-modal";
-import React, { useContext, useEffect, useState } from "react";
-import { connectionConfig } from "../services/config";
-import FinancialRecords from "../component/@Views/FinancialRecords/FinancialRecords";
+import React, { useEffect, useState } from "react";
 
 Modal.setAppElement("body");
 
@@ -27,7 +25,7 @@ const AppRouter = () => {
     fetch(`${services.localHost}/api/users/menus/items`)
       .then((response) => response.json())
       .then(({data}) => setRoutesData(data));
-  }, []);
+  }, [services.localHost]);
 
   //ajax
   const privateElement = (element: JSX.Element) => {
@@ -59,10 +57,6 @@ const AppRouter = () => {
           {/* user authrozie element */}
           <Route path="/Login" element={<LoginLayout />}>
             <Route path="/Login" element={<Login />} />
-          </Route>
-
-          <Route path="/front">
-            <Route path="/front" element={<FinancialRecords />} />
           </Route>
 
           {/* System element */}

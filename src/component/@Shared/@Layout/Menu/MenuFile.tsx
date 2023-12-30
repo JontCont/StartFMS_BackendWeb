@@ -1,22 +1,21 @@
-import { ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-class MenuFileType {
+interface MenuFileType {
     id?: string;
     name?: string;
-    icon?: string = 'fas fa-tachometer-alt';
-    url: string = "/";
+    icon?: string;
+    url: string;
 }
 
-const MenuFile = (type: MenuFileType) => {
+const MenuItem: React.FC<MenuFileType> = ({ id, name, icon = 'fas fa-tachometer-alt', url }) => {
     return (
-        <li className="nav-item" key={type.id}>
-            <Link to={type.url} className={"nav-link"}>
-                <i className={`nav-icon ${type.icon} `}></i>
-                <p>{type.name}</p>
+        <li className="nav-item" key={id}>
+            <Link to={url} className="nav-link">
+                <i className={`nav-icon ${icon} `}></i>
+                <p>{name}</p>
             </Link>
         </li>
     );
 }
 
-export default MenuFile;
+export default MenuItem;

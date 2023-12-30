@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { CardFrameProps } from "../../../../models/Layout/CardFrameProps";
 
 const CardBodyFrame = (props: CardFrameProps) => {

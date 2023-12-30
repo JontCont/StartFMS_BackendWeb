@@ -1,6 +1,3 @@
-import users from 'admin-lte/dist/img/user1-128x128.jpg'
-
-
 const MenuSearch = () => {
     return (
         <div className="form-inline">
