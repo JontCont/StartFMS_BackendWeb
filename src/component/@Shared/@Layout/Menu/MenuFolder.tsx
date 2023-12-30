@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ReactNode, useState, useEffect } from "react";
 import { MenuTypeProps } from "../../../../models/Layout/MenuTypeProps";
-import { GlobalDataContext } from "../../../../services/GlobalDataContext";
+import { GlobalDataContext } from "../../../../helper/GlobalDataContext";
 
 interface MenuFolderProps {
   id?: string;
