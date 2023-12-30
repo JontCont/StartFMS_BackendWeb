@@ -46,7 +46,6 @@ const MenuItems = () => {
       if (!element) {
         return setMenuElement(null);
       }
-      console.log(element); 
       const menuElement = renderMenuElements(element);
       setMenuElement(menuElement);
     };
