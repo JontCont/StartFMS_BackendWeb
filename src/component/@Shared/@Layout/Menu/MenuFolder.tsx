@@ -1,32 +1,31 @@
 import { Link } from "react-router-dom";
 import { ReactNode, useState } from "react";
 
-class MenuFolderType {
+interface MenuFolderProps {
     id?: string;
     name?: string;
     icon?: string | null;
     children: ReactNode;
 }
 
+const MenuFolder = ({ id, name, icon, children }: MenuFolderProps) => {
+    const [isMenuOpen, setMenuOpen] = useState(false);
 
-const MenuFolder = (models: MenuFolderType) => {
-    const [menuActionState, setmenuActionState] = useState(false);
-
-    const handleClick = () => {
-        setmenuActionState(!menuActionState);
+    const toggleMenu = () => {
+        setMenuOpen(!isMenuOpen);
     };
 
     return (
-        <li className={`nav-item ${menuActionState ? "menu-open" : ""}`}
-            onClick={handleClick} key={models.id}>
+        <li className={`nav-item ${isMenuOpen ? "menu-open" : ""}`}
+            onClick={toggleMenu} key={id}>
             <Link to="#" onClick={e => e.preventDefault()} className="nav-link">
-                <i className={`nav-icon ` + models.icon ?? 'fas fa-tachometer-alt'}></i>
+                <i className={`nav-icon ${icon ?? 'fas fa-tachometer-alt'}`}></i>
                 <p>
-                    {models.name}
+                    {name}
                     <i className="right fas fa-angle-left"></i>
                 </p>
             </Link>
-            {models.children}
+            {children}
         </li>
     );
 }

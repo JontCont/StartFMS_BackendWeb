@@ -5,25 +5,25 @@ import MenuFolder from './MenuFolder';
 import { Services, ServicesContext } from '../../../../services/services';
 import { MenuTypeProps } from '../../../../models/Layout/MenuTypeProps';
 
-const getMenusElement = (menuList: any) => {
+const renderMenuElements = (menuList: any) => {
   if (menuList == null) return null;
 
   return menuList.map((el: MenuTypeProps, index: number) => {
-    return (el.children != null) ? getMenuFolder(el) : getMenuFile(el);
+    return (el.children != null) ? renderMenuFolder(el) : renderMenuFile(el);
   });
 };
 
-const getMenuFolder = (el: any) => {
+const renderMenuFolder = (el: any) => {
   return (
     <MenuFolder name={el.menuName} icon={el.icon}>
       <ul className="nav nav-treeview">
-        {getMenusElement(el.children)}
+        {renderMenuElements(el.children)}
       </ul>
     </MenuFolder>
   );
 }
 
-const getMenuFile = (el: any) => {
+const renderMenuFile = (el: any) => {
   return (
     <MenuFile name={el.menuName} url={el.url} icon={el.icon} />
   );
@@ -31,22 +31,22 @@ const getMenuFile = (el: any) => {
 
 
 const MenuItems = () => {
-  const [menuElement, setMenuElement] = useState(null);
+  const [menuElement, setMenuElement] = useState<JSX.Element | null>(null);
   const services: Services | null = useContext(ServicesContext);
 
   useEffect(() => {
     const getMenuList = async () => {
       //取得 menu 清單
       const element = await services?.users.getUsersMenus();
-      if (element == null || element === undefined) {
-        return (<nav className="mt-2"></nav>);
+      if (!element) {
+        return setMenuElement(null);
       }
 
-      const menuElement = getMenusElement(element);
+      const menuElement = renderMenuElements(element);
       setMenuElement(menuElement);
     };
     getMenuList();
-  }, []);
+  }, [services]);
 
   return (
     <nav className="mt-2">
