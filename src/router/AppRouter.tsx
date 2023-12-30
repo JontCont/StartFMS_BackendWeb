@@ -13,7 +13,6 @@ import { ToastContainer } from "react-toastify";
 import { Services, ServicesContext } from "../services/services";
 import Modal from "react-modal";
 import React, { useEffect, useState } from "react";
-import FinancialRecords from "../component/@Views/FinancialRecords/FinancialRecords";
 
 Modal.setAppElement("body");
 
@@ -58,10 +57,6 @@ const AppRouter = () => {
           {/* user authrozie element */}
           <Route path="/Login" element={<LoginLayout />}>
             <Route path="/Login" element={<Login />} />
-          </Route>
-
-          <Route path="/front">
-            <Route path="/front" element={<FinancialRecords />} />
           </Route>
 
           {/* System element */}
