@@ -1,8 +1,8 @@
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { connectionConfig } from "../services/config";
-import { setAuthHeader } from "../services/services";
 import { toast } from "react-toastify";
+import { configuration } from "../config/configuration";
+import { setAuthHeader } from "./services";
 
 export interface IUserServices {
   // 定義其他需要的服務方法
@@ -10,10 +10,10 @@ export interface IUserServices {
 }
 
 export class UserServices implements IUserServices {
-  private connection: connectionConfig;
+  private connection: configuration;
   private host?: string;
 
-  constructor(connection: connectionConfig) {
+  constructor(connection: configuration) {
     this.connection = connection;
     this.host = this.connection.usersHost ?? this.connection.localHost;
   }
@@ -21,21 +21,16 @@ export class UserServices implements IUserServices {
   async getUsersMenus() {
     try {
       const url: string = `${this.host}/api/users/menus`;
-      const result = await getUsersMenus(url);
+      let result;
+
+      await axios.get(url, setAuthHeader).then(({ data }) => {
+        let res = data as any;
+        result = res.data;
+        return result;
+      });
       return result;
     } catch (error) {
       toast.error("無法登入");
     }
   }
-
 }
-
-const getUsersMenus = async (url: string) => {
-  let result: any;
-  await axios.get(url, setAuthHeader).then(({ data }) => {
-    let res = data as any;
-    result = res.data;
-    return result;
-  });
-  return result;
-};

@@ -1,31 +1,33 @@
 import { createContext } from "react";
-import { AuthServices, IAuthServices } from "./auth";
-import { connectionConfig } from "./config";
-import { IUserServices, UserServices } from "../interfaces/IUserServices";
+import { configuration } from "../config/configuration";
+import { AuthServices } from "./auth.services";
+import { UserServices } from "./user.services";
 
 export const ServicesContext = createContext<Services | null>(null);
 export let setAuthHeader = {};
 
 export const setAuthHeaderFunction = (header: any) => {
-    const config = {
-        headers: { Authorization: header }
-    };
-    setAuthHeader = config;
+  const config = {
+    headers: { Authorization: header },
+  };
+  setAuthHeader = config;
 };
 
-export class Services extends connectionConfig {
-    private connection: connectionConfig;
-
-    public auth:IAuthServices; 
-    public users:IUserServices; 
+export class Services extends configuration {
+  private connection: configuration;
+  private host?: string;
+  public auth: AuthServices;
+  public users: UserServices;
+  constructor(connection?: configuration) {
+    super();
+    this.connection = connection ?? new configuration();
+    this.usersHost = this.connection.usersHost ?? this.connection.localHost;
+    this.backendHost = this.connection.backendHost ?? this.connection.localHost;
     
-    constructor(connection?: connectionConfig) {
-        super();
-        this.connection = connection?? new connectionConfig();
-        this.auth = new AuthServices(this.connection);
-        this.users = new UserServices(this.connection);
-    }
+    //
+    this.auth = new AuthServices(this.connection);
+    this.users = new UserServices(this.connection);
+  }
 
-    // 實作其他介面定義的方法
+  // 實作其他介面定義的方法
 }
-

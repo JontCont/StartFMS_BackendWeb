@@ -1,5 +1,5 @@
 import axios from "axios";
-import { connectionConfig } from "./config";
+import { configuration } from "../config/configuration";
 
 export interface IAuthServices {
   // 定義其他需要的服務方法
@@ -7,10 +7,10 @@ export interface IAuthServices {
 }
 
 export class AuthServices implements IAuthServices {
-  private connection: connectionConfig;
+  private connection: configuration;
   private host?: string;
 
-  constructor(connection: connectionConfig) {
+  constructor(connection: configuration) {
     this.connection = connection;
     this.host = this.connection.usersHost ?? this.connection.localHost;
   }

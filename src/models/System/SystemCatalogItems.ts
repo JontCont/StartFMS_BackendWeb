@@ -7,6 +7,7 @@ export class SystemCatalogItems {
     icon: string | null;
     parentId: string | null;
 
+    //客製化屬性
     children: SystemCatalogItems[] | null;
     parent: SystemCatalogItems | null;
 
