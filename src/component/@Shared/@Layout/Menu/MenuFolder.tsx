@@ -33,7 +33,7 @@ const MenuFolder = ({
         }
       });
     }
-  }, [currentPath]);
+  }, [childrens, currentPath]);
 
   const toggleMenu = () => {
     let row = {

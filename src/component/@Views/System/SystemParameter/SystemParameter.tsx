@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { FilterMatchMode, FilterOperator } from "primereact/api";
+import { InputNumber, InputNumberChangeEvent } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
@@ -15,23 +15,31 @@ import { SystemParameterProperty } from "../../../../models/System/SystemParamet
 
 const SystemParameter = () => {
   const services = useContext(ServicesContext);
-  const emptyProduct: SystemParameterProperty = { Id: 0, Name: "" };
+  const emptyProduct: SystemParameterProperty = { id: 0, name: "" };
   const [dataTables, setDataTables] = useState<SystemParameterProperty[]>([]);
   const [sysConfig, setSysConfig] =
     useState<SystemParameterProperty>(emptyProduct);
-  const [filters, setFilters] = useState({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    ParName: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    ParValue: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    ParMemo: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  });
 
   const [sysConfigDialog, setSysConfigDialog] = useState({
     isOpen: false,
     type: "",
   });
+
+  const columns = [
+    { field: "id", header: "識別碼" },
+    { field: "name", header: "參數名稱" },
+    { field: "value1", header: "參數1" },
+    { field: "value2", header: "參數2" },
+    { field: "value3", header: "參數3" },
+    { field: "description", header: "備註" },
+  ];
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
+
+  useEffect(() => {
+    services.system.getSystemParameterList().then((res) => {
+      setDataTables(res);
+    });
+  }, [services.system]);
 
   const hideDialog = () => {
     setSysConfigDialog({ isOpen: false, type: "" });
@@ -60,24 +68,44 @@ const SystemParameter = () => {
   };
 
   const deleteProduct = () => {
-    const updatedDataTables = [...dataTables];
-    setDataTables(updatedDataTables);
-    setSysConfig(emptyProduct);
-    setDeleteProductDialog(false);
-    toast.success("刪除成功");
+    services.system.deleteSystemParameter(sysConfig.id).then((res) => {
+      services.system.getSystemParameterList().then((res) => {
+        setDataTables(res);
+      });
+      toast.success("儲存成功");
+      hideDeleteProductDialog();
+    });
   };
 
   const saveProduct = () => {
-    const updatedDataTables = [...dataTables];
-    setDataTables(updatedDataTables);
-    setSysConfig(emptyProduct);
-    setSysConfigDialog({ isOpen: false, type: "" });
+    if (sysConfig.id > 0) {
+      services.system.updateSystemParameter(sysConfig).then((res) => {
+        if (res) {
+          services.system.getSystemParameterList().then((res) => {
+            setDataTables(res);
+          });
+          toast.success("儲存成功");
+          hideDialog();
+        } else {
+          toast.error("儲存失敗");
+        }
+      });
+    } else {
+      services.system.addSystemParameter(sysConfig).then((res) => {
+        if (res) {
+          services.system.getSystemParameterList().then((res) => {
+            setDataTables(res);
+          });
+          toast.success("儲存成功");
+          hideDialog();
+        } else {
+          toast.error("儲存失敗");
+        }
+      });
+    }
   };
 
-  const onInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    name: string
-  ) => {
+  const onInputChange = (e: any, name: string) => {
     const val = e.target.value || "";
     setSysConfig((prevSysConfig) => ({
       ...prevSysConfig,
@@ -93,16 +121,18 @@ const SystemParameter = () => {
       <>
         <Button
           icon="fa fa-pen"
-          rounded
           outlined
-          className="mr-2"
+          rounded
+          severity="success"
+          className="mr-2 p-1"
           onClick={() => editProduct(rowData, options.rowIndex)}
         />
         <Button
           icon="fa fa-trash"
-          rounded
           outlined
+          rounded
           severity="danger"
+          className="p-1"
           onClick={() => confirmDeleteProduct(rowData, options.rowIndex)}
         />
       </>
@@ -133,10 +163,8 @@ const SystemParameter = () => {
     </>
   );
 
-  useEffect(() => {}, []);
-
   return (
-    <Content titleName="系統參數">
+    <Content titleName="參數設定">
       <CardFrame titleName="" IsCardTitle={false}>
         <div className="flex flex-wrap gap-2">
           <Button
@@ -150,42 +178,26 @@ const SystemParameter = () => {
 
       <CardFrame titleName="資料檔案" cardBodyStyle="p-0">
         <DataTable
+          className="table table-bordered table-striped mb-0"
           value={dataTables}
-          filters={filters}
           paginator
           showGridlines
           rowsPerPageOptions={[15, 50, 100]}
           rows={15}
-          filterDisplay="row"
-          globalFilterFields={["ParName", "ParValue", "ParMemo"]}
-          emptyMessage="No customers found."
         >
-          <Column
-            header="名稱"
-            field="ParName"
-            sortable
-            filter
-            filterPlaceholder="請輸入名稱"
-          ></Column>
-          <Column
-            header="參數"
-            field="ParValue"
-            sortable
-            filter
-            filterPlaceholder="請輸入參數"
-          ></Column>
-          <Column
-            header="備註"
-            field="ParMemo"
-            sortable
-            filter
-            filterPlaceholder="請輸入備註"
-          ></Column>
+          {columns.map((col, i) => (
+            <Column
+              key={col.field}
+              field={col.field}
+              header={col.header}
+              sortable
+            />
+          ))}
           <Column
             header="操作"
             body={actionBodyTemplate}
             exportable={false}
-            style={{ minWidth: "12rem" }}
+            style={{ width: "12rem" }}
           ></Column>
         </DataTable>
       </CardFrame>
@@ -194,39 +206,45 @@ const SystemParameter = () => {
         modal
         visible={sysConfigDialog.isOpen}
         style={{ width: "32rem" }}
-        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
         header={sysConfigDialog.type === "Edit" ? "編輯 Edit" : "新增 Create"}
         className="p-fluid"
         footer={sysConfigDialogFooter}
         onHide={hideDialog}
       >
         <div className="field">
-          <label htmlFor="parName" className="font-bold">
-            名稱
-          </label>
+          <label className="font-bold">名稱</label>
           <InputText
-            id="parName"
-            onChange={(e) => onInputChange(e, "ParName")}
+            value={sysConfig.name}
+            onChange={(e) => onInputChange(e, "name")}
             disabled={sysConfigDialog.type === "Edit"}
           />
         </div>
         <div className="field">
-          <label htmlFor="parValue" className="font-bold">
-            參數
-          </label>
+          <label className="font-bold">參數1</label>
           <InputText
-            id="parValue"
-            onChange={(e) => onInputChange(e, "ParValue")}
+            value={sysConfig.value1}
+            onChange={(e) => onInputChange(e, "value1")}
           />
         </div>
         <div className="field">
-          <label htmlFor="parMemo" className="font-bold">
-            備註
-          </label>
+          <label className="font-bold">參數2</label>
+          <InputText
+            value={sysConfig.value2}
+            onChange={(e) => onInputChange(e, "value2")}
+          />
+        </div>
+        <div className="field">
+          <label className="font-bold">參數3</label>
+          <InputText
+            value={sysConfig.value3}
+            onChange={(e) => onInputChange(e, "value3")}
+          />
+        </div>
+        <div className="field">
+          <label className="font-bold">備註</label>
           <InputTextarea
-            id="parMemo"
-            onChange={(e) => onInputChange(e, "ParMemo")}
-            required
+            value={sysConfig.description}
+            onChange={(e) => onInputChange(e, "description")}
             rows={3}
             cols={20}
           />
@@ -249,7 +267,7 @@ const SystemParameter = () => {
           />
           {sysConfig && (
             <span>
-              您是否確定刪除 <b>""</b> ?
+              您是否確定刪除 <b>"{sysConfig.name}"</b> ?
             </span>
           )}
         </div>

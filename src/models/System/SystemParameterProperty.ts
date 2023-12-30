@@ -1,8 +1,8 @@
 export class SystemParameterProperty {
-  public Id: number;
-  public Name: string;
-  public Value1?: string;
-  public Value2?: string;
-  public Value3?: string;
-  public Description?: string;
+  public id: number;
+  public name: string;
+  public value1?: string;
+  public value2?: string;
+  public value3?: string;
+  public description?: string;
 }

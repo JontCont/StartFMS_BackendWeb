@@ -42,6 +42,7 @@ export class SystemManagement implements ISystemManagement {
       let result;
       await axios.get(url, setAuthHeader).then(({ data }) => {
         let res = data as any;
+        console.log(res);
         result = res.data;
         return result;
       });
