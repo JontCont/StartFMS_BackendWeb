@@ -2,7 +2,7 @@ import "./login.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect, useContext } from "react";
 import { useIsAuthenticated, useSignIn } from "react-auth-kit";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../services/services";
 
@@ -57,7 +57,7 @@ const LoginForm = () => {
       <div className="align-self-center">
         <div className="card">
           <div className="card-header text-center">
-            <h3>Sign In</h3>
+            <h3>登入</h3>
           </div>
           <div className="card-body">
             <div className="form-row">
@@ -82,9 +82,18 @@ const LoginForm = () => {
                 placeholder="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                onKeyDown={(e) => { if (e.key === 'Enter') { loginHandler(); }}}
+                onKeyUp={(e) => {
+                  if (e.key === "Enter") {
+                    loginHandler();
+                  }
+                }}
               />
               <label className="label"></label>
+            </div>
+
+            <div>
+              <Link to="/forgot-password">忘記密碼？</Link>
+              <Link to="/signup">註冊新帳號</Link>
             </div>
             <div className="mt-6 input-buttons">
               <input
