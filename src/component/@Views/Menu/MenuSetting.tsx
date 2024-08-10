@@ -2,7 +2,7 @@
 
 const MenuSetting = () =>{
     return (
-        <div>MenuSetting</div>
+        <div>MenuSetting123</div>
     );
 }
 

@@ -14,7 +14,6 @@ import { Services, ServicesContext } from "../services/services";
 import Modal from "react-modal";
 import React, { useEffect, useState } from "react";
 import SignUpForm from "../component/@Views/SignUp/SignUpForm";
-
 Modal.setAppElement("body");
 
 const AppRouter = () => {
