@@ -32,7 +32,7 @@ const SingUpForm = () => {
 
             <div className="mt-6 input-buttons">
               <input type="button" className="btn btn-primary" value="註冊" />
-              <Link className="btn btn-danger ml-2" to="/login">
+              <Link className="btn btn-outline-danger ml-2" to="/login">
                 返回
               </Link>
             </div>
