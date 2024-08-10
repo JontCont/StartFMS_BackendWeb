@@ -49,29 +49,24 @@ const SignUpForm = () => {
   };
 
   const onSaveForm = () => {
-    // if (!vaiidateForm()) {
-    //   return false;
-    // }
-    // 
-    navigate('/login');
+    if (!vaiidateForm()) {
+      return false;
+    }
 
-    // // Call API to save data
-    // services.auth
-    //   .userSignup(formData)
-    //   .then((res) => {
-    //     console.log(res);
-
-    //     if (res.httpCode === HttpStatus.success) {
-    //       toast.success("註冊成功");
-    //       navigate('/login');
-    //     } else {
-    //       toast.error(`${res.errorMessage} , 錯誤代碼: ${res.httpCode}`);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     toast.error("註冊失敗");
-    //   });
+    // Call API to save data
+    services.auth
+      .userSignup(formData)
+      .then((res) => {
+        if (res.httpCode === HttpStatus.success) {
+          toast.success("註冊成功");
+          navigate('/login');
+        } else {
+          toast.error(`${res.errorMessage} , 錯誤代碼: ${res.httpCode}`);
+        }
+      })
+      .catch((error) => {
+        toast.error("註冊失敗");
+      });
   };
 
   return (
