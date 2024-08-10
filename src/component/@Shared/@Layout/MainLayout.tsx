@@ -2,9 +2,9 @@ import Header from "./Header";
 import MenuSidebar from "./MenuSidebar";
 //append css or js
 import 'admin-lte/dist/css/adminlte.min.css'
-import 'admin-lte/plugins/fontawesome-free/css/all.css'
-import 'admin-lte/plugins/bootstrap/js/bootstrap'
-import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle'
+import 'fontawesome-free/css/all.css'
+import 'bootstrap/dist/js/bootstrap'
+import 'bootstrap/dist/js//bootstrap.bundle'
 import 'jquery/dist/jquery'
 import 'admin-lte/dist/js/adminlte'
 //primereact theme 
