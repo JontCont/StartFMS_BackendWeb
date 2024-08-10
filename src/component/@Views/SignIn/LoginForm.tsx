@@ -11,14 +11,14 @@ const LoginForm = () => {
   const services: Services | null = useContext(ServicesContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let isAuth = isAuthenticated();
-    if (isAuth) {
-      navigate("/");
-    } else {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   let isAuth = isAuthenticated();
+  //   if (isAuth) {
+  //     navigate("/");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, [isAuthenticated, navigate]);
 
   let [useremail, setUseremail] = useState("");
   let [password, setPassword] = useState("");
