@@ -5,10 +5,13 @@ import { SignUp } from "../../../models/System/SignUp";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../services/services";
+import { HttpStatus } from "../../../enums/HttpStatus";
+import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = () => {
   let [formData, setFormData] = useState(new SignUp());
   const services: Services | null = useContext(ServicesContext);
+  const navigate = useNavigate();
 
   const vaiidateForm = (): boolean => {
     let status = true;
@@ -46,13 +49,29 @@ const SignUpForm = () => {
   };
 
   const onSaveForm = () => {
-    if (!vaiidateForm()) {
-      return false;
-    }
-    toast.success("註冊成功");
-    // Call API to save data
+    // if (!vaiidateForm()) {
+    //   return false;
+    // }
+    // 
+    navigate('/login');
 
-    services.auth.userSignup(formData);
+    // // Call API to save data
+    // services.auth
+    //   .userSignup(formData)
+    //   .then((res) => {
+    //     console.log(res);
+
+    //     if (res.httpCode === HttpStatus.success) {
+    //       toast.success("註冊成功");
+    //       navigate('/login');
+    //     } else {
+    //       toast.error(`${res.errorMessage} , 錯誤代碼: ${res.httpCode}`);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     toast.error("註冊失敗");
+    //   });
   };
 
   return (

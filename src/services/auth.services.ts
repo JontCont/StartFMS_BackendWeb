@@ -1,6 +1,7 @@
 import axios from "axios";
 import { configuration } from "../config/configuration";
 import { SignUp } from "../models/System/SignUp";
+import { ApiResponse } from "../models/ApiResponse";
 
 export interface IAuthServices {
   // 定義其他需要的服務方法
@@ -29,12 +30,11 @@ export class AuthServices implements IAuthServices {
       throw new Error("無法登入"); // 自訂錯誤訊息
     }
   }
-  async userSignup(models: SignUp): Promise<string> {
+  async userSignup(models: SignUp): Promise<ApiResponse> {
     try {
       const url: string = `${this.host}/api/auth/SignUp`;
       const { data } = await axios.post(url, models);
-      // const token = data.data.token;
-      return "";
+      return data as ApiResponse;
     } catch (error) {
       throw new Error("無法登入"); // 自訂錯誤訊息
     }
