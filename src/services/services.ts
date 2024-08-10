@@ -17,16 +17,18 @@ export const setAuthHeaderFunction = (header: any) => {
 export class Services extends configuration {
   private connection: configuration;
   private host?: string;
+  
   public auth: AuthServices;
   public users: UserServices;
   public system: SystemManagement;
+
   constructor(connection?: configuration) {
     super();
     this.connection = connection ?? new configuration();
     this.usersHost = this.connection.usersHost ?? this.connection.localHost;
     this.backendHost = this.connection.backendHost ?? this.connection.localHost;
     
-    //
+    //-- 這裡新增服務 --//
     this.auth = new AuthServices(this.connection);
     this.users = new UserServices(this.connection);
     this.system = new SystemManagement(this.connection);

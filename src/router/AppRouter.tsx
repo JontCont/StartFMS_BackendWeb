@@ -6,14 +6,14 @@ import About from "../component/@Views/TopList/About";
 import ProfileHome from "../component/@Views/Profile/ProfileHome";
 
 import LoginLayout from "../component/@Shared/@Layout/LoginLayout";
-import Login from "../component/@Views/Login/LoginForm";
+import Login from "../component/@Views/SignIn/LoginForm";
 import MainLayout from "../component/@Shared/@Layout/MainLayout";
 import { RequireAuth } from "react-auth-kit";
 import { ToastContainer } from "react-toastify";
 import { Services, ServicesContext } from "../services/services";
 import Modal from "react-modal";
 import React, { useEffect, useState } from "react";
-
+import SignUpForm from "../component/@Views/SignUp/SignUpForm";
 Modal.setAppElement("body");
 
 const AppRouter = () => {
@@ -24,7 +24,7 @@ const AppRouter = () => {
     // 這裡進行 API 調用，並將獲取的數據設置到狀態中
     fetch(`${services.localHost}/api/users/menus/items`)
       .then((response) => response.json())
-      .then(({data}) => setRoutesData(data));
+      .then(({ data }) => setRoutesData(data));
   }, [services.localHost]);
 
   //ajax
@@ -33,7 +33,7 @@ const AppRouter = () => {
   };
   let components: any[] = [];
 
-  if(routesData.length > 0){
+  if (routesData.length > 0) {
     components = routesData?.map((route: any) => ({
       ...route,
       component: React.lazy(
@@ -55,8 +55,9 @@ const AppRouter = () => {
         <ToastContainer />
         <Routes>
           {/* user authrozie element */}
-          <Route path="/Login" element={<LoginLayout />}>
+          <Route element={<LoginLayout />}>
             <Route path="/Login" element={<Login />} />
+            <Route path="/signup" element={<SignUpForm />} />
           </Route>
 
           {/* System element */}

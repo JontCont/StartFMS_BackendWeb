@@ -1,10 +1,10 @@
+import './index.css';
+import './helper/stringExtensions';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
 import AppRouter from './router/AppRouter';
 import { AuthProvider } from 'react-auth-kit';
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

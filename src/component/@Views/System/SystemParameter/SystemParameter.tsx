@@ -122,7 +122,6 @@ const SystemParameter = () => {
         <Button
           icon="fa fa-pen"
           outlined
-          rounded
           severity="success"
           className="mr-2 p-1"
           onClick={() => editProduct(rowData, options.rowIndex)}
@@ -130,7 +129,6 @@ const SystemParameter = () => {
         <Button
           icon="fa fa-trash"
           outlined
-          rounded
           severity="danger"
           className="p-1"
           onClick={() => confirmDeleteProduct(rowData, options.rowIndex)}
