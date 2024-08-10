@@ -1,12 +1,14 @@
 import "./SignUp.css";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SignUp } from "../../../models/System/SignUp";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Services, ServicesContext } from "../../../services/services";
 
 const SignUpForm = () => {
   let [formData, setFormData] = useState(new SignUp());
+  const services: Services | null = useContext(ServicesContext);
 
   const vaiidateForm = (): boolean => {
     let status = true;
@@ -50,7 +52,7 @@ const SignUpForm = () => {
     toast.success("註冊成功");
     // Call API to save data
 
-    alert(JSON.stringify(formData));
+    services.auth.userSignup(formData);
   };
 
   return (
