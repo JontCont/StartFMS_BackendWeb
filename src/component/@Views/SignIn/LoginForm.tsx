@@ -92,7 +92,7 @@ const LoginForm = () => {
             </div>
 
             <div>
-              <Link to="/forgot-password">忘記密碼？</Link>
+              <Link to="/forgot-password" className="mr-2">忘記密碼？</Link>
               <Link to="/signup">註冊新帳號</Link>
             </div>
             <div className="mt-6 input-buttons">
@@ -100,7 +100,7 @@ const LoginForm = () => {
                 type="button"
                 className="btn btn-primary"
                 onClick={() => loginHandler()}
-                value="Sign In"
+                value="登入"
               />
             </div>
           </div>

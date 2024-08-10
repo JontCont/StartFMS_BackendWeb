@@ -13,7 +13,7 @@ import { ToastContainer } from "react-toastify";
 import { Services, ServicesContext } from "../services/services";
 import Modal from "react-modal";
 import React, { useEffect, useState } from "react";
-import SingUpForm from "../component/@Views/SignUp/SingUpForm";
+import SignUpForm from "../component/@Views/SignUp/SignUpForm";
 
 Modal.setAppElement("body");
 
@@ -58,7 +58,7 @@ const AppRouter = () => {
           {/* user authrozie element */}
           <Route element={<LoginLayout />}>
             <Route path="/Login" element={<Login />} />
-            <Route path="/signup" element={<SingUpForm />} />
+            <Route path="/signup" element={<SignUpForm />} />
           </Route>
 
           {/* System element */}
