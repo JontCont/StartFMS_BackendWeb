@@ -1,18 +1,16 @@
-export {}
-
+export {};
 
 declare global {
-    interface String {
-        IsNullOrWhiteSpace(): boolean;
-        IsNullOrEmpty(): boolean;
-    }
+  interface String {}
+  interface StringConstructor {
+    IsNullOrWhiteSpace(value: string): boolean;
+    IsNullOrEmpty(value: string): boolean;
+  }
 }
 
-
-String.prototype!.IsNullOrWhiteSpace = function (): boolean {
-    return this === null || this.match(/^ *$/) !== null;
+String.IsNullOrWhiteSpace = (value: string | null): boolean => {
+  return value === undefined || value === null || value.match(/^ *$/) !== null;
 };
-
-String.prototype!.IsNullOrEmpty = function (): boolean {
-    return this === null || this.match(/^$/) !== null;
+String.IsNullOrEmpty = (value: string | null): boolean => {
+  return value === undefined || value === null || value.match(/^$/) !== null;
 };

@@ -9,37 +9,38 @@ const SignUpForm = () => {
   let [formData, setFormData] = useState(new SignUp());
 
   const vaiidateForm = (): boolean => {
-    if (formData.email.IsNullOrEmpty()) {
+    let status = true;
+    if (String.IsNullOrEmpty(formData.email)) {
       toast.error("[必填] 請輸入Email");
-      return false;
+      status = false;
     }
 
-    if (formData.account.IsNullOrWhiteSpace()) {
+    if (String.IsNullOrEmpty(formData.account)) {
       toast.error("[必填] 請輸入帳號");
-      return false;
+      status = false;
     }
 
-    if (formData.password.IsNullOrWhiteSpace()) {
+    if (String.IsNullOrEmpty(formData.password)) {
       toast.error("[必填] 請輸入密碼");
-      return false;
+      status = false;
     }
 
-    if (formData.confirmPassword.IsNullOrWhiteSpace()) {
+    if (String.IsNullOrEmpty(formData.confirmPassword)) {
       toast.error("[必填] 請輸入確認密碼");
-      return false;
+      status = false;
     }
 
     if (formData.password !== formData.confirmPassword) {
       toast.error("密碼與確認密碼不符，請重新輸入");
-      return;
+      status = false;
     }
 
-    if (formData.name.IsNullOrWhiteSpace()) {
+    if (String.IsNullOrEmpty(formData.name)) {
       toast.error("[必填] 請輸入使用者姓名");
-      return false;
+      status = false;
     }
 
-    return true;
+    return status;
   };
 
   const onSaveForm = () => {
