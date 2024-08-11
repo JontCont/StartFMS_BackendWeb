@@ -5,6 +5,7 @@ import { useSignIn } from "react-auth-kit";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Services, ServicesContext } from "../../../../services/services";
+import { jwtDecode } from "jwt-decode";
 
 const LoginForm = () => {
   // const isAuthenticated = useIsAuthenticated();
@@ -37,11 +38,16 @@ const LoginForm = () => {
         toast.error("帳號或密碼輸入錯誤，請重新輸入");
         return false;
       }
-
+      const decoded = jwtDecode(token);
       signIn({
         token: token,
         tokenType: "Bearer",
-        authState: { name: "React User", uid: 123456 },
+        authState: {
+          name: decoded["FullName"],
+          uid: decoded["nameid"],
+          role: decoded["role"],
+          email: decoded["email"],
+        },
         expiresIn: 120,
       });
 

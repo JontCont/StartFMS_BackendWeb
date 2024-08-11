@@ -4,7 +4,7 @@ import MenuSidebar from "./MenuSidebar";
 import 'admin-lte/dist/css/adminlte.min.css'
 import 'fontawesome-free/css/all.css'
 import 'bootstrap/dist/js/bootstrap'
-import 'bootstrap/dist/js//bootstrap.bundle'
+import 'bootstrap/dist/js/bootstrap.bundle'
 import 'jquery/dist/jquery'
 import 'admin-lte/dist/js/adminlte'
 //primereact theme 
