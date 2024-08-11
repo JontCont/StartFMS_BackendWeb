@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-// append page (only views)
-import Home from "../component/@Views/TopList/Home";
-import About from "../component/@Views/TopList/About";
-import ProfileHome from "../component/@Views/Profile/ProfileHome";
-
-import LoginLayout from "../component/@Shared/@Layout/LoginLayout";
-import Login from "../component/@Views/SignIn/LoginForm";
-import MainLayout from "../component/@Shared/@Layout/MainLayout";
 import { RequireAuth } from "react-auth-kit";
 import { ToastContainer } from "react-toastify";
 import { Services, ServicesContext } from "../services/services";
 import Modal from "react-modal";
 import React, { useEffect, useState } from "react";
-import SignUpForm from "../component/@Views/SignUp/SignUpForm";
+
+// append page (only views)
+import Home from "../component/@Views/TopList/Home";
+import About from "../component/@Views/TopList/About";
+import ProfileHome from "../component/@Views/Profile/ProfileHome";
+import LoginLayout from "../component/@Shared/@Layout/LoginLayout";
+import MainLayout from "../component/@Shared/@Layout/MainLayout";
+import Login from "../component/@Views/Account/SignIn/LoginForm";
+import SignUpForm from "../component/@Views/Account/SignUp/SignUpForm";
+import ForgetForm from "../component/@Views/Account/Forget/ForgetForm";
 Modal.setAppElement("body");
 
 const AppRouter = () => {
@@ -58,6 +58,7 @@ const AppRouter = () => {
           <Route element={<LoginLayout />}>
             <Route path="/Login" element={<Login />} />
             <Route path="/signup" element={<SignUpForm />} />
+            <Route path="/forgot-password" element={<ForgetForm />} />
           </Route>
 
           {/* System element */}
@@ -71,7 +72,17 @@ const AppRouter = () => {
                 key={id}
                 path={url}
                 element={
-                  <React.Suspense fallback={<div>Loading...</div>}>
+                  <React.Suspense
+                    fallback={
+                      <div className="">
+                        <div className="d-flex justify-content-center">
+                          <div className="overlay dark">
+                            <i className="fas fa-2x fa-sync-alt fa-spin"></i>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  >
                     <Component />
                   </React.Suspense>
                 }

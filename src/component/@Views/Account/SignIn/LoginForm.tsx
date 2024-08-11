@@ -1,16 +1,16 @@
 import "./login.css";
 import "react-toastify/dist/ReactToastify.css";
-import { useState, useEffect, useContext } from "react";
-import { useIsAuthenticated, useSignIn } from "react-auth-kit";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { useSignIn } from "react-auth-kit";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Services, ServicesContext } from "../../../services/services";
+import { Services, ServicesContext } from "../../../../services/services";
 
 const LoginForm = () => {
-  const isAuthenticated = useIsAuthenticated();
+  // const isAuthenticated = useIsAuthenticated();
   const services: Services | null = useContext(ServicesContext);
-  const navigate = useNavigate();
-  
+  // const navigate = useNavigate();
+
   // useEffect(() => {
   //   let isAuth = isAuthenticated();
   //   if (isAuth) {
@@ -92,7 +92,9 @@ const LoginForm = () => {
             </div>
 
             <div>
-              <Link to="/forgot-password" className="mr-2">忘記密碼？</Link>
+              <Link to="/forgot-password" className="mr-1">
+                忘記密碼？
+              </Link>
               <Link to="/signup">註冊新帳號</Link>
             </div>
             <div className="mt-6 input-buttons">

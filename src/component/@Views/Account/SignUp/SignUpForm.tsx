@@ -1,11 +1,11 @@
 import "./SignUp.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useContext, useState } from "react";
-import { SignUp } from "../../../models/System/SignUp";
+import { SignUp } from "../../../../models/System/SignUp";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Services, ServicesContext } from "../../../services/services";
-import { HttpStatus } from "../../../enums/HttpStatus";
+import { Services, ServicesContext } from "../../../../services/services";
+import { HttpStatus } from "../../../../enums/HttpStatus";
 import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = () => {
