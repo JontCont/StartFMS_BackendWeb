@@ -17,6 +17,7 @@
     "fontawesome-free": "^1.0.4",
     "jquery": "^3.7.1",
     "jwt-decode": "^4.0.0",
+    "playwright": "^1.47.1",
     "primereact": "^9.5.0",
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.2",
@@ -57,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.47.1",
     "@types/react-modal": "^3.16.0"
   }
 }
